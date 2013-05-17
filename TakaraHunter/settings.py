@@ -1,6 +1,11 @@
 #encoding:utf-8
 # Django settings for Takara_Hunter project.
 
+# Identificando la ruta del proyecto
+import os
+RUTA_PROYECTO = os.path.dirname(os.path.realpath(__file__))
+
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -11,9 +16,8 @@ ADMINS = (
 		('Jesús Rodríguez Pérez', 'i02roprj@uco.es'),
 )
 
-# Identificando la ruta del proyecto
-import os
-RUTA_PROYECTO = os.path.dirname(os.path.realpath(__file__))
+
+
 
 TEMPLATE_DIRS = (
     os.path.join(RUTA_PROYECTO,'plantillas'),
@@ -24,7 +28,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'mapas.db',                     # Or path to database file if using sqlite3.
+        'NAME': os.path.join(PROJECT_DIR, 'sqlite.db'),                   # Or path to database file if using sqlite3.
         'USER': '',                             # Not used with sqlite3.
         'PASSWORD': '',                         # Not used with sqlite3.
         'HOST': '',                             # Set to empty string for localhost. Not used with sqlite3.
@@ -57,14 +61,11 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = (
-    os.path.join(RUTA_PROYECTO, 'carga'),
-)
-
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -89,7 +90,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -109,7 +110,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'TakaraHunter.urls'
@@ -126,7 +127,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-		'principal',
+	'principal',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -157,3 +158,7 @@ LOGGING = {
         },
     }
 }
+
+FIXTURE_DIRS = (
+   os.path.join(RUTA_PROYECTO, 'fixtures'),
+)
