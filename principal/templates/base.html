@@ -1,0 +1,50 @@
+{% load principal_extras %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>{% block titulo %}Apostol{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Web de apuestas">
+    <meta name="author" content="Jesús Rodríguez Pérez">
+	
+	<!--<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Paytone One">-->
+	<link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}css/bootstrap-responsive.min.css" rel="stylesheet">	
+	<!--<link href="{{ STATIC_URL }}css/font-awesome.css" rel="stylesheet"><!-- Font Awesome - http://fortawesome.github.com/Font-Awesome -->
+	<!--<link href="{{ STATIC_URL }}css/datepicker.css" rel="stylesheet">-->
+	<link href="{{ STATIC_URL }}css/apostol.css" rel="stylesheet">
+	<!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
+	
+	 <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png">
+</head>
+<body>
+    <div class="container">
+		{% include "header.html" %}
+
+		{% getCategorias %}
+		<hr>
+		{% block mensaje %}
+			{% if mensaje %}
+				<div class="featureBox">
+					<p>{{mensaje}}</p>
+				  	{% if not user.is_authenticated %}
+				  		<p><a class="btnA">Registrarse</a></p>
+				  	{% endif %}
+				</div>
+			{% endif %}
+		{% endblock %}
+		{% block mainContent %}
+
+		{% endblock %}
+		<footer>
+			<p>&copy; Jesus Rodriguez Perez</p>
+		</footer>
+    </div> <!-- /container -->
+	<script src="{{ STATIC_URL }}js/jquery-latest.js"></script>
+	<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+	<!--<script src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>-->
+	{% block footerScripts %}
+	{% endblock %}
+</body>
+</html>
