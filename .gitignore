@@ -1,3 +1,7 @@
+<<<<<<< HEAD
 *.class
 *.pyc
 *.pyo
+=======
+*.txt
+>>>>>>> 5f612feef2db0fe21be8d29f3a69ed7007ef8ecd
