@@ -9,7 +9,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Raúl Arroyo Lubián', 'i02arlur@uco.es'),
+        ('Raúl Arroyo Lubián', 'i02arlur@uco.es'),
 		('Alfonso Lacalle García', 'i52lagaa@uco.es'),
 		('Pedro Daniel López González', 'i02logop@uco.es'),
 		('Jesús Rodríguez Pérez', 'i02roprj@uco.es'),
