@@ -3,8 +3,7 @@
 
 # Identificando la ruta del proyecto
 import os
-RUTA_PROYECTO = os.path.dirname(os.path.realpath(__file__))
-
+PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -16,11 +15,11 @@ ADMINS = (
 		('Jesús Rodríguez Pérez', 'i02roprj@uco.es'),
 )
 
-
-
-
 TEMPLATE_DIRS = (
-    os.path.join(RUTA_PROYECTO,'plantillas'),
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+     os.path.join(PROJECT_DIR, 'templates'),
 )
 
 MANAGERS = ADMINS
@@ -28,7 +27,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.path.join(RUTA_PROYECTO, 'mapas.db'),                   # Or path to database file if using sqlite3.
+        'NAME': os.path.join(PROJECT_DIR, 'mapas.db'),                   # Or path to database file if using sqlite3.
         'USER': '',                             # Not used with sqlite3.
         'PASSWORD': '',                         # Not used with sqlite3.
         'HOST': '',                             # Set to empty string for localhost. Not used with sqlite3.
@@ -61,7 +60,8 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(RUTA_PROYECTO, 'media')
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
+
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
@@ -82,7 +82,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(RUTA_PROYECTO, 'static'),
+    os.path.join(PROJECT_DIR, 'static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -160,5 +160,5 @@ LOGGING = {
 }
 
 FIXTURE_DIRS = (
-   os.path.join(RUTA_PROYECTO, 'fixtures'),
+   os.path.join(PROJECT_DIR, 'fixtures'),
 )
