@@ -3,9 +3,3 @@ El superusuario es:
 	Usuario:    grupo3
 	E-Mail:     i02arlur@uco.es
 	Contraseña: 1234
-<<<<<<< HEAD
-lalalalalalaalal
-=======
-
-Esto cambiando el fichero Fdo:Alfonso
->>>>>>> 1a1a95794dea6974ecaa208f42ece11289b9a2c2
