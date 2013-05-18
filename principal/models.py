@@ -1,6 +1,8 @@
 #encoding:utf-8
 from django.db                  import models
 from django.contrib.auth.models import User
+#https://docs.djangoproject.com/en/dev/ref/contrib/gis/model-api/#pointfield
+from django.contrib.gis.db import models
 
 ################################################################################
 #										TIPOS DE DATOS
@@ -28,3 +30,24 @@ User.add_to_class('fecha_nacimiento', models.DateField(null=True, blank=True, ve
 User.add_to_class('profesion', models.CharField(max_length=30, blank=True, verbose_name="Profesión", help_text="Tu empleo actual."))
 # FOTO
 User.add_to_class('foto', models.ImageField(upload_to='fotos_usuario', blank=True, verbose_name="Foto", help_text="Tu fotografía."))
+
+
+    
+class Ruta(models.Model):
+    a = models.PointField()
+    b = models.PointField()
+
+class Busqueda(models.Model):
+    slug = models.SlugField(blank=False,unique=True)
+    titulo = models.CharField(max_length=250,unique=True)
+    fecha_creacion = models.DateTimeField(auto_now=True)
+    
+class Tesoro(models.Model):
+    lugar = models.PointField()
+    busqueda = models.ForeignKey(Busqueda)
+    recogidaPor =  models.ForeignKey(User)
+
+class Participa(models.Model):
+    busqueda = models.ForeignKey(Busqueda)
+    participante =  models.ForeignKey(User)
+    
