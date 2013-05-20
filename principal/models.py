@@ -34,6 +34,7 @@ User.add_to_class('foto', models.ImageField(upload_to='fotos_usuario', blank=Tru
 
     
 class Ruta(models.Model):
+    user =  models.ForeignKey(User)
     a = models.PointField()
     b = models.PointField()
 
