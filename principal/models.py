@@ -2,7 +2,7 @@
 from django.db                  import models
 from django.contrib.auth.models import User
 #https://docs.djangoproject.com/en/dev/ref/contrib/gis/model-api/#pointfield
-from django.contrib.gis.db import models
+#from django.contrib.gis.db import models
 
 ################################################################################
 #										TIPOS DE DATOS

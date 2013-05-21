@@ -3,6 +3,3 @@ El superusuario es:
 	Usuario:    grupo3
 	E-Mail:     i02arlur@uco.es
 	Contraseña: 1234
-	
-probando
-probado
