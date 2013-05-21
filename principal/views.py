@@ -8,7 +8,7 @@ from django.contrib.auth import login, authenticate, logout
 
 
 def inicio(request):
-	return render_to_response('inicio.html',{'hola':'na',},context_instance=RequestContext(request))
+	return render_to_response('inicio2.html',{'hola':'na',},context_instance=RequestContext(request))
 
 def login(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
