@@ -1,71 +1,11 @@
 [
-	{
-	"model": "Principal.Categoria",
-	"pk": 1,
-	"fields": {      "slug": "futbol",      "nombre": "Fútbol",	"imagen":"imgCategoria/futbol.png"  	}
-	},
-	{
-	"model": "Principal.Categoria",
-	"pk": 2,
-	"fields": {      "slug": "baloncesto",      "nombre": "Baloncesto",	"imagen":"imgCategoria/baloncesto.png"   }
-	},
-	{
-	"model": "Principal.Categoria",
-	"pk": 3,
-	"fields": {      "slug": "F1",      "nombre": "Fórmula 1",	"imagen":"imgCategoria/F1.png"      }
-	},
-	{
-	"model": "Principal.Categoria",
-	"pk": 4,
-	"fields": {      "slug": "otras",      "nombre": "Sin categoría",	"imagen":"imgCategoria/sinCategorial.png"    }
-	},
-	{
-	"model": "Principal.Perfil",
-	"pk": 1,
-	"fields": {"user": 1, "dinero":1000, "fecha_nacimiento":"1989-09-06"}
-	},
 	{ "model": "auth.user",
 	"pk": 2,
-	"fields": {"username": "user1", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user1@apostol.com"}
+	"fields": {"username": "user1", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user1@takarahunter.com"}
 	},
 	{
-	"model": "Principal.Perfil",
-	"pk": 2,
-	"fields": {"user": 2, "dinero":200, "fecha_nacimiento":"1989-09-06"}
-	},
-	{
-	"model": "Principal.Apuesta",
+	"model": "principal.Busqueda",
 	"pk": 1,
-	"fields": {"titulo": "Prueba", "opciones": "op1, op2, op3", "descripcion":"Apuesta de prueba","user":1, "categoria":4,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2013-02-01T13:20:30+03:00","estado":"a","visibilidad":"pu"}
-	},
-	{
-	"model": "Principal.Apuesta",
-	"pk": 2,
-	"fields": {"titulo": "¿Quién ganará el mudial de F1?", "opciones": "F.Alonso, L.Hamilton, J.Button, F.Massa", "descripcion":"¿Quien ganara la F1?","user":1, "categoria":3,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2013-02-10T13:20:30+03:00","estado":"a","visibilidad":"pu"}
-	},
-	{
-	"model": "Principal.Apuesta",
-	"pk": 3,
-	"fields": {"titulo": "¿Lloverá en semana santa?", "opciones": "Si, No", "descripcion":"¿Que pasará entonces?","user":1, "categoria":4,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2013-04-01T00:00:00+02:00","estado":"a","visibilidad":"pu"}
-	},
-	{
-	"model": "Principal.Apuesta",
-	"pk": 4,
-	"fields": {"titulo": "R.Madrid VS Barcelona", "opciones": "R.Madrid, x, Barcelona", "descripcion":"Partido de futbol Real Madrid VS Barcelona","user":1, "categoria":1,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2013-03-02T20:00:00+02:00","estado":"a","visibilidad":"pu"}
-	},
-	{
-	"model": "Principal.Participacion",
-	"pk": 1,
-	"fields": {"user":1, "apuesta":1, "opcion":0, "cantidad":50, "timestamp":"2013-02-01T13:20:30+03:00"}
-	},
-	{
-	"model": "Principal.Participacion",
-	"pk": 2,
-	"fields": {"user":1, "apuesta":1, "opcion":1, "cantidad":75, "timestamp":"2013-02-01T13:20:30+03:00"}
-	},
-	{
-	"model": "Principal.Participacion",
-	"pk": 3,
-	"fields": {"user":2, "apuesta":1, "opcion":2, "cantidad":20, "timestamp":"2013-02-01T13:20:30+03:00"}
+	"fields": {      "slug": "onepiece",      "titulo": "One Piece",	"fecha_creacion":"2013-02-01T13:20:30+03:00",	"descripcion":"pero esto que eeeeeeee e eeeeee e e e eee eeeeee" }
 	}
 ]

@@ -32,23 +32,36 @@ User.add_to_class('profesion', models.CharField(max_length=30, blank=True, verbo
 User.add_to_class('foto', models.ImageField(upload_to='fotos_usuario', blank=True, verbose_name="Foto", help_text="Tu fotografía."))
 
 
+#Hay que añadir el lugar donde viven( coordenada X e Y como dos floats ) 
+
     
 class Ruta(models.Model):
+    # titulo = models.CharField(max_length=250,unique=True) ???
+    # medio transporte???
     user =  models.ForeignKey(User)
-    a = models.PointField()
-    b = models.PointField()
+    pax = models.FloatField()
+    pay = models.FloatField()
+    pbx = models.FloatField()
+    pby = models.FloatField()
 
 class Busqueda(models.Model):
     slug = models.SlugField(blank=False,unique=True)
     titulo = models.CharField(max_length=250,unique=True)
+    descripcion = models.TextField()
     fecha_creacion = models.DateTimeField(auto_now=True)
+    participantes = models.ManyToManyField(User)
     
 class Tesoro(models.Model):
-    lugar = models.PointField()
+    #lugar = models.PointField()
+    x = models.FloatField()
+    y = models.FloatField()
     busqueda = models.ForeignKey(Busqueda)
+    fecha_recogida = models.DateTimeField(auto_now=True)
     recogidaPor =  models.ForeignKey(User)
+    
 
-class Participa(models.Model):
-    busqueda = models.ForeignKey(Busqueda)
-    participante =  models.ForeignKey(User)
+# mejor ponerlo como una relacion muchos a muchos en busqueda
+#class Participa(models.Model):
+#    busqueda = models.ForeignKey(Busqueda)
+#    participante =  models.ForeignKey(User)
     
