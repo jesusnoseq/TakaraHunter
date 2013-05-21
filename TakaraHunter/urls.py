@@ -7,7 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 	url(r'^$','principal.views.inicio'),
-	
+
 	url(r'^login/$','principal.views.login'),
 	url(r'^logout/$','principal.views.logout'),
 	url(r'^registro/$','principal.views.registro'),
@@ -22,16 +22,16 @@ urlpatterns = patterns('',
 	
 	url(r'^busqueda/detalle/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.detalleBusqueda'),
 	url(r'^busqueda/unirse/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.unirseBusqueda'),
-	url(r'^busqueda/salir/(?P<id_busqueda\d+)\/[-\w]*$','principal.views.salirBusqueda'),
+	url(r'^busqueda/salir/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.salirBusqueda'),
 	
 	url(r'^busqueda/tesoros/atrapar/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.atraparTesoros'),
-
+	
 	url(r'^busqueda/crear/$','principal.views.crearBusqueda'),
-
 		
 	url(r'^about/$', direct_to_template, {'template': 'sobreNosotros.html'}),
 	url('^404testing/$', direct_to_template, {'template': '404.html'}),
 	#url(r'^login/$', 'auth.views.login_user'),
+
 	url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT,}),
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	url(r'^admin/', include(admin.site.urls)),
