@@ -28,5 +28,5 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Ruta)
 admin.site.register(Busqueda)
 admin.site.register(Tesoro)
-admin.site.register(Participa)
+#admin.site.register(Participa)
 
