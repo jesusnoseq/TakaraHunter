@@ -31,6 +31,13 @@
 						<div class="container">
 							<ul class="nav">
 								{% block navegacion %}{% endblock %}
+								{% if user.is_anonymous %}
+									<li><a href="/"><i class="icon-home"></i> Inicio</a></li>
+									<li><a href="/login"><i class="icon-lock"></i> Login</a></li>
+									<li><a href="/registro"><i class="icon-user"></i> Registro</a></li>
+								{% elif user.is_authenticated %}
+									<li><a href="/logout">Logout</a></li>
+								{% endif %}
 							</ul>
 						</div>
 					</div>
