@@ -8,8 +8,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
 	url(r'^$','principal.views.inicio'),
 
-	url(r'^login/$','principal.views.login'),
-	url(r'^logout/$','principal.views.logout'),
+	url(r'^login/$','principal.views.entrar'),
+	url(r'^logout/$','principal.views.salir'),
 	url(r'^registro/$','principal.views.registro'),
 	url(r'^perfil/$','principal.views.perfil'),
 	

@@ -3,6 +3,8 @@ body
 	padding-top: 20px;
 	padding-bottom: 60px;
 	background-color: #f5f5f5;
+	/*background: url(../img/mapa_del_tesoro.jpg) no-repeat;
+		color: gold!important;*/
 }
 
 /* Custom container */
@@ -10,6 +12,7 @@ body
 {
 	margin: 0 auto;
 	max-width: 1000px;
+
 }
 
 .container > hr
@@ -32,7 +35,7 @@ body
 .jumbotron h1
 {
 	font-size: 100px;
-	line-height: 1;
+	line-height: 1;¡
 }
       
 .jumbotron .lead

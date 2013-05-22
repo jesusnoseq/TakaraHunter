@@ -23,7 +23,8 @@ User.add_to_class('sexo', models.CharField(max_length=1, choices=SEXO, blank=Tru
 # TELEFONO
 User.add_to_class('telefono', models.PositiveIntegerField(null=True, blank=True, verbose_name="Número de teléfono", help_text="Tu número de teléfono."))
 # DIRECCION (Debería ser una dirección escrita o una coordenada de un mapa?)
-
+    #Hay que añadir el lugar donde viven( coordenada X e Y como dos floats ) 
+    
 # FECHA DE NACIMIENTO
 User.add_to_class('fecha_nacimiento', models.DateField(null=True, blank=True, verbose_name="Fecha de nacimiento", help_text="La fecha en que naciste."))
 # PROFESION
@@ -32,7 +33,6 @@ User.add_to_class('profesion', models.CharField(max_length=30, blank=True, verbo
 User.add_to_class('foto', models.ImageField(upload_to='fotos_usuario', blank=True, verbose_name="Foto", help_text="Tu fotografía."))
 
 
-#Hay que añadir el lugar donde viven( coordenada X e Y como dos floats ) 
 
     
 class Ruta(models.Model):

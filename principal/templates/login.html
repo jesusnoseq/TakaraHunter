@@ -7,15 +7,15 @@
 
 {% block contenido %}
 <div class="container">
-	<h1>{{hola}} registrate ya!!</h1>
-	<form class="form-signin">
-		<h2 class="form-signin-heading">Please sign in</h2>
-		<input type="text" class="input-block-level" placeholder="Email address">
+	<form class="form-signin" method="post" action="/login/">
+		<h2 class="form-signin-heading">Login</h2>
+		{% csrf_token %}
+		<input type="text" class="input-block-level" placeholder="Nombre de usuario">
 		<input type="password" class="input-block-level" placeholder="Password">
-		<label class="checkbox">
-			<input type="checkbox" value="remember-me"> Remember me
-		</label>
-		<button class="btn btn-large btn-primary" type="submit">Sign in</button>
+		<!--<label class="checkbox">
+			<input type="checkbox" value="remember-me"> Recordarme
+		</label>-->
+		<button class="btn btn-large btn-primary" type="submit">Login</button>
 	</form>
 </div>
 {% endblock %}
