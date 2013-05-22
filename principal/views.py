@@ -11,10 +11,13 @@ from django.contrib.auth import login, authenticate, logout
 
 
 def inicio(request):
-	return render_to_response('inicio.html',{'hola':'na',},context_instance=RequestContext(request))
-
+	if not request.user.is_anonymous():
+		return HttpResponseRedirect('/perfil')
+	return render_to_response('inicio.html',{},context_instance=RequestContext(request))
 
 def entrar(request):
+	if not request.user.is_anonymous():
+		return HttpResponseRedirect('/perfil')
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
@@ -24,25 +27,34 @@ def entrar(request):
 			if user.is_active:
 				login(request, user)
 				state = "Bienvenido %s" % username
+				return render_to_response('perfil.html',
+				{
+					'mensaje':state
+				},context_instance=RequestContext(request))
 			else:
 				state = "Tu cuenta no esta activa, contacta con el administrador."
 		else:
 			state = "Tu nombre de usuario y/o contraseña no son correctas."
 	state="Error al logearse, vuelva a intentarlo."
-	return render_to_response('login.html',{'mensaje':state},context_instance=RequestContext(request))
-
+	return render_to_response('login.html',
+	{
+		'mensaje':state
+	},context_instance=RequestContext(request))
 
 def registro(request):
+	if not request.user.is_anonymous():
+		return HttpResponseRedirect('/perfil')
 	if request.method=='POST':
 		formulario = UserCreationForm(request.POST)
 		if formulario.is_valid():
 			formulario.save()
-			return HttpResponseRedirect('/')
+			return HttpResponseRedirect('/login')
 	else:
 		formulario = UserCreationForm()
-	return render_to_response('registro.html',{'formulario':formulario},
-							  context_instance=RequestContext(request))
-
+	return render_to_response('registro.html',
+	{
+		'formulario':formulario
+	}, context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def salir(request):
@@ -50,43 +62,53 @@ def salir(request):
 	state='Sesión cerrada.'
 	return render_to_response('mensaje.html',{'mensaje':state},context_instance=RequestContext(request))
 
-@login_required(login_url='/registro')
+@login_required(login_url='/login')
 def perfil(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	return render_to_response('perfil.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
-@login_required(login_url='/registro')
+@login_required(login_url='/login')
 def nuevaRuta(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
-@login_required(login_url='/registro')
+@login_required(login_url='/login')
 def detalleRuta(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
-@login_required(login_url='/registro')
+@login_required(login_url='/login')
 def modificarRuta(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
-@login_required(login_url='/registro')
+@login_required(login_url='/login')
 def borrarRuta(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
-@login_required(login_url='/registro')
+@login_required(login_url='/login')
 def detalleBusqueda(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
-@login_required(login_url='/registro')
+@login_required(login_url='/login')
 def unirseBusqueda(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
-@login_required(login_url='/registro')
+@login_required(login_url='/login')
+def listaBusquedas(request):
+	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+
+@login_required(login_url='/login')
 def salirBusqueda(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
-@login_required(login_url='/registro')
+@login_required(login_url='/login')
 def atraparTesoros(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
+@login_required(login_url='/login')
+def matriz(request):
+	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
+@login_required(login_url='/login')
+def hall(request):
+	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
 @staff_member_required
 def crearBusqueda(request):

@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+
 {% block contenido %}
 <form class="" method="post" action="">
 	{% csrf_token %}
-	<div>{{formulario}}</div>
-	<input class="btn-primary" type="submit" value="Registrarse" />
+	<table>{{formulario}}</table>
+	<input class="btn btn-primary" type="submit" value="Registrarse" />
 </form>
 
 {% endblock %}

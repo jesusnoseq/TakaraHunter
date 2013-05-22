@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
-{% block titulo %}
-	TH | Inicio
-{% endblock %}
+{% block titulo %}TH | Inicio{% endblock %}
 
+{% block mensaje_informativo %}
+<div class="container">
+	{{ state }}
+</div>
+{% endblock %}
 
 {% block contenido %}
 <div class="container">
