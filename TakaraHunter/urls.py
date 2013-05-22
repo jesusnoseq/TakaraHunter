@@ -19,14 +19,16 @@ urlpatterns = patterns('',
 	url(r'^ruta/modificar/(?P<id_ruta>\d+)\/[-\w]*$','principal.views.modificarRuta'),
 	url(r'^ruta/borrar/(?P<id_ruta>\d+)\/[-\w]*$','principal.views.borrarRuta'),
 	
+	url(r'^matriz/$','principal.views.matriz'),
+	
+	url(r'^hall/$','principal.views.hall'),
 	
 	url(r'^busqueda/detalle/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.detalleBusqueda'),
 	url(r'^busqueda/unirse/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.unirseBusqueda'),
 	url(r'^busqueda/salir/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.salirBusqueda'),
-	
 	url(r'^busqueda/tesoros/atrapar/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.atraparTesoros'),
-	
 	url(r'^busqueda/crear/$','principal.views.crearBusqueda'),
+	url(r'^busqueda/$','principal.views.listaBusquedas'),
 		
 	url(r'^about/$', direct_to_template, {'template': 'sobreNosotros.html'}),
 	url('^404testing/$', direct_to_template, {'template': '404.html'}),
