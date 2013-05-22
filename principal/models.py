@@ -36,8 +36,7 @@ User.add_to_class('foto', models.ImageField(upload_to='fotos_usuario', blank=Tru
 
     
 class Ruta(models.Model):
-    # titulo = models.CharField(max_length=250,unique=True) ???
-    # medio transporte???
+    titulo = models.CharField(max_length=250)
     user =  models.ForeignKey(User)
     pax = models.FloatField()
     pay = models.FloatField()
@@ -52,7 +51,6 @@ class Busqueda(models.Model):
     participantes = models.ManyToManyField(User)
     
 class Tesoro(models.Model):
-    #lugar = models.PointField()
     x = models.FloatField()
     y = models.FloatField()
     busqueda = models.ForeignKey(Busqueda)

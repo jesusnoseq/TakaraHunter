@@ -1,32 +1,21 @@
-<!DOCTYPE html>
-<html lang='es'>
-	<head>
-		<meta charset='utf-8'>
-		<title>Inicio</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<!-- Bootstrap -->
-        <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet" media="screen">
-	</head>
-	<body>
-		
-		
-    <div class="container">
+{% extends 'base.html' %}
+
+{% block titulo %}
+	TH | Inicio
+{% endblock %}
+
+
+{% block contenido %}
+<div class="container">
 	<h1>{{hola}} registrate ya!!</h1>
-      <form class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" class="input-block-level" placeholder="Email address">
-        <input type="password" class="input-block-level" placeholder="Password">
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
-      </form>
-
-    </div> <!-- /container -->
-		
-		
-
-		<script src="http://code.jquery.com/jquery.js"></script>
-		<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-	</body>
-</html>
+	<form class="form-signin">
+		<h2 class="form-signin-heading">Please sign in</h2>
+		<input type="text" class="input-block-level" placeholder="Email address">
+		<input type="password" class="input-block-level" placeholder="Password">
+		<label class="checkbox">
+			<input type="checkbox" value="remember-me"> Remember me
+		</label>
+		<button class="btn btn-large btn-primary" type="submit">Sign in</button>
+	</form>
+</div>
+{% endblock %}
