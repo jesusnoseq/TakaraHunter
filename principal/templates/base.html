@@ -30,18 +30,18 @@
 						<div class="container">
 							<ul class="nav">
 								{% if user.is_anonymous %}
-									<li><a href="/"><i class="icon-home"></i> Inicio</a></li>
-									<li><a href="/login"><i class="icon-lock"></i> Login</a></li>
-									<li><a href="/registro"><i class="icon-user"></i> Registro</a></li>
+									<li><a href="/"><i class="icon-home"></i> <p>Inicio</p></a></li>
+									<li><a href="/login"><i class="icon-lock"></i> <p>Login</p></a></li>
+									<li><a href="/registro"><i class="icon-user"></i> <p>Registro</p></a></li>
 								{% else %}
-									<li><a href="/perfil">Perfil</a></li>
-									<li><a href="/busqueda">Busquedas</a></li>
-									<li><a href="/hall">Hall de la fama</a></li>
-									<li><a href="/matriz">Matriz de usuarios</a></li>
+									<li><a href="/perfil"><i class="icon-user"></i> <p>Perfil de usuario</p></a></li>
+									<li><a href="/busqueda"><i class="icon-list"></i><i class="icon-globe"></i> <p>Búsquedas</p></a></li>
+									<li><a href="/hall"><i class="icon-list"></i><i class="icon-user"></i> <p>Hall de la fama</p></a></li>
+									<li><a href="/matriz"><i class="icon-align-justify"></i><i class="icon-user"></i> <p>Matriz de usuarios</p></a></li>
 									{% if user.is_superuser %}
-										<li><a href="/admin">Administración</a></li>
+										<li><a href="/admin"><i class="icon-lock"></i><i class="icon-adjust"></i> <p>Administración</p></a></li>
 									{% endif %}
-									<li><a href="/logout">Logout</a></li>
+									<li><a href="/logout"><i class="icon-off"></i> <p>Logout</p></a></li>
 								{% endif %}
 							</ul>
 						</div>
@@ -65,12 +65,10 @@
 					<div class="navbar-inner">
 						<div class="container">
 							<ul class="nav">
-								<li><img src="{{ STATIC_URL }}img/django.png" class="img-rounded" width="150px" height="150px"><p>Con la tecnología de Django</p></li>
-								<li><img src="{{ STATIC_URL }}img/google_maps.png" class="img-rounded" width="125px" height="125px"><p>Con la tecnología de Google Maps</p></li>
-								<li><p>Jesús Rodríguez Pérez</p>
-									<p>Raúl Arroyo Lubián</p>
-									<p>Pedro Daniel López González</p>
-									<p>Alfonso Lacalle García</p></li>
+								<li><img src="{{ STATIC_URL }}img/django.png" class="img-rounded" width="160px" height="160px"><p>Con la tecnología de Django</p></li>
+								<li><img src="{{ STATIC_URL }}img/google_maps.png" class="img-rounded" width="70px" height="70px"><p>Con la tecnología de Google Maps</p></li>
+								<li><p>Jesús Rodríguez Pérez</p><p>Raúl Arroyo Lubián</p></li>
+								<li><p>Pedro Daniel López González</p><p>Alfonso Lacalle García</p></li>
 							</ul>
 						</div>
 					</div>
