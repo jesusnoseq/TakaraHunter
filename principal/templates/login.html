@@ -10,8 +10,8 @@
 	<form class="form-signin" method="post" action="/login/">
 		<h2 class="form-signin-heading">Login</h2>
 		{% csrf_token %}
-		<input type="text" class="input-block-level" placeholder="Nombre de usuario">
-		<input type="password" class="input-block-level" placeholder="Password">
+		<input type="text" name="username" required="" class="input-block-level" placeholder="Nombre de usuario">
+		<input type="password" name="password" required="" class="input-block-level" placeholder="Password">
 		<!--<label class="checkbox">
 			<input type="checkbox" value="remember-me"> Recordarme
 		</label>-->
