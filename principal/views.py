@@ -16,6 +16,7 @@ def inicio(request):
 	return render_to_response('inicio.html',{},context_instance=RequestContext(request))
 
 def entrar(request):
+	state=""
 	if not request.user.is_anonymous():
 		return HttpResponseRedirect('/perfil')
 	if request.method == 'POST':
@@ -35,7 +36,7 @@ def entrar(request):
 				state = "Tu cuenta no esta activa, contacta con el administrador."
 		else:
 			state = "Tu nombre de usuario y/o contraseña no son correctas."
-	state="Error al logearse, vuelva a intentarlo."
+	#state="Error al logearse, vuelva a intentarlo."
 	return render_to_response('login.html',
 	{
 		'mensaje':state
