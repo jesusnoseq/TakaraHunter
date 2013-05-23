@@ -68,8 +68,16 @@ def perfil(request):
 	return render_to_response('perfil.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
+def editarPerfil(request):
+	return render_to_response('editarPerfil.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+
+@login_required(login_url='/login')
+def listaRutas(request):
+	return render_to_response('listaRutas.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+
+@login_required(login_url='/login')
 def nuevaRuta(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	return render_to_response('nuevaRuta.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def detalleRuta(request):
