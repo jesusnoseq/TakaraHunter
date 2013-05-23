@@ -7,5 +7,10 @@
 	"model": "principal.Busqueda",
 	"pk": 1,
 	"fields": {      "slug": "onepiece",      "titulo": "One Piece",	"fecha_creacion":"2013-02-01T13:20:30+03:00",	"descripcion":"pero esto que eeeeeeee e eeeeee e e e eee eeeeee" }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 2,
+	"fields": {      "slug": "dagronballs",      "titulo": "Bolas de dragon",	"fecha_creacion":"2013-02-01T13:20:30+03:00",	"descripcion":"pero esto que eeeeeeee e eeeeee e e e eee eeeeee" }
 	}
 ]
