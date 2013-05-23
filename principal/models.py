@@ -32,16 +32,18 @@ User.add_to_class('profesion', models.CharField(max_length=30, blank=True, verbo
 # FOTO
 User.add_to_class('foto', models.ImageField(upload_to='fotos_usuario', blank=True, verbose_name="Foto", help_text="Tu fotografía."))
 
-
-
-    
 class Ruta(models.Model):
-    titulo = models.CharField(max_length=250)
-    user =  models.ForeignKey(User)
+    titulo = models.CharField(max_length=250, verbose_name="Nombre", help_text="Nombre de la ruta. 250 caracteres máximo.")
+    user =  models.ForeignKey(User, verbose_name="Poseedor")
     pax = models.FloatField()
     pay = models.FloatField()
     pbx = models.FloatField()
     pby = models.FloatField()
+    fecha_modificacion = models.DateTimeField(db_index=True, auto_now=True)
+    fecha_creacion = models.DateTimeField(db_index=True, auto_now_add=True)
+    
+    class Meta:
+        ordering=['-fecha_modificacion']
 
 class Busqueda(models.Model):
     slug = models.SlugField(blank=False,unique=True)
