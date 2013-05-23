@@ -31,6 +31,14 @@
 		</script>
 {% endblock %}
 
+{% block mensaje_informativo %}
+{% if mensaje %}
+	<div class="jumbotron">
+		<h2>{{mensaje}}</h2>
+	</div>
+{% endif %}
+{% endblock %}
+
 {% block menu_pagina %}
 <div class="navbar">
 	<div class="navbar-inner">
