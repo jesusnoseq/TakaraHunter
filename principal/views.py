@@ -29,8 +29,10 @@ def entrar(request):
 			if user.is_active:
 				login(request, user)
 				state = "Bienvenido %s" % username
+				listaRutas = Ruta.objects.filter(user=request.user)[:10]
 				return render_to_response('perfil.html',
 				{
+					'ultimas_rutas':listaRutas,
 					'mensaje':state
 				},context_instance=RequestContext(request))
 			else:

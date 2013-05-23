@@ -27,6 +27,14 @@
 </div>
 {% endblock %}
 
+{% block mensaje_informativo %}
+{% if mensaje %}
+	<div class="jumbotron">
+		<h2>{{mensaje}}</h2>
+	</div>
+{% endif %}
+{% endblock %}
+
 {% block contenido %}
 <div class="row-fluid">
 	<div class="span4">
