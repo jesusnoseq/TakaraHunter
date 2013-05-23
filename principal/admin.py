@@ -21,11 +21,25 @@ class UserAdmin(admin.ModelAdmin):
             'fields': ('first_name', 'last_name', 'sexo', 'telefono', 'fecha_nacimiento', 'profesion', 'foto')
         }),
     )
+	
+class RutaAdmin(admin.ModelAdmin):
+	list_display = ('titulo', 'user', 'pax', 'pay', 'pbx', 'pby')
+	fieldsets = (
+        ('Ruta y poseedor',
+				{
+            'fields': ('titulo','user')
+        }),
+        ('Punto A', {
+            'fields': ('pax', 'pay')
+        }),
+        ('Punto B', {
+            'fields': ('pbx', 'pby')
+        }),
+    )
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-
-admin.site.register(Ruta)
+admin.site.register(Ruta, RutaAdmin)
 admin.site.register(Busqueda)
 admin.site.register(Tesoro)
 #admin.site.register(Participa)

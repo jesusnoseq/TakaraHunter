@@ -30,13 +30,13 @@
 				<li class="nav-header">Últimas rutas</li>
 				{% if ultimas_rutas %}
 					{% for ruta in ultimas_rutas %}
-						<li><a href="rutas/{{ ruta.id_ruta }}">{{ ruta.id_nombre }}</a></li>
+						<li><a href="/rutas/{{ ruta.id }}">{{ ruta.titulo }}</a></li>
 					{% endfor %}
     			{% else %}
 					<li><p>No hay rutas.</p></li>
     			{% endif %}
 			</ul>
-		</div><!--/.well -->
+		</div>
 	</div>
  	<div class="span4">
 		<h2>Heading</h2>

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block titulo %}TH | Editar perfil{% endblock %}
+{% block titulo %}TH | Detalle ruta{% endblock %}
 
 {% block menu_pagina %}
 <div class="navbar">
@@ -9,6 +9,7 @@
 			<ul class="nav">
 				<li><a href="/perfil/editar"><i class="icon-edit"></i><i class="icon-user"></i> <p>Modifcar perfil</p></a></li>
 				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> <p>Mis rutas</p></a></li>
+				<li><a href="/rutas/{{id_ruta}}/borrar"><i class="icon-trash"></i><i class="icon-flag"></i> <p>Borrar ruta</p></a></li>
 				<li><a href="/rutas/nueva"><i class="icon-file"></i><i class="icon-map-marker"></i> <p>Nueva ruta</p></a></li>
 				<li><a href="/busquedas"><i class="icon-list"></i><i class="icon-flag"></i> <p>Mis búsquedas</p></a></li>
 			</ul>
@@ -18,28 +19,20 @@
 {% endblock %}
 
 {% block contenido %}
-<div class="well sidebar-nav">
-	<table class="table table-striped">
-		<tr>
-			<td>Nombre</td>
-			<td>Punto A: coordenada X</td>
-			<td>Punto A: coordenada Y</td>
-			<td>Punto B: coordenada X</td>
-			<td>Punto B: coordenada Y</td>
-		</tr>
-		{% if rutas %}
-			{% for ruta in rutas %}
-				<tr>
-					<td><a href="/rutas/{{ ruta.id }}">{{ ruta.titulo }}</a></td>
-					<td>{{ ruta.pax }}</td>
-					<td>{{ ruta.pay }}</td>
-					<td>{{ ruta.pbx }}</td>
-					<td>{{ ruta.pby }}</td>
-				</tr>
-			{% endfor %}
-    	{% else %}
-			<tr>No hay rutas.</tr>
-    	{% endif %}
-	</table>
+<div class="row-fluid">
+	<div class="span6">
+		<div class="well sidebar-nav">
+			<form class="" method="post" action="">
+				{% csrf_token %}
+				<table>{{formulario}}</table>
+				<input class="btn btn-primary" type="submit" value="Modificar" />
+			</form>
+		</div>
+	</div>
+ 	<div class="span6">
+		<div class="well sidebar-nav">
+			Ubicación del mapa
+		</div>
+	</div>
 </div>
 {% endblock %}

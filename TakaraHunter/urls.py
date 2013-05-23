@@ -18,9 +18,9 @@ urlpatterns = patterns('',
 	# no se si sabeis la forma de hacer crud en plan rapido con django, bueno, si alguien sabe que se encargue de ese tema
 	url(r'^rutas/$','principal.views.listaRutas'),
 	url(r'^rutas/nueva/$','principal.views.nuevaRuta'),
-	url(r'^rutas/(?P<id_ruta>\d+)\/[-\w]*$','principal.views.detalleRuta'),
-	url(r'^rutas/(?P<id_ruta>\d+)\/[-\w]*/modificar$','principal.views.modificarRuta'),
-	url(r'^rutas/(?P<id_ruta>\d+)\/[-\w]*/borrar$','principal.views.borrarRuta'),
+	url(r'^rutas/(?P<ruta>\d+)\/[-\w]*$','principal.views.detalleRuta'),
+	url(r'^rutas/(?P<ruta>\d+)\/[-\w]*/borrar$','principal.views.borrarRuta'),
+	#url(r'^rutas/(?P<ruta>\d+)\/[-\w]*/modificar$','principal.views.modificarRuta'),
 	
 	url(r'^matriz/$','principal.views.matriz'),
 	
