@@ -8,5 +8,4 @@ $(document).ready(function()
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 	var map = new google.maps.Map(document.getElementById("mapa"), mapOptions);
-	document.getElementById("prueba").innerHTML = "Prueba";
 });
