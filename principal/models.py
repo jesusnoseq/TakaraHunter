@@ -22,10 +22,6 @@ SEXO = (
 User.add_to_class('sexo', models.CharField(max_length=1, choices=SEXO, blank=True, verbose_name="Sexo", help_text="Tu sexo."))
 # TELEFONO
 User.add_to_class('telefono', models.PositiveIntegerField(null=True, blank=True, verbose_name="Número de teléfono", help_text="Tu número de teléfono."))
-# DIRECCION (Debería ser una dirección escrita o una coordenada de un mapa?)
-#Hay que añadir el lugar donde viven( coordenada X e Y como dos floats ) 
-#User.add_to_class('px', models.FloatField(null=True, blank=True, verbose_name="Coordenada X", help_text="Coordenada X de tu localizacion."))
-#User.add_to_class('py', models.FloatField(null=True, blank=True, verbose_name="Coordenada X", help_text="Coordenada X de tu localizacion."))
 
 # FECHA DE NACIMIENTO
 User.add_to_class('fecha_nacimiento', models.DateField(null=True, blank=True, verbose_name="Fecha de nacimiento", help_text="La fecha en que naciste."))
@@ -33,6 +29,12 @@ User.add_to_class('fecha_nacimiento', models.DateField(null=True, blank=True, ve
 User.add_to_class('profesion', models.CharField(max_length=30, blank=True, verbose_name="Profesión", help_text="Tu empleo actual."))
 # FOTO
 User.add_to_class('foto', models.ImageField(upload_to='fotos_usuario', blank=True, verbose_name="Foto", help_text="Tu fotografía."))
+
+# DIRECCION (Debería ser una dirección escrita o una coordenada de un mapa?)
+#Hay que añadir el lugar donde viven( coordenada X e Y como dos floats ) 
+User.add_to_class('px', models.FloatField(null=True, blank=True, verbose_name="Coordenada X", help_text="Coordenada X de tu localizacion."))
+User.add_to_class('py', models.FloatField(null=True, blank=True, verbose_name="Coordenada X", help_text="Coordenada X de tu localizacion."))
+
 
 class Ruta(models.Model):
     titulo = models.CharField(max_length=250, verbose_name="Nombre", help_text="Nombre de la ruta. 250 caracteres máximo.")
@@ -42,9 +44,10 @@ class Ruta(models.Model):
     pbx = models.FloatField(verbose_name="Punto B - X:", help_text="Coordenada X del punto B. Debe ser un número.")
     pby = models.FloatField(verbose_name="Punto B - Y:", help_text="Coordenada Y del punto B. Debe ser un número.")
     fecha_modificacion = models.DateTimeField(db_index=True, auto_now=True)
-    
     class Meta:
         ordering=['-fecha_modificacion']
+    def __unicode__(self):
+        return u"%s" % self.titulo
 
 class Busqueda(models.Model):
     slug = models.SlugField(blank=False,unique=True)
@@ -52,15 +55,19 @@ class Busqueda(models.Model):
     descripcion = models.TextField()
     fecha_creacion = models.DateTimeField(auto_now=True)
     participantes = models.ManyToManyField(User)
+    def __unicode__(self):
+        return u"%s" % self.titulo
     
 class Tesoro(models.Model):
     x = models.FloatField()
     y = models.FloatField()
     busqueda = models.ForeignKey(Busqueda)
     fecha_recogida = models.DateTimeField(auto_now=True)
-    recogidaPor =  models.ForeignKey(User)
+    recogidaPor =  models.ForeignKey(User,null=True)
+    def __unicode__(self):
+        return u"%s - (%0.2f, %0.2f)" % (self.busqueda.titulo,self.x,self.y)
     
-
+#return u"%s apuesta en %s: %ium a la opcion (%s)" % (self.user.username, self.apuesta, self.cantidad,self.opcion)
 # mejor ponerlo como una relacion muchos a muchos en busqueda
 #class Participa(models.Model):
 #    busqueda = models.ForeignKey(Busqueda)
