@@ -3,6 +3,12 @@
 {% block titulo %}TH | Editar perfil{% endblock %}
 
 {% block contenido %}
-{{formulario}}
+
+<form class="" method="post" action="" enctype="multipart/form-data">
+	{% csrf_token %}
+	<div>{{formulario}}</div>
+	<input class="btnA" type="submit" value="Crear" />
+	<input class="btnA unselected" type="reset" value="Cancelar" />
+</form>
 
 {% endblock %}
