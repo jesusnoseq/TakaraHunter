@@ -34,13 +34,12 @@ User.add_to_class('foto', models.ImageField(upload_to='fotos_usuario', blank=Tru
 
 class Ruta(models.Model):
     titulo = models.CharField(max_length=250, verbose_name="Nombre", help_text="Nombre de la ruta. 250 caracteres máximo.")
-    user =  models.ForeignKey(User, verbose_name="Poseedor")
-    pax = models.FloatField()
-    pay = models.FloatField()
-    pbx = models.FloatField()
-    pby = models.FloatField()
+    user =  models.ForeignKey(User, verbose_name="Poseedor", null=True, blank=True, editable=False)
+    pax = models.FloatField(verbose_name="Punto A - X:", help_text="Coordenada X del punto A. Debe ser un número.")
+    pay = models.FloatField(verbose_name="Punto A - Y:", help_text="Coordenada Y del punto A. Debe ser un número.")
+    pbx = models.FloatField(verbose_name="Punto B - X:", help_text="Coordenada X del punto B. Debe ser un número.")
+    pby = models.FloatField(verbose_name="Punto B - Y:", help_text="Coordenada Y del punto B. Debe ser un número.")
     fecha_modificacion = models.DateTimeField(db_index=True, auto_now=True)
-    fecha_creacion = models.DateTimeField(db_index=True, auto_now_add=True)
     
     class Meta:
         ordering=['-fecha_modificacion']
