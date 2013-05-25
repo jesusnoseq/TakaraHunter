@@ -19,7 +19,7 @@ urlpatterns = patterns('',
 	url(r'^rutas/$','principal.views.listaRutas'),
 	url(r'^rutas/nueva/$','principal.views.nuevaRuta'),
 	url(r'^rutas/(?P<ruta>\d+)\/[-\w]*$','principal.views.detalleRuta'),
-	url(r'^rutas/(?P<ruta>\d+)\/[-\w]*/borrar$','principal.views.borrarRuta'),
+	url(r'^rutas/borrar/(?P<ruta>\d+)\/[-\w]*$','principal.views.borrarRuta'),
 	#url(r'^rutas/(?P<ruta>\d+)\/[-\w]*/modificar$','principal.views.modificarRuta'),
 	
 	url(r'^matriz/$','principal.views.matriz'),
