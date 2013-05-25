@@ -2,27 +2,9 @@
 
 {% block titulo %}TH | Detalle ruta{% endblock %}
 
-{% block mapagoogle %}
-    <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD2GmIgWJYGPXc95Qc-kUXZC2IeZmHg6n4&sensor=true">
-    </script>
-    <script type="text/javascript">
-      function initialize()
-      {
-        var mapOptions =
-        {
-          center: new google.maps.LatLng(-34.397, 150.644),
-          zoom: 8,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-        document.getElementById("prueba").innerHTML = "Prueba";
-      }
-    </script>
-{% endblock %}
-
-{% block bodyinicializarmapa %}
-	<body onload="initialize()">
+{% block footerScripts %}
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD2GmIgWJYGPXc95Qc-kUXZC2IeZmHg6n4&sensor=true"></script>
+	<script src="{{ STATIC_URL }}js/detalleRuta.js"></script>
 {% endblock %}
 
 {% block menu_pagina %}
@@ -191,8 +173,8 @@
 	</div>
  	<div class="span6">
 		<div class="well sidebar-nav">
-			<div id="map_canvas" style="width:100%; height:100%"></div>
-			<p id="prueba"></p>
+			<div id="mapa">f</div>
+			<p id="prueba">a</p>
 		</div>
 	</div>
 </div>
