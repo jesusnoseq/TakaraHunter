@@ -12,8 +12,8 @@ from principal.models import *
 from principal.forms import *
 
 def inicio(request):
-	if not request.user.is_anonymous():
-		return HttpResponseRedirect('/perfil')
+	#if not request.user.is_anonymous():
+	#	return HttpResponseRedirect('/perfil')
 	return render_to_response('inicio.html',{},context_instance=RequestContext(request))
 
 def entrar(request):
@@ -69,6 +69,7 @@ def salir(request):
 @login_required(login_url='/login')
 def perfil(request):
 	listaRutas = Ruta.objects.filter(user=request.user)[:10]
+	
 	return render_to_response('perfil.html',
 	{
 		'ultimas_rutas':listaRutas
@@ -76,7 +77,14 @@ def perfil(request):
 
 @login_required(login_url='/login')
 def editarPerfil(request):
-	return render_to_response('editarPerfil.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	if request.method=='POST':
+		formulario= UserForm(request.POST,request.FILES,instance=request.user)
+		if formulario.is_valid():
+			user = formulario.save(commit=True)
+			return HttpResponseRedirect('perfil/')
+	else:
+		formulario = UserForm(instance=request.user)
+	return render_to_response('editarPerfil.html',{'formulario':formulario},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def listaRutas(request):
