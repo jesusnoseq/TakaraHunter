@@ -100,6 +100,7 @@ def nuevaRuta(request):
 		formulario = RutaForm(request.POST, request.FILES)		
 		if formulario.is_valid():
 			ruta = formulario.save(commit=False)
+			ruta.user = request.user
 			ruta.save()
 			pagina_de_vuelta='/rutas/'
 			return HttpResponseRedirect(pagina_de_vuelta)
@@ -133,8 +134,8 @@ def detalleRuta(request, ruta):
 
 @login_required(login_url='/login')
 def borrarRuta(request, ruta):
-	Ruta.objects.get(id=ruta).delete()
-	return HttpResponseRedirect('/rutas/')
+	rutaABorrar = Ruta.objects.get(id=ruta).delete()
+	return HttpResponseRedirect('/rutas')
 
 @login_required(login_url='/login')
 def detalleBusqueda(request):

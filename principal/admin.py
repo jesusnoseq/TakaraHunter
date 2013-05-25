@@ -25,9 +25,8 @@ class UserAdmin(admin.ModelAdmin):
 class RutaAdmin(admin.ModelAdmin):
 	list_display = ('titulo', 'user', 'pax', 'pay', 'pbx', 'pby')
 	fieldsets = (
-        ('Ruta y poseedor',
-				{
-            'fields': ('titulo','user')
+        ('Ruta', {
+            'fields': ('titulo', )
         }),
         ('Punto A', {
             'fields': ('pax', 'pay')

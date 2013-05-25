@@ -2,6 +2,14 @@
 
 {% block titulo %}TH | Perfil{% endblock %}
 
+{% block mensaje_informativo %}
+	{% if mensaje %}
+		<div class="jumbotron">
+			<h2>{{mensaje}}</h2>
+		</div>
+	{% endif %}
+{% endblock %}
+
 {% block footerScripts %}
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
 		<script>
@@ -54,14 +62,6 @@
 		</div>
 	</div>
 </div>
-{% endblock %}
-
-{% block mensaje_informativo %}
-{% if mensaje %}
-	<div class="jumbotron">
-		<h2>{{mensaje}}</h2>
-	</div>
-{% endif %}
 {% endblock %}
 
 {% block contenido %}
