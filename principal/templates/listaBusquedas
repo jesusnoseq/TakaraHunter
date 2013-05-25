@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block titulo %}TH | Editar perfil{% endblock %}
+
+{% block contenido %}
+<div class="well sidebar-nav">
+	<table class="table table-striped">
+		<tr>
+			<td>Nombre</td>
+		</tr>
+		{% if busquedas %}
+			{% for busqueda in busquedas %}
+				<tr>
+					<td><a href="/busquedas/{{ busquedas.titulo }}">{{ busquedas.descripcion }}</a></td>
+				</tr>
+			{% endfor %}
+    	{% else %}
+			<tr>No hay busquedas.</tr>
+    	{% endif %}
+	</table>
+</div>
+{% endblock %}
+
+
+</body>
+</html>
+
