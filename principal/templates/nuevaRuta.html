@@ -2,6 +2,39 @@
 
 {% block titulo %}TH | Nueva ruta{% endblock %}
 
+{% block footerScripts %}
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+	<script>
+		$(document).ready(function()
+		{
+			initialize()
+		});
+		
+		function initialize()
+		{
+			var fenway = new google.maps.LatLng(42.345573, -71.098326);
+			var mapOptions =
+			{
+				center : fenway,
+				zoom : 14,
+				mapTypeId : google.maps.MapTypeId.ROADMAP
+			};
+			var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+			var panoramaOptions =
+			{
+				position : fenway,
+				pov :
+				{
+					heading : 34,
+					pitch : 10
+				}
+			};
+			var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
+			map.setStreetView(panorama);
+		}
+	</script>
+{% endblock %}
+
 {% block menu_pagina %}
 <div class="navbar">
 	<div class="navbar-inner">
@@ -155,7 +188,8 @@
 	</div>
  	<div class="span6">
 		<div class="well sidebar-nav">
-			Ubicación del mapa
+			<div id="map-canvas" style="width: 445px; height: 300px"></div>
+			<div id="pano" style="width: 445px; height: 300px"></div>
 		</div>
 	</div>
 </div>

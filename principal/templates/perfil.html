@@ -3,11 +3,40 @@
 {% block titulo %}TH | Perfil{% endblock %}
 
 {% block mensaje_informativo %}
-{% if mensaje %}
-	<div class="jumbotron">
-		<h2>{{mensaje}}</h2>
-	</div>
-{% endif %}
+	{% if mensaje %}
+		<div class="jumbotron">
+			<h2>{{mensaje}}</h2>
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block footerScripts %}
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+		<script>
+			$(document).ready(function(){
+				initialize()
+			});
+			function initialize() {
+				alert("ola ke hace")
+				var fenway = new google.maps.LatLng(42.345573, -71.098326);
+				var mapOptions = {
+					center : fenway,
+					zoom : 14,
+					mapTypeId : google.maps.MapTypeId.ROADMAP
+				};
+				var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+				var panoramaOptions = {
+					position : fenway,
+					pov : {
+						heading : 34,
+						pitch : 10
+					}
+				};
+				var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
+				map.setStreetView(panorama);
+			}
+			
+		</script>
 {% endblock %}
 
 {% block menu_pagina %}
@@ -38,7 +67,17 @@
 {% block contenido %}
 <div class="row-fluid">
 	<div class="span4">
-		Hueco para el perfil.
+		<div class="well sidebar-nav">
+			<ul class="nav nav-list">
+				<li class="nav-header">Perfil</li>
+				<li>Nombre: {{ user.username }}</li>
+				<li>Sexo: {{ user.sexo}}</li>
+				
+				<li>Coordenada X: {{ user.px }}</li>
+				<li>Coordenada Y: {{ user.px }}</li>
+
+			</ul>
+		</div>
 	</div>
 	<div class="span4">
 		<div class="well sidebar-nav">
@@ -68,5 +107,9 @@
 			</ul>
 		</div>
 	</div>
+</div>
+<div>
+	<div id="map-canvas" style="width: 400px; height: 300px"></div>
+	<div id="pano" style="width: 400px; height: 300px;"></div>
 </div>
 {% endblock %}

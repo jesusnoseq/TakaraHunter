@@ -3,8 +3,36 @@
 {% block titulo %}TH | Detalle ruta{% endblock %}
 
 {% block footerScripts %}
-	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD2GmIgWJYGPXc95Qc-kUXZC2IeZmHg6n4&sensor=true"></script>
-	<script src="{{ STATIC_URL }}js/detalleRuta.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+	<script>
+		$(document).ready(function()
+		{
+			initialize()
+		});
+		
+		function initialize()
+		{
+			var fenway = new google.maps.LatLng(42.345573, -71.098326);
+			var mapOptions =
+			{
+				center : fenway,
+				zoom : 14,
+				mapTypeId : google.maps.MapTypeId.ROADMAP
+			};
+			var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+			var panoramaOptions =
+			{
+				position : fenway,
+				pov :
+				{
+					heading : 34,
+					pitch : 10
+				}
+			};
+			var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
+			map.setStreetView(panorama);
+		}
+	</script>
 {% endblock %}
 
 {% block menu_pagina %}
@@ -173,7 +201,8 @@
 	</div>
  	<div class="span6">
 		<div class="well sidebar-nav">
-			<div id="mapa"></div>
+			<div id="map-canvas" style="width: 445px; height: 300px"></div>
+			<div id="pano" style="width: 445px; height: 300px"></div>
 		</div>
 	</div>
 </div>
