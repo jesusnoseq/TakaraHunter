@@ -8,6 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import login, authenticate, logout
+from django.db.models import Count
 from principal.models import *
 from principal.forms import *
 
@@ -163,7 +164,10 @@ def matriz(request):
 
 @login_required(login_url='/login')
 def hall(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
+	for row in result:
+		row['username']=User.objects.get(pk=row['recogidaPor']).username
+	return render_to_response('hallDeLaFama.html',{'lista':result},context_instance=RequestContext(request))
 
 @staff_member_required
 def crearBusqueda(request):
