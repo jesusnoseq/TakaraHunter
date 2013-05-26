@@ -33,7 +33,7 @@ User.add_to_class('foto', models.ImageField(upload_to='fotos_usuario', blank=Tru
 # DIRECCION (Debería ser una dirección escrita o una coordenada de un mapa?)
 #Hay que añadir el lugar donde viven( coordenada X e Y como dos floats ) 
 User.add_to_class('px', models.FloatField(null=True, blank=True, verbose_name="Coordenada X", help_text="Coordenada X de tu localizacion."))
-User.add_to_class('py', models.FloatField(null=True, blank=True, verbose_name="Coordenada X", help_text="Coordenada X de tu localizacion."))
+User.add_to_class('py', models.FloatField(null=True, blank=True, verbose_name="Coordenada Y", help_text="Coordenada Y de tu localizacion."))
 
 
 class Ruta(models.Model):

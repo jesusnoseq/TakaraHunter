@@ -20,6 +20,9 @@ class UserAdmin(admin.ModelAdmin):
         ('Perfil', {
             'fields': ('first_name', 'last_name', 'sexo', 'telefono', 'fecha_nacimiento', 'profesion', 'foto')
         }),
+		('Localización', {
+			'fields': ('px','py')
+		}),
     )
 	
 class RutaAdmin(admin.ModelAdmin):
