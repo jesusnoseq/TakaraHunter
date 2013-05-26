@@ -1,0 +1,14 @@
+Añadid algunos datos mas al fichero fixtures/initial_data.json
+
+Para crear las busquedas
+http://gmaps-samples-v3.googlecode.com/svn/trunk/rectangle-overlay/rectangle-overlay.html
+
+
+Localizador de coordenadas y direccion(buscador)
+http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html
+
+Marcas simples
+http://www.lootogo.com/googlemapsapi3/markerPlugin.html
+
+Ejemplos?
+https://developers.google.com/maps/documentation/javascript/examples/?hl=es
