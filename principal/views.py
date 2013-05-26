@@ -138,7 +138,10 @@ def unirseBusqueda(request):
 
 @login_required(login_url='/login')
 def listaBusquedas(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	return render_to_response('listaBusquedas.html',
+	{
+		'busquedas':listaBusquedas
+	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def salirBusqueda(request):
