@@ -1,28 +1,63 @@
 {% extends "base.html" %}
 
 {% block titulo %}TH | Detalle ruta{% endblock %}
-
+msa=0&ll=,
 {% block footerScripts %}
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
 	<script>
 		$(document).ready(function()
 		{
-			initialize()
+			inicializar();
 		});
 		
-		function initialize()
+		$("#id_pax").onchange(function()
 		{
-			var fenway = new google.maps.LatLng(42.345573, -71.098326);
+		});
+		
+		$("#id_pay").onchange(function()
+		{
+		});
+		
+		$("#id_pbx").onchange(function()
+		{
+		});
+		
+		$("#id_pby").onchange(function()
+		{
+		});
+		
+		$("#mode").onchange(function()
+		{
+			
+		});
+		
+		function cambiarCoordenadasA(marker)
+		{
+			document.getElementById('id_pax').value = marker.getPosition().lat(); 
+			document.getElementById('id_pay').value = marker.getPosition().lng(); 
+		}
+		
+		function cambiarCoordenadasB(marker)
+		{
+			document.getElementById('id_pbx').value = marker.getPosition().lat(); 
+			document.getElementById('id_pby').value = marker.getPosition().lng(); 
+		}
+		
+		function inicializar()
+		{
+			var punto1 = new google.maps.LatLng(document.getElementById('id_pax').value, document.getElementById('id_pay').value);
+			var punto2 = new google.maps.LatLng(document.getElementById('id_pbx').value, document.getElementById('id_pby').value);
+			var centromapa = new google.maps.LatLng(37.913935, -4.723134);
 			var mapOptions =
 			{
-				center : fenway,
+				center : centromapa,
 				zoom : 14,
 				mapTypeId : google.maps.MapTypeId.ROADMAP
 			};
 			var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 			var panoramaOptions =
 			{
-				position : fenway,
+				position : centromapa,
 				pov :
 				{
 					heading : 34,
@@ -31,6 +66,32 @@
 			};
 			var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
 			map.setStreetView(panorama);
+			
+			marcador1 = new google.maps.Marker(
+			{ 
+				position: punto1, 
+				draggable: true, 
+				title:"Punto A" 
+			});
+			
+			marcador2 = new google.maps.Marker(
+			{ 
+				position: punto2, 
+				draggable: true, 
+				title:"Punto B" 
+			}); 
+			marcador1.setMap(map);
+			marcador2.setMap(map);
+			
+			google.maps.event.addListener(marcador1, "dragend", function()
+			{
+				cambiarCoordenadasA(marcador1); 
+			}); 
+			
+			google.maps.event.addListener(marcador2, "dragend", function()
+			{
+				cambiarCoordenadasB(marcador2); 
+			}); 
 		}
 	</script>
 {% endblock %}
@@ -155,6 +216,22 @@
 						<td></td>
 						<td>{{ formulario.pby.help_text }}</td>
 					</tr>
+					<tr>
+						<td><strong>Transporte:</strong></td>
+						<td>
+							<select id="mode">
+								<option value="DRIVING">Conduciendo</option>
+								<option value="WALKING">Andando</option>
+								<option value="BICYCLING">En bicicleta</option>
+								<option value="TRANSIT">Transitando</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>Selecciona el medio de transporte.</td>
+					</tr>
+					
 					<tr>
 						<td><input class="btn btn-primary" type="submit" value="Modificar ruta" /></td>
 					</tr>
