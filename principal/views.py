@@ -82,7 +82,7 @@ def editarPerfil(request):
 		formulario= UserForm(request.POST,request.FILES,instance=request.user)
 		if formulario.is_valid():
 			user = formulario.save(commit=True)
-			return HttpResponseRedirect('perfil/')
+			#return HttpResponseRedirect('perfil/')
 	else:
 		formulario = UserForm(instance=request.user)
 	return render_to_response('editarPerfil.html',{'formulario':formulario},context_instance=RequestContext(request))
@@ -163,7 +163,8 @@ def atraparTesoros(request):
 
 @login_required(login_url='/login')
 def matriz(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	usuarios=User.objects.all().exclude(px=None).exclude(py=None)
+	return render_to_response('matriz.html',{'usuarios':usuarios},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def hall(request):
