@@ -5,8 +5,10 @@
 {% block contenido %}
 
 <form class="" method="post" action="" enctype="multipart/form-data">
-	{% csrf_token %}
-	<div>{{formulario}}</div>
+	<table>
+		{% csrf_token %}
+		{{formulario}}
+	</table>
 	<input class="btn btn-primary" type="submit" value="Guardar" />
 	<!--<input class="btnA unselected" type="reset" value="Cancelar" />-->
 </form>
