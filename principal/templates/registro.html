@@ -4,8 +4,11 @@
 
 {% block contenido %}
 <form class="" method="post" action="">
-	{% csrf_token %}
-	<table>{{formulario}}</table>
+	<table>
+		{% csrf_token %}
+		{{formulario}}
+		<!--<tr><td><label>Correo electronico: </label></td><td><input type="email" name="email" id="email" /></td></tr>-->
+	</table>
 	<input class="btn btn-primary" type="submit" value="Registrarse" />
 </form>
 

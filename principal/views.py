@@ -50,12 +50,12 @@ def registro(request):
 	if not request.user.is_anonymous():
 		return HttpResponseRedirect('/perfil')
 	if request.method=='POST':
-		formulario = UserCreationForm(request.POST)
+		formulario = PerfilCreationForm(request.POST)
 		if formulario.is_valid():
 			formulario.save()
 			return HttpResponseRedirect('/login')
 	else:
-		formulario = UserCreationForm()
+		formulario = PerfilCreationForm()
 	return render_to_response('registro.html',
 	{
 		'formulario':formulario
