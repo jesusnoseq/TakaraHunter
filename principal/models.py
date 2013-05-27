@@ -54,14 +54,11 @@ class Busqueda(models.Model):
     titulo = models.CharField(max_length=250,unique=True)
     descripcion = models.TextField()
     fecha_creacion = models.DateTimeField(auto_now=True)
-<<<<<<< HEAD
-    participantes = models.ManyToManyField(User)
+    participantes = models.ManyToManyField(User,blank=True,null=True) 
+
     def __unicode__(self):
         return u"%s" % self.titulo
-=======
-    participantes = models.ManyToManyField(User,blank=True,null=True) 
->>>>>>> TakaraHunterAlfonso
-    
+
 class Tesoro(models.Model):
     x = models.FloatField()
     y = models.FloatField()
