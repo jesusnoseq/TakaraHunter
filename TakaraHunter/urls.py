@@ -22,15 +22,18 @@ urlpatterns = patterns('',
 	#url(r'^rutas/(?P<ruta>\d+)\/[-\w]*/modificar$','principal.views.modificarRuta'),
 	
 	url(r'^misbusquedas/$','principal.views.miListaBusquedas'),
+	url(r'^misbusquedas/(?P<busqueda>\d+)\/[-\w]*$','principal.views.miDetallesBusquedas'),
+	url(r'^misbusquedas/salir/(?P<busqueda>\d+)\/[-\w]*$','principal.views.miSalirBusquedas'),
+	url(r'^misbusquedas/tesoros/atrapar/(?P<busqueda>\d+)\/[-\w]*$','principal.views.atraparTesoros'),
 	
 	url(r'^matriz/$','principal.views.matriz'),
 	url(r'^hall/$','principal.views.hall'),
 	
 	url(r'^busquedas/$','principal.views.listaBusquedas'),
-	url(r'^busquedas/detalle/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.detalleBusqueda'),
-	url(r'^busquedas/unirse/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.unirseBusqueda'),
-	url(r'^busquedas/salir/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.salirBusqueda'),
-	url(r'^busquedas/tesoros/atrapar/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.atraparTesoros'),
+	url(r'^busquedas/(?P<busqueda>\d+)\/[-\w]*$','principal.views.detalleBusqueda'),
+	url(r'^busquedas/unirse/(?P<busqueda>\d+)\/[-\w]*$','principal.views.unirseBusqueda'),
+	url(r'^busquedas/salir/(?P<busqueda>\d+)\/[-\w]*$','principal.views.salirBusqueda'),
+	url(r'^busquedas/borrar/(?P<busqueda>\d+)\/[-\w]*$','principal.views.borrarBusqueda'),
 	url(r'^busquedas/nueva/$','principal.views.crearBusqueda'),
 		
 	url(r'^about/$', direct_to_template, {'template': 'sobreNosotros.html'}),

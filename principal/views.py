@@ -172,9 +172,17 @@ def miListaBusquedas(request):
 	{
 		'busquedas':listaBusquedas
 	},context_instance=RequestContext(request))
+	
+@login_required(login_url='/login')
+def miDetallesBusquedas(request):
+	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
-def salirBusqueda(request):
+def miSalirBusquedas(request):
+	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+
+@login_required(login_url='/login')
+def salirBusquedas(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
@@ -197,4 +205,7 @@ def hall(request):
 def crearBusqueda(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
+@staff_member_required
+def borrarBusqueda(request):
+	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
