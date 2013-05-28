@@ -8,12 +8,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import login, authenticate, logout
+from django.db.models import Count
 from principal.models import *
 from principal.forms import *
 
 def inicio(request):
-	if not request.user.is_anonymous():
-		return HttpResponseRedirect('/perfil')
+	#if not request.user.is_anonymous():
+	#	return HttpResponseRedirect('/perfil')
 	return render_to_response('inicio.html',{},context_instance=RequestContext(request))
 
 def entrar(request):
@@ -49,12 +50,12 @@ def registro(request):
 	if not request.user.is_anonymous():
 		return HttpResponseRedirect('/perfil')
 	if request.method=='POST':
-		formulario = UserCreationForm(request.POST)
+		formulario = PerfilCreationForm(request.POST)
 		if formulario.is_valid():
 			formulario.save()
 			return HttpResponseRedirect('/login')
 	else:
-		formulario = UserCreationForm()
+		formulario = PerfilCreationForm()
 	return render_to_response('registro.html',
 	{
 		'formulario':formulario
@@ -76,11 +77,30 @@ def perfil(request):
 
 @login_required(login_url='/login')
 def editarPerfil(request):
-	return render_to_response('editarPerfil.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	if request.method=='POST':
+		formulario= UserForm(request.POST,request.FILES,instance=request.user)
+		if formulario.is_valid():
+			user = formulario.save(commit=True)
+			return HttpResponseRedirect('/perfil')
+	else:
+		formulario = UserForm(instance=request.user)
+	return render_to_response('editarPerfil.html',
+	{
+		'formulario':formulario
+	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def listaRutas(request):
 	listaRutas = Ruta.objects.filter(user=request.user)
+	for ruta in listaRutas:
+		if ruta.modo == "DRIVING":
+			ruta.modo = "Coche"
+		if ruta.modo == "WALKING":
+			ruta.modo = "A pie"
+		if ruta.modo == "BICYCLING":
+			ruta.modo = "Biciclet"
+		if ruta.modo == "TRANSIT":
+			ruta.modo = "Transporte público"
 	return render_to_response('listaRutas.html',
 	{
 		'rutas':listaRutas
@@ -92,6 +112,7 @@ def nuevaRuta(request):
 		formulario = RutaForm(request.POST, request.FILES)		
 		if formulario.is_valid():
 			ruta = formulario.save(commit=False)
+			ruta.user = request.user
 			ruta.save()
 			pagina_de_vuelta='/rutas/'
 			return HttpResponseRedirect(pagina_de_vuelta)
@@ -125,8 +146,8 @@ def detalleRuta(request, ruta):
 
 @login_required(login_url='/login')
 def borrarRuta(request, ruta):
-	Ruta.objects.get(id=ruta).delete()
-	return HttpResponseRedirect('/rutas/')
+	rutaABorrar = Ruta.objects.get(id=ruta).delete()
+	return HttpResponseRedirect('/rutas')
 
 @login_required(login_url='/login')
 def detalleBusqueda(request):
@@ -138,7 +159,19 @@ def unirseBusqueda(request):
 
 @login_required(login_url='/login')
 def listaBusquedas(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	listaBusquedas = Busqueda.objects.all()
+	return render_to_response('listaBusquedas.html',
+	{
+		'busquedas':listaBusquedas
+	},context_instance=RequestContext(request))
+	
+@login_required(login_url='/login')
+def miListaBusquedas(request):
+	listaBusquedas = Busqueda.objects.filter(participantes=request.user)
+	return render_to_response('miListaBusquedas.html',
+	{
+		'busquedas':listaBusquedas
+	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def salirBusqueda(request):
@@ -150,11 +183,15 @@ def atraparTesoros(request):
 
 @login_required(login_url='/login')
 def matriz(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	usuarios=User.objects.all().exclude(px=None).exclude(py=None)
+	return render_to_response('matriz.html',{'usuarios':usuarios},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def hall(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
+	for row in result:
+		row['username']=User.objects.get(pk=row['recogidaPor']).username
+	return render_to_response('hallDeLaFama.html',{'lista':result},context_instance=RequestContext(request))
 
 @staff_member_required
 def crearBusqueda(request):

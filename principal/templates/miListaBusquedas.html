@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block titulo %}TH | Mi lista búsquedas{% endblock %}
+
+{% block menu_pagina %}
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<ul class="nav">
+				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> <p>Mis rutas</p></a></li>
+				<li><a href="/misbusquedas"><i class="icon-list"></i><i class="icon-flag"></i> <p>Mis búsquedas</p></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block contenido %}
+<div class="well sidebar-nav">
+	<table class="table table-striped">
+		<tr>
+			<td>Título</td>
+			<td>Descripción</td>
+		</tr>
+		{% if busquedas %}
+			{% for busqueda in busquedas %}
+				<tr>
+					<td><a href="/busquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
+					<td>{{ busqueda.descripcion }}</td>
+				</tr>
+			{% endfor %}
+    	{% else %}
+			<tr>
+				<td>No hay búsquedas.</td>
+				<td></td>
+			</tr>
+    	{% endif %}
+	</table>
+</div>
+{% endblock %}

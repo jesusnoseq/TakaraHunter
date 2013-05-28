@@ -20,27 +20,37 @@ class UserAdmin(admin.ModelAdmin):
         ('Perfil', {
             'fields': ('first_name', 'last_name', 'sexo', 'telefono', 'fecha_nacimiento', 'profesion', 'foto')
         }),
+		('Localización', {
+			'fields': ('px','py')
+		}),
     )
 	
 class RutaAdmin(admin.ModelAdmin):
-	list_display = ('titulo', 'user', 'pax', 'pay', 'pbx', 'pby')
+	list_display = ('titulo', 'user', 'origen', 'destino', 'modo')
 	fieldsets = (
-        ('Ruta y poseedor',
-				{
-            'fields': ('titulo','user')
+        ('Ruta', {
+            'fields': ('titulo', )
         }),
-        ('Punto A', {
-            'fields': ('pax', 'pay')
+        ('Información de la ruta', {
+            'fields': ('origen', 'destino', 'modo')
         }),
-        ('Punto B', {
-            'fields': ('pbx', 'pby')
+    )
+	
+class BusquedaAdmin(admin.ModelAdmin):
+	list_display = ('titulo', 'slug', 'descripcion', )
+	fieldsets = (
+        ('Información de la búsqueda', {
+            'fields': ('titulo', 'slug', 'descripcion')
+        }),
+        ('Participantes', {
+            'fields': ('participantes', )
         }),
     )
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Ruta, RutaAdmin)
-admin.site.register(Busqueda)
+admin.site.register(Busqueda, BusquedaAdmin)
 admin.site.register(Tesoro)
 #admin.site.register(Participa)
 

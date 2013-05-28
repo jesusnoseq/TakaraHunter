@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block titulo %}TH | Lista búsquedas{% endblock %}
+
+{% block menu_inferior %}
+{% if user.is_superuser %}
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<ul class="nav">
+					<li><a href="/busquedas/nueva"><i class="icon-file"></i><i class="icon-flag"></i> <p>Nueva búsqueda</p></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endif %}
+{% endblock %}
+
+{% block contenido %}
+<div class="well sidebar-nav">
+	<table class="table table-striped">
+		<tr>
+			<td>Título</td>
+			<td>Descripción</td>
+		</tr>
+		{% if busquedas %}
+			{% for busqueda in busquedas %}
+				<tr>
+					<td><a href="/busquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
+					<td>{{ busqueda.descripcion }}</td>
+				</tr>
+			{% endfor %}
+    	{% else %}
+			<tr>
+				<td>No hay búsquedas.</td>
+				<td></td>
+			</tr>
+    	{% endif %}
+	</table>
+</div>
+{% endblock %}

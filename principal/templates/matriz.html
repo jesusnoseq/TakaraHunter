@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block titulo %}TH | Hall de la fama{% endblock %}
+
+
+{% block footerScripts %}
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+		<script>
+			$(document).ready(function(){
+				initialize()
+			});
+			function initialize() {
+				var fenway = new google.maps.LatLng(42.345573, -71.098326);
+				var mapOptions = {
+					center : fenway,
+					zoom : 14,
+					mapTypeId : google.maps.MapTypeId.ROADMAP
+				};
+				var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+				var panoramaOptions = {
+					position : fenway,
+					pov : {
+						heading : 34,
+						pitch : 10
+					}
+				};
+				var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
+				map.setStreetView(panorama);
+			}
+			
+		</script>
+{% endblock %}
+
+
+
+{% block contenido %}
+
+<ol class="well">
+{% for usuario in usuarios %}
+<li>
+	{{usuario.username}} - ({{usuario.px}},{{usuario.py}})
+</li>
+{% empty %}
+	<li>No hay auténticos buscadores de tesoros en este momento.</li>
+{% endfor %}
+</ol>
+
+<div>
+	<div id="map-canvas" style="width: 400px; height: 300px"></div>
+	<div id="pano" style="width: 400px; height: 300px;"></div>
+</div>
+
+{% endblock %}

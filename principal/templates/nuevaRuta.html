@@ -2,13 +2,130 @@
 
 {% block titulo %}TH | Nueva ruta{% endblock %}
 
+{% block footerScripts %}
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			inicializar()
+		});
+	
+		var geocoder;
+		var infoWindow;
+		var marker;
+		var rendererOptions = 
+		{
+			draggable: true
+		};
+		var directionDisplay;
+		var directionsService = new google.maps.DirectionsService();
+		geocoder = new google.maps.Geocoder();
+    	infowindow = new google.maps.InfoWindow();
+
+		function inicializar() 
+		{
+			var centromapa = new google.maps.LatLng(37.88472,-4.77889);
+			directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+			var myOptions = 
+			{
+				zoom: 14,
+				center: centromapa,
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				mapTypeControl: false
+			};
+			var map = new google.maps.Map(document.getElementById("mapa"),myOptions);
+			directionsDisplay.setMap(map);
+			directionsDisplay.setPanel(document.getElementById("panel_direcciones"));
+		
+			google.maps.event.addListener(map, 'click', function(e)
+			{
+          		geocoder.geocode({'latLng':e.latLng},function(results, status)
+				{
+					if (status == google.maps.GeocoderStatus.OK) 
+					{
+                		if (results[0]) 
+                  		{
+        	            	if (marker) 
+	                    	{
+								marker.setPosition(e.latLng);
+							} 
+							else 
+							{
+								marker = new google.maps.Marker(
+								{
+									position: e.latLng,
+									map: map
+								});
+							}
+							infowindow.setContent(results[0].formatted_address);
+							infowindow.open(map, marker);
+						}
+					} 
+				});
+			});
+		}
+		
+		function calcularRuta() 
+		{
+			var modo = document.getElementById('id_modo').value;
+			var origen = document.getElementById("id_origen").value;
+			var destino = document.getElementById("id_destino").value;
+			var request = 
+			{
+				origin:origen,
+				destination:destino,
+				travelMode: google.maps.DirectionsTravelMode[modo]
+			};
+			
+			directionsService.route(request, function(response, status)
+			{
+				if (status == google.maps.DirectionsStatus.OK)
+				{
+					directionsDisplay.setDirections(response);
+				} 
+				else
+				{
+					if (status == 'ZERO_RESULTS')
+					{
+						alert('No se pudo encontrar una ruta entre el origen y el destino.');
+					}
+					else if (status == 'UNKNOWN_ERROR')
+					{
+						alert('La petición no ha podido ser procesada debido a un error. Puede que funcione si lo intentas de nuevo.');
+					} 
+					else if (status == 'REQUEST_DENIED')
+					{
+						alert('La página no está autorizada a usar el servicio.');
+					} 
+					else if (status == 'OVER_QUERY_LIMIT')
+					{
+						alert('La página web ha superado el límite de peticiones en un corto periodo de tiempo.');
+					} 
+					else if (status == 'NOT_FOUND')
+					{
+						alert('Al menos el origen, el destino o uno de los puntos de ruta no pudo ser geocodificado.');
+					} 
+					else if (status == 'INVALID_REQUEST')
+					{
+						alert('La dirección de la petición proporcionada fue inválida.');					
+					} 
+					else
+					{
+						alert("Ha habido un error desconocido en su petición. Estado de la petición: \n\n"+status);
+					}
+				}
+			});
+		}
+	</script>
+{% endblock %}
+
 {% block menu_pagina %}
 <div class="navbar">
 	<div class="navbar-inner">
 		<div class="container">
 			<ul class="nav">
 				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> <p>Mis rutas</p></a></li>
-				<li><a href="/busquedas"><i class="icon-list"></i><i class="icon-flag"></i> <p>Mis búsquedas</p></a></li>
+				<li><a href="/misbusquedas"><i class="icon-list"></i><i class="icon-flag"></i> <p>Mis búsquedas</p></a></li>
 			</ul>
 		</div>
 	</div>
@@ -19,16 +136,102 @@
 <div class="row-fluid">
 	<div class="span6">
 		<div class="well sidebar-nav">
-			<form class="" method="post" action="">
-				{% csrf_token %}
-				<table>{{formulario}}</table>
-				<input class="btn btn-primary" type="submit" value="Modificar" />
+			<form method="post">{% csrf_token %}
+				<table class="table table-bordered table-condensed">
+					{% if formulario.non_field_errors %}
+						<tr>
+							<td></td>
+							<td>
+    							{{ formulario.non_field_errors }}
+							</td>
+						</tr>
+					{% endif %}
+					{% if formulario.titulo.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.titulo.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Título:</strong></td>
+						<td>{{ formulario.titulo }}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>{{ formulario.titulo.help_text }}</td>
+					</tr>
+					{% if formulario.origen.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.origen.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Origen:</strong></td>
+						<td>{{ formulario.origen }}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>{{ formulario.origen.help_text }}</td>
+					</tr>
+					{% if formulario.destino.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.destino.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Destino:</strong></td>
+						<td>{{ formulario.destino }}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>{{ formulario.destino.help_text }}</td>
+					</tr>
+					{% if formulario.modo.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.modo.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Modo:</strong></td>
+						<td>{{ formulario.modo }}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>{{ formulario.modo.help_text }}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>Deberías pulsar primero el botón <strong>"Calcular ruta"</strong> para comprobar que la ruta se crea y funciona correctamente.</td>
+					</tr>
+					<tr>
+						<td><input class="btn btn-primary" type="submit" value="Crear ruta" /></td>
+						<td><input class="btn btn-primary" onclick="calcularRuta();return false;" value="Calcular ruta" /></td>
+					</tr>
+				</table>
 			</form>
 		</div>
 	</div>
  	<div class="span6">
 		<div class="well sidebar-nav">
-			Ubicación del mapa
+			<div id="mapa" style="width: 445px; height: 441px"></div>
+		</div>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span12">
+		<div class="well sidebar-nav">
+			<div id="panel_direcciones">Información de la ruta</div>
 		</div>
 	</div>
 </div>

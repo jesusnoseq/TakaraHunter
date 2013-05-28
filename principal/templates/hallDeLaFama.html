@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block titulo %}TH | Hall de la fama{% endblock %}
+
+{% block contenido %}
+
+<ol class="well">
+{% for usuario in lista %}
+<li>
+	{{usuario.username}} - {{usuario.recogidaPor__count}}
+</li>
+{% empty %}
+	<li>No hay auténticos buscadores de tesoros en este momento.</li>
+{% endfor %}
+</ol>
+
+{% endblock %}

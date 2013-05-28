@@ -2,13 +2,49 @@
 
 {% block titulo %}TH | Perfil{% endblock %}
 
+{% block mensaje_informativo %}
+	{% if mensaje %}
+		<div class="jumbotron">
+			<h2>{{mensaje}}</h2>
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block footerScripts %}
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+		<script>
+			$(document).ready(function(){
+				initialize()
+			});
+			function initialize() {
+				var fenway = new google.maps.LatLng(42.345573, -71.098326);
+				var mapOptions = {
+					center : fenway,
+					zoom : 14,
+					mapTypeId : google.maps.MapTypeId.ROADMAP
+				};
+				var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+				var panoramaOptions = {
+					position : fenway,
+					pov : {
+						heading : 34,
+						pitch : 10
+					}
+				};
+				var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
+				map.setStreetView(panorama);
+			}
+			
+		</script>
+{% endblock %}
+
 {% block menu_pagina %}
 <div class="navbar">
 	<div class="navbar-inner">
 		<div class="container">
 			<ul class="nav">
 				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> <p>Mis rutas</p></a></li>
-				<li><a href="/busquedas"><i class="icon-list"></i><i class="icon-flag"></i> <p>Mis búsquedas</p></a></li>
+				<li><a href="/misbusquedas"><i class="icon-list"></i><i class="icon-flag"></i> <p>Mis búsquedas</p></a></li>
 			</ul>
 		</div>
 	</div>
@@ -27,18 +63,33 @@
 </div>
 {% endblock %}
 
-{% block mensaje_informativo %}
-{% if mensaje %}
-	<div class="jumbotron">
-		<h2>{{mensaje}}</h2>
-	</div>
-{% endif %}
-{% endblock %}
-
 {% block contenido %}
 <div class="row-fluid">
 	<div class="span4">
-		Hueco para el perfil.
+		<div class="well sidebar-nav">
+			<ul class="nav nav-list">
+				<li class="nav-header">Datos del perfil</li>
+				<li>
+					{% if  user.foto %}
+						<img src="{{MEDIA_DIR}}{{user.foto}}"/>
+					{% endif %}
+				</li>
+				<li>Nombre: {{ user.username }}</li>
+				<li>Correo: {{ user.email }}</li>
+				
+				<li>Nombre propio: {{ user.first_name }}</li>
+				<li>Apellidos: {{ user.last_name }}</li>
+				
+				<li>Fecha de nacimiento: {{ user.fecha_nacimiento}}</li>
+				<li>Teléfono: {{ user.telefono}}</li>
+				<li>Profesión: {{ user.profesion}}</li>
+				<li>Sexo: {{ user.sexo}}</li>
+				
+				<li>Coordenada X: {{ user.px }}</li>
+				<li>Coordenada Y: {{ user.py }}</li>
+
+			</ul>
+		</div>
 	</div>
 	<div class="span4">
 		<div class="well sidebar-nav">
