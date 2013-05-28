@@ -26,16 +26,13 @@ class UserAdmin(admin.ModelAdmin):
     )
 	
 class RutaAdmin(admin.ModelAdmin):
-	list_display = ('titulo', 'user', 'pax', 'pay', 'pbx', 'pby')
+	list_display = ('titulo', 'user', 'origen', 'destino', 'modo')
 	fieldsets = (
         ('Ruta', {
             'fields': ('titulo', )
         }),
-        ('Punto A', {
-            'fields': ('pax', 'pay')
-        }),
-        ('Punto B', {
-            'fields': ('pbx', 'pby')
+        ('Información de la ruta', {
+            'fields': ('origen', 'destino', 'modo')
         }),
     )
 

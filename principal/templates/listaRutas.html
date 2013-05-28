@@ -32,25 +32,22 @@
 	<table class="table table-striped">
 		<tr>
 			<td>Nombre</td>
-			<td>Punto A: coordenada X</td>
-			<td>Punto A: coordenada Y</td>
-			<td>Punto B: coordenada X</td>
-			<td>Punto B: coordenada Y</td>
+			<td>Origen</td>
+			<td>Destino</td>
+			<td>Modo</td>
 		</tr>
 		{% if rutas %}
 			{% for ruta in rutas %}
 				<tr>
 					<td><a href="/rutas/{{ ruta.id }}">{{ ruta.titulo }}</a></td>
-					<td>{{ ruta.pax }}</td>
-					<td>{{ ruta.pay }}</td>
-					<td>{{ ruta.pbx }}</td>
-					<td>{{ ruta.pby }}</td>
+					<td>{{ ruta.origen }}</td>
+					<td>{{ ruta.destino }}</td>
+					<td>{{ ruta.modo }}</td>
 				</tr>
 			{% endfor %}
     	{% else %}
 			<tr>
 				<td>No hay rutas.</td>
-				<td></td>
 				<td></td>
 				<td></td>
 				<td></td>

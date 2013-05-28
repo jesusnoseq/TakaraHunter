@@ -70,7 +70,6 @@ def salir(request):
 @login_required(login_url='/login')
 def perfil(request):
 	listaRutas = Ruta.objects.filter(user=request.user)[:10]
-	
 	return render_to_response('perfil.html',
 	{
 		'ultimas_rutas':listaRutas
@@ -82,14 +81,26 @@ def editarPerfil(request):
 		formulario= UserForm(request.POST,request.FILES,instance=request.user)
 		if formulario.is_valid():
 			user = formulario.save(commit=True)
-			#return HttpResponseRedirect('perfil/')
+			return HttpResponseRedirect('/perfil')
 	else:
 		formulario = UserForm(instance=request.user)
-	return render_to_response('editarPerfil.html',{'formulario':formulario},context_instance=RequestContext(request))
+	return render_to_response('editarPerfil.html',
+	{
+		'formulario':formulario
+	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def listaRutas(request):
 	listaRutas = Ruta.objects.filter(user=request.user)
+	for ruta in listaRutas:
+		if ruta.modo == "DRIVING":
+			ruta.modo = "Coche"
+		if ruta.modo == "WALKING":
+			ruta.modo = "A pie"
+		if ruta.modo == "BICYCLING":
+			ruta.modo = "Biciclet"
+		if ruta.modo == "TRANSIT":
+			ruta.modo = "Transporte públicoe"
 	return render_to_response('listaRutas.html',
 	{
 		'rutas':listaRutas

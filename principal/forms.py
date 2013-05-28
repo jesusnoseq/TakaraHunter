@@ -9,7 +9,6 @@ class RutaForm(ModelForm):
     class Meta:
         model = Ruta
         
-
 class UserForm(ModelForm):
     class Meta:
         model = User

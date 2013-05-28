@@ -8,9 +8,15 @@ from django.contrib.auth.models import User
 #										TIPOS DE DATOS
 #-------------------------------------------------------------------------------
 SEXO = (
-         ('h', 'Hombre'),
-         ('m', 'Mujer'),
+            ('Hombre', 'Hombre'),
+            ('Mujer', 'Mujer'),
        )
+MODE_CHOICES = (
+                    ('DRIVING','Coche'),
+                    ('WALKING','A pie'),
+                    ('BICYCLING','Bicicleta'),
+                    ('TRANSIT','Transporte público'),
+                )
 ################################################################################
 #										CLASE USUARIO
 #-------------------------------------------------------------------------------
@@ -19,10 +25,13 @@ SEXO = (
 # NOMBRE Y APELLIDO - Ya incluidos en la clase User por defecto
 #                     Son first_name y last_name
 # SEXO
-User.add_to_class('sexo', models.CharField(max_length=1, choices=SEXO, blank=True, verbose_name="Sexo", help_text="Tu sexo."))
+User.add_to_class('sexo', models.CharField(max_length=6, choices=SEXO, blank=True, verbose_name="Sexo", help_text="Tu sexo."))
 # TELEFONO
 User.add_to_class('telefono', models.PositiveIntegerField(null=True, blank=True, verbose_name="Número de teléfono", help_text="Tu número de teléfono."))
-
+# DIRECCION (Debería ser una dirección escrita o una coordenada de un mapa?)
+#Hay que añadir el lugar donde viven( coordenada X e Y como dos floats ) 
+User.add_to_class('px', models.FloatField(null=True, blank=True, verbose_name="Coordenada X", help_text="Coordenada X de tu localizacion."))
+User.add_to_class('py', models.FloatField(null=True, blank=True, verbose_name="Coordenada Y", help_text="Coordenada Y de tu localizacion."))
 # FECHA DE NACIMIENTO
 User.add_to_class('fecha_nacimiento', models.DateField(null=True, blank=True, verbose_name="Fecha de nacimiento", help_text="La fecha en que naciste."))
 # PROFESION
@@ -30,25 +39,24 @@ User.add_to_class('profesion', models.CharField(max_length=30, blank=True, verbo
 # FOTO
 User.add_to_class('foto', models.ImageField(upload_to='fotos_usuario', blank=True, verbose_name="Foto", help_text="Tu fotografía."))
 
-# DIRECCION (Debería ser una dirección escrita o una coordenada de un mapa?)
-#Hay que añadir el lugar donde viven( coordenada X e Y como dos floats ) 
-User.add_to_class('px', models.FloatField(null=True, blank=True, verbose_name="Coordenada X", help_text="Coordenada X de tu localizacion."))
-User.add_to_class('py', models.FloatField(null=True, blank=True, verbose_name="Coordenada Y", help_text="Coordenada Y de tu localizacion."))
-
-
+################################################################################
+#                                        CLASE RUTA
+#-------------------------------------------------------------------------------
 class Ruta(models.Model):
-    titulo = models.CharField(max_length=250, verbose_name="Nombre", help_text="Nombre de la ruta. 250 caracteres máximo.")
+    titulo = models.CharField(max_length=100, verbose_name="Nombre", help_text="Nombre de la ruta. 100 caracteres máximo.")
     user =  models.ForeignKey(User, verbose_name="Poseedor", null=True, blank=True, editable=False)
-    pax = models.FloatField(verbose_name="Punto A - X:", help_text="Coordenada X del punto A. Debe ser un número.")
-    pay = models.FloatField(verbose_name="Punto A - Y:", help_text="Coordenada Y del punto A. Debe ser un número.")
-    pbx = models.FloatField(verbose_name="Punto B - X:", help_text="Coordenada X del punto B. Debe ser un número.")
-    pby = models.FloatField(verbose_name="Punto B - Y:", help_text="Coordenada Y del punto B. Debe ser un número.")
+    origen = models.CharField(max_length = 100, verbose_name="Origen", help_text="Origen de la ruta. 100 caracteres máximo.")
+    destino = models.CharField(max_length = 100, verbose_name="Destino", help_text="Destino de la ruta. 100 caracteres máximo.")
+    modo = models.CharField(max_length = 10, verbose_name="Modo", choices=MODE_CHOICES, help_text="Modo o medio de transporte de la ruta.")
     fecha_modificacion = models.DateTimeField(db_index=True, auto_now=True)
     class Meta:
         ordering=['-fecha_modificacion']
     def __unicode__(self):
         return u"%s" % self.titulo
 
+################################################################################
+#                                        CLASE BÚSQUEDA
+#-------------------------------------------------------------------------------
 class Busqueda(models.Model):
     slug = models.SlugField(blank=False,unique=True)
     titulo = models.CharField(max_length=250,unique=True)
@@ -59,6 +67,9 @@ class Busqueda(models.Model):
     def __unicode__(self):
         return u"%s" % self.titulo
 
+################################################################################
+#                                        CLASE TESORO
+#-------------------------------------------------------------------------------
 class Tesoro(models.Model):
     x = models.FloatField()
     y = models.FloatField()
