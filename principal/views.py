@@ -182,7 +182,7 @@ def miSalirBusquedas(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
-def salirBusquedas(request):
+def salirBusqueda(request):
 	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
