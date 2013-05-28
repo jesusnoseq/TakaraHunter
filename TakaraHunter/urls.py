@@ -30,7 +30,7 @@ urlpatterns = patterns('',
 	url(r'^busquedas/unirse/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.unirseBusqueda'),
 	url(r'^busquedas/salir/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.salirBusqueda'),
 	url(r'^busquedas/tesoros/atrapar/(?P<id_busqueda>\d+)\/[-\w]*$','principal.views.atraparTesoros'),
-	url(r'^busquedas/crear/$','principal.views.crearBusqueda'),
+	url(r'^busquedas/nueva/$','principal.views.crearBusqueda'),
 	url(r'^busquedas/$','principal.views.listaBusquedas'),
 		
 	url(r'^about/$', direct_to_template, {'template': 'sobreNosotros.html'}),

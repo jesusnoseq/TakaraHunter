@@ -100,7 +100,7 @@ def listaRutas(request):
 		if ruta.modo == "BICYCLING":
 			ruta.modo = "Biciclet"
 		if ruta.modo == "TRANSIT":
-			ruta.modo = "Transporte públicoe"
+			ruta.modo = "Transporte público"
 	return render_to_response('listaRutas.html',
 	{
 		'rutas':listaRutas
@@ -159,6 +159,7 @@ def unirseBusqueda(request):
 
 @login_required(login_url='/login')
 def listaBusquedas(request):
+	listaBusquedas = Busqueda.objects.all()
 	return render_to_response('listaBusquedas.html',
 	{
 		'busquedas':listaBusquedas

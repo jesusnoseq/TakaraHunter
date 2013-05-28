@@ -35,11 +35,22 @@ class RutaAdmin(admin.ModelAdmin):
             'fields': ('origen', 'destino', 'modo')
         }),
     )
+	
+class BusquedaAdmin(admin.ModelAdmin):
+	list_display = ('titulo', 'slug', 'descripcion', )
+	fieldsets = (
+        ('Información de la búsqueda', {
+            'fields': ('titulo', 'slug', 'descripcion')
+        }),
+        ('Participantes', {
+            'fields': ('participantes', )
+        }),
+    )
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Ruta, RutaAdmin)
-admin.site.register(Busqueda)
+admin.site.register(Busqueda, BusquedaAdmin)
 admin.site.register(Tesoro)
 #admin.site.register(Participa)
 
