@@ -164,6 +164,14 @@ def listaBusquedas(request):
 	{
 		'busquedas':listaBusquedas
 	},context_instance=RequestContext(request))
+	
+@login_required(login_url='/login')
+def miListaBusquedas(request):
+	listaBusquedas = Busqueda.objects.filter(participantes=request.user)
+	return render_to_response('miListaBusquedas.html',
+	{
+		'busquedas':listaBusquedas
+	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def salirBusqueda(request):

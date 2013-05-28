@@ -1,19 +1,18 @@
 {% extends "base.html" %}
 
-{% block titulo %}TH | Lista búsquedas{% endblock %}
+{% block titulo %}TH | Mi lista búsquedas{% endblock %}
 
-{% block menu_inferior %}
-{% if user.is_superuser %}
-	<div class="navbar">
-		<div class="navbar-inner">
-			<div class="container">
-				<ul class="nav">
-					<li><a href="/busquedas/nueva"><i class="icon-file"></i><i class="icon-flag"></i> <p>Nueva búsqueda</p></a></li>
-				</ul>
-			</div>
+{% block menu_pagina %}
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<ul class="nav">
+				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> <p>Mis rutas</p></a></li>
+				<li><a href="/misbusquedas"><i class="icon-list"></i><i class="icon-flag"></i> <p>Mis búsquedas</p></a></li>
+			</ul>
 		</div>
 	</div>
-{% endif %}
+</div>
 {% endblock %}
 
 {% block contenido %}
