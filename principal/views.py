@@ -220,11 +220,11 @@ def hall(request):
 	return render_to_response('hallDeLaFama.html',{'lista':result},context_instance=RequestContext(request))
 
 def realizandoBusqueda(request, busqueda):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	return render_to_response('tesoro.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def atraparTesoros(request):
-	return render_to_response('tesoro.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
 @staff_member_required
 def crearBusqueda(request):
