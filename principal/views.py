@@ -70,9 +70,11 @@ def salir(request):
 @login_required(login_url='/login')
 def perfil(request):
 	listaRutas = Ruta.objects.filter(user=request.user)[:10]
+	listaBusquedas = Busqueda.objects.filter(participantes=request.user)[:10]
 	return render_to_response('perfil.html',
 	{
-		'ultimas_rutas':listaRutas
+		'ultimas_rutas':listaRutas,
+		'ultimas_busquedas':listaBusquedas
 	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')

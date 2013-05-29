@@ -30,9 +30,9 @@
 				<tr>
 					<td><a href="/busquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
 					<td>{{ busqueda.descripcion }}</td>
-					<td><a class="btn btn btn-warning btn-block" href="/busquedas/salir/{{ busqueda.id }}">Abandonar búsqueda</a></td>
+					<td><a class="btn btn btn-warning btn-block" href="/busquedas/salir/{{ busqueda.id }}"><i class="icon-remove"></i><i class="icon-globe"></i> Abandonar búsqueda</a></td>
 					{% if user.is_superuser %}
-						<td><a class="btn btn btn-danger btn-block" href="/busquedas/borrar/{{ busqueda.id }}">Borrar búsqueda</a></td>
+						<td><a class="btn btn btn-danger btn-block" href="/busquedas/borrar/{{ busqueda.id }}"><i class="icon-trash"></i><i class="icon-globe"></i> Borrar búsqueda</a></td>
 					{% endif %}
 				</tr>
 			{% endfor %}
@@ -49,9 +49,9 @@
 				<tr>
 					<td><a href="/busquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
 					<td>{{ busqueda.descripcion }}</td>
-					<td><a class="btn btn btn-success btn-block" href="/busquedas/unirse/{{ busqueda.id }}">Unirse a búsqueda</a></td>
+					<td><a class="btn btn btn-success btn-block" href="/busquedas/unirse/{{ busqueda.id }}"><i class="icon-ok"></i><i class="icon-globe"></i> Unirse a búsqueda</a></td>
 					{% if user.is_superuser %}
-						<td><a class="btn btn btn-danger btn-block" href="/busquedas/borrar/{{ busqueda.id }}">Borrar búsqueda</a></td>
+						<td><a class="btn btn btn-danger btn-block" href="/busquedas/borrar/{{ busqueda.id }}"><i class="icon-trash"></i><i class="icon-globe"></i> Borrar búsqueda</a></td>
 					{% endif %}
 				</tr>
 			{% endfor %}
