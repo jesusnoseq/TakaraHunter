@@ -134,26 +134,46 @@
 				</tr>
 			</table>-->
 			<ul class="nav nav-list">
-				<li class="nav-header"><center>Datos del perfil</center></li>
+				<a class="btn btn-info btn-block" href="/perfil/editar"><i class="icon-edit"></i><i class="icon-user"></i></a>
+				<li class="nav-header"><center>Perfil</center></li>
 				<li><center>
 					{% if  user.foto %}
 						<img src="{{MEDIA_URL}}{{user.foto}}" class="img-rounded"/>
 					{% endif %}
 				</center></li>
-				<li>Nombre: {{ user.username }}</li>
-				<li>Correo: {{ user.email }}</li>
-				
-				<li>Nombre propio: {{ user.first_name }}</li>
-				<li>Apellidos: {{ user.last_name }}</li>
-				
-				<li>Fecha de nacimiento: {{ user.fecha_nacimiento}}</li>
-				<li>Teléfono: {{ user.telefono}}</li>
-				<li>Profesión: {{ user.profesion}}</li>
-				<li>Sexo: {{ user.sexo}}</li>
-				
-				<li>Coordenada X: {{ user.px }}</li>
-				<li>Coordenada Y: {{ user.py }}</li>
-
+				<li class="nav-header"><center>Datos de cuenta</center></li>
+				<li><strong>Nombre de usuario:</strong> {{ user.username }}</li>
+				<li><strong>Correo:</strong> {{ user.email }}</li>
+				<li class="nav-header"><center>Información personal</center></li>
+				<li><strong>Nombre:</strong> {{ user.first_name }}</li>
+				<li><strong>Apellidos:</strong> {{ user.last_name }}</li>
+				<li><strong>F. nacimiento:</strong> 
+					{% if user.fecha_nacimiento %}
+						{{ user.fecha_nacimiento}}
+					{% else %}
+						
+					{% endif %}</li>
+				<li><strong>Teléfono:</strong>
+					{% if user.telefono %}
+						{{ user.telefono}}
+					{% else %}
+						
+					{% endif %}</li>
+				<li><strong>Profesión:</strong> {{ user.profesion}}</li>
+				<li><strong>Sexo:</strong> {{ user.sexo}}</li>
+				<li class="nav-header"><center>Localización</center></li>
+				<li><strong>Coordenada X:</strong> 
+					{% if user.px %}
+						{{ user.px}}
+					{% else %}
+						
+					{% endif %}</li>
+				<li><strong>Coordenada Y:</strong> 
+					{% if user.py %}
+						{{ user.py}}
+					{% else %}
+						
+					{% endif %}</li>
 			</ul>
 		</div>
 	</div>
