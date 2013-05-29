@@ -7,8 +7,8 @@
 	<div class="navbar-inner">
 		<div class="container">
 			<ul class="nav">
-				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> <p>Mis rutas</p></a></li>
-				<li><a href="/misbusquedas"><i class="icon-list"></i><i class="icon-flag"></i> <p>Mis búsquedas</p></a></li>
+				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> Mis rutas</a></li>
+				<li><a href="/misbusquedas"><i class="icon-list"></i><i class="icon-flag"></i> Mis búsquedas</a></li>
 			</ul>
 		</div>
 	</div>
@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block menu_inferior %}
-<div class="navbar">
+<!--<div class="navbar">
 	<div class="navbar-inner">
 		<div class="container">
 			<ul class="nav">
@@ -24,18 +24,18 @@
 			</ul>
 		</div>
 	</div>
-</div>
+</div>-->
 {% endblock %}
 
 {% block contenido %}
 <div class="well sidebar-nav">
-	<table class="table table-striped table-hover">
+	<table class="table table-striped table-hover" alin>
 		<tr>
 			<td><strong>Nombre</strong></td>
 			<td><strong>Origen</strong></td>
 			<td><strong>Destino</strong></td>
 			<td><strong>Modo</strong></td>
-			<td></td>
+			<td><a class="btn btn-info btn-block" href="/rutas/nueva"><i class="icon-file"></i><i class="icon-map-marker"></i> Nueva</a></td>
 		</tr>
 		{% if rutas %}
 			{% for ruta in rutas %}
@@ -44,7 +44,7 @@
 					<td>{{ ruta.origen }}</td>
 					<td>{{ ruta.destino }}</td>
 					<td>{{ ruta.modo }}</td>
-					<td><a class="btn btn btn-danger btn-block" href="/rutas/borrar/{{ ruta.id }}"><i class="icon-trash"></i><i class="icon-map-marker"></i> Borrar ruta</a></td>
+					<td><a class="btn btn-danger btn-block" href="/rutas/borrar/{{ ruta.id }}"><i class="icon-trash"></i><i class="icon-map-marker"></i> Borrar</a></td>
 				</tr>
 			{% endfor %}
     	{% else %}

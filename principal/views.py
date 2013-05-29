@@ -100,7 +100,7 @@ def listaRutas(request):
 		if ruta.modo == "WALKING":
 			ruta.modo = "A pie"
 		if ruta.modo == "BICYCLING":
-			ruta.modo = "Biciclet"
+			ruta.modo = "Bicicleta"
 		if ruta.modo == "TRANSIT":
 			ruta.modo = "Transporte público"
 	return render_to_response('listaRutas.html',
