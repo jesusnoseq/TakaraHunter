@@ -2,20 +2,26 @@
 
 {% block titulo %}TH | Detalle búsqueda{% endblock %}
 
+{% block menu_pagina %}
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<ul class="nav">
+				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> <p>Mis rutas</p></a></li>
+				<li><a href="/misbusquedas"><i class="icon-list"></i><i class="icon-flag"></i> <p>Mis búsquedas</p></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
 {% block menu_inferior %}
 <div class="navbar">
 	<div class="navbar-inner">
 		<div class="container">
 			<ul class="nav">
-				{% if participo %}
-					<li><a href="/busquedas/salir/{{busqueda.id}}"><i class="icon-remove"></i><i class="icon-globe"></i> <p>Abandonar búsqueda</p></a></li>
-				{% else %}
-					<li><a href="/busquedas/unirse/{{busqueda.id}}"><i class="icon-ok"></i><i class="icon-globe"></i> <p>Unirse a búsqueda</p></a></li>
-				{% endif %}
-				{% if user.is_superuser %}
-					<li><a href="/busquedas/borrar/{{busqueda.id}}"><i class="icon-trash"></i><i class="icon-globe"></i> <p>Borrar búsqueda</p></a></li>
-					<li><a href="/busquedas/nueva"><i class="icon-file"></i><i class="icon-globe"></i> <p>Nueva búsqueda</p></a></li>
-				{% endif %}
+				<li><a href="/misbusquedas/realizar/{{busqueda.id}}"><i class="icon-play"></i><i class="icon-globe"></i> <p>Realizar búsqueda</p></a></li>
+				<li><a href="/misbusquedas/salir/{{busqueda.id}}"><i class="icon-remove"></i><i class="icon-globe"></i> <p>Abandonar búsqueda</p></a></li>
 			</ul>
 		</div>
 	</div>
