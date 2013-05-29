@@ -45,6 +45,10 @@ User.add_to_class('foto', models.ImageField(upload_to='fotos_usuario', blank=Tru
 class Ruta(models.Model):
     titulo = models.CharField(max_length=100, verbose_name="Nombre", help_text="Nombre de la ruta. 100 caracteres máximo.")
     user =  models.ForeignKey(User, verbose_name="Poseedor", null=True, blank=True, editable=False)
+    """ Pienso que no es correcto asi, a partir de una coordenada se puede pillar la direccion facilmente
+    sin problemas, ahora, ¿una direccion? puesdes guardar "mi calle"? eso donde esta? XD o si quiero poner un punto
+    en mitad del campo o el desierto, eso que direccion tiene ¿diseminado?
+    En fin, el perfil se queda con px y py. Haced con vuestra parte lo que querais. """
     origen = models.CharField(max_length = 100, verbose_name="Origen", help_text="Origen de la ruta. 100 caracteres máximo.")
     destino = models.CharField(max_length = 100, verbose_name="Destino", help_text="Destino de la ruta. 100 caracteres máximo.")
     modo = models.CharField(max_length = 10, verbose_name="Modo", choices=MODE_CHOICES, help_text="Modo o medio de transporte de la ruta.")
