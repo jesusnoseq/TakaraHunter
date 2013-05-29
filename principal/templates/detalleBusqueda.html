@@ -1,121 +1,16 @@
 {% extends "base.html" %}
 
-{% block titulo %}TH | Detalle ruta{% endblock %}
-
-{% block footerScripts %}
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
-	<script>
-		$(document).ready(function()
-		{
-			inicializar();
-		});
-		
-		$("#id_pax").onchange(function()
-		{
-		});
-		
-		$("#id_pay").onchange(function()
-		{
-		});
-		
-		$("#id_pbx").onchange(function()
-		{
-		});
-		
-		$("#id_pby").onchange(function()
-		{
-		});
-		
-		$("#mode").onchange(function()
-		{
-			
-		});
-		
-		function cambiarCoordenadasA(marker)
-		{
-			document.getElementById('id_pax').value = marker.getPosition().lat(); 
-			document.getElementById('id_pay').value = marker.getPosition().lng(); 
-		}
-		
-		function cambiarCoordenadasB(marker)
-		{
-			document.getElementById('id_pbx').value = marker.getPosition().lat(); 
-			document.getElementById('id_pby').value = marker.getPosition().lng(); 
-		}
-		
-		function inicializar()
-		{
-			var punto1 = new google.maps.LatLng(document.getElementById('id_pax').value, document.getElementById('id_pay').value);
-			var punto2 = new google.maps.LatLng(document.getElementById('id_pbx').value, document.getElementById('id_pby').value);
-			var centromapa = new google.maps.LatLng(37.913935, -4.723134);
-			var mapOptions =
-			{
-				center : centromapa,
-				zoom : 14,
-				mapTypeId : google.maps.MapTypeId.ROADMAP
-			};
-			var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-			var panoramaOptions =
-			{
-				position : centromapa,
-				pov :
-				{
-					heading : 34,
-					pitch : 10
-				}
-			};
-			var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
-			map.setStreetView(panorama);
-			
-			marcador1 = new google.maps.Marker(
-			{ 
-				position: punto1, 
-				draggable: true, 
-				title:"Punto A" 
-			});
-			
-			marcador2 = new google.maps.Marker(
-			{ 
-				position: punto2, 
-				draggable: true, 
-				title:"Punto B" 
-			}); 
-			marcador1.setMap(map);
-			marcador2.setMap(map);
-			
-			google.maps.event.addListener(marcador1, "dragend", function()
-			{
-				cambiarCoordenadasA(marcador1); 
-			}); 
-			
-			google.maps.event.addListener(marcador2, "dragend", function()
-			{
-				cambiarCoordenadasB(marcador2); 
-			}); 
-		}
-	</script>
-{% endblock %}
-
-{% block menu_pagina %}
-<div class="navbar">
-	<div class="navbar-inner">
-		<div class="container">
-			<ul class="nav">
-				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> <p>Mis rutas</p></a></li>
-				<li><a href="/busquedas"><i class="icon-list"></i><i class="icon-flag"></i> <p>Mis búsquedas</p></a></li>
-			</ul>
-		</div>
-	</div>
-</div>
-{% endblock %}
+{% block titulo %}TH | Detalle búsqueda{% endblock %}
 
 {% block menu_inferior %}
 <div class="navbar">
 	<div class="navbar-inner">
 		<div class="container">
 			<ul class="nav">
-				<li><a href="/rutas/borrar/{{id_ruta}}"><i class="icon-trash"></i><i class="icon-flag"></i> <p>Borrar ruta</p></a></li>
-				<li><a href="/rutas/nueva"><i class="icon-file"></i><i class="icon-map-marker"></i> <p>Nueva ruta</p></a></li>
+				{% if user.is_superuser %}
+					<li><a href="/busquedas/borrar/{{busqueda.id}}"><i class="icon-trash"></i><i class="icon-globe"></i> <p>Borrar búsqueda</p></a></li>
+					<li><a href="/busquedas/nueva"><i class="icon-file"></i><i class="icon-globe"></i> <p>Nueva búsqueda</p></a></li>
+				{% endif %}
 			</ul>
 		</div>
 	</div>
@@ -126,161 +21,25 @@
 <div class="row-fluid">
 	<div class="span6">
 		<div class="well sidebar-nav">
-			<form method="post">{% csrf_token %}
-				<table class="table table-bordered table-condensed">
-					{% if formulario.non_field_errors %}
-						<tr>
-							<td></td>
-							<td>
-    							{{ formulario.non_field_errors }}
-							</td>
-						</tr>
-					{% endif %}
-					{% if formulario.titulo.errors %}
-						<tr class="error">
-							<td><i class="icon-warning-sign"></i></td>
-							<td>
-    							{{ formulario.titulo.errors }}
-							</td>
-						</tr>
-					{% endif %}
-					<tr>
-						<td><strong>Título:</strong></td>
-						<td>{{ formulario.titulo }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ formulario.titulo.help_text }}</td>
-					</tr>
-					{% if formulario.pax.errors %}
-						<tr class="error">
-							<td><i class="icon-warning-sign"></i></td>
-							<td>
-    							{{ formulario.pax.errors }}
-							</td>
-						</tr>
-					{% endif %}
-					<tr>
-						<td><strong>Punto A - X:</strong></td>
-						<td>{{ formulario.pax }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ formulario.pax.help_text }}</td>
-					</tr>
-					{% if formulario.pay.errors %}
-						<tr class="error">
-							<td><i class="icon-warning-sign"></i></td>
-							<td>
-    							{{ formulario.pay.errors }}
-							</td>
-						</tr>
-					{% endif %}
-					<tr>
-						<td><strong>Punto A - Y:</strong></td>
-						<td>{{ formulario.pay }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ formulario.pay.help_text }}</td>
-					</tr>
-					{% if formulario.pbx.errors %}
-						<tr class="error">
-							<td><i class="icon-warning-sign"></i></td>
-							<td>
-    							{{ formulario.pbx.errors }}
-							</td>
-						</tr>
-					{% endif %}
-					<tr>
-						<td><strong>Punto B - X:</strong></td>
-						<td>{{ formulario.pbx }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ formulario.pbx.help_text }}</td>
-					</tr>
-					{% if formulario.pby.errors %}
-						<tr class="error">
-							<td><i class="icon-warning-sign"></i></td>
-							<td>
-    							{{ formulario.pby.errors }}
-							</td>
-						</tr>
-					{% endif %}
-					<tr>
-						<td><strong>Punto B - Y:</strong></td>
-						<td>{{ formulario.pby }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ formulario.pby.help_text }}</td>
-					</tr>
-					<tr>
-						<td><strong>Transporte:</strong></td>
-						<td>
-							<select id="mode">
-								<option value="DRIVING">Conduciendo</option>
-								<option value="WALKING">Andando</option>
-								<option value="BICYCLING">En bicicleta</option>
-								<option value="TRANSIT">Transitando</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>Selecciona el medio de transporte.</td>
-					</tr>
-					
-					<tr>
-						<td><input class="btn btn-primary" type="submit" value="Modificar ruta" /></td>
-					</tr>
-				</table>
-    			<!--<div>
-        			<section id="errores">
-    					{{ formulario.pax.errors }}
-					</section>
-        			<strong>Punto A - X: </strong>{{ formulario.pax }}<br>
-					{{ formulario.pax.help_text }}
-					<hr>
-    			</div>
-    			<div>
-        			<section id="errores">
-    					{{ formulario.pay.errors }}
-					</section>
-        			<strong>Punto A - Y: </strong>{{ formulario.pay }}<br>
-					{{ formulario.pay.help_text }}
-					<hr>
-    			</div>
-    			<div>
-        			<section id="errores">
-    					{{ formulario.pbx.errors }}
-					</section>
-        			<strong>Punto A - X: </strong>{{ formulario.pbx }}<br>
-					{{ formulario.pbx.help_text }}
-					<hr>
-    			</div>
-    			<div>
-        			<section id="errores">
-    					{{ formulario.pby.errors }}
-					</section>
-        			<strong>Punto B - Y: </strong>{{ formulario.pby }}<br>
-					{{ formulario.pby.help_text }}
-					<hr>
-    			</div>-->
-			<!--</form>-->
-			<!--<form class="" method="post" action="">
-				{% csrf_token %}
-				<table>{{formulario}}</table>
-				<input class="btn btn-primary" type="submit" value="Modificar ruta" />
-			</form>-->
+			<p><strong>Título: </strong>{{busqueda.titulo}}</p>
+			<p><strong>Descripción: </strong>{{busqueda.descripcion}}</p>
+			<p><strong>Participantes: </p>
+			{% if participantes %}
+				{% for participante in participantes %}
+					<ul>
+						<li>{{participante.username}}</li>
+					</ul>
+				{% endfor %}
+			{% else %}
+				<p>No hay participantes.</p>
+			{% endif %}
 		</div>
 	</div>
  	<div class="span6">
-		<div class="well sidebar-nav">
+		<!--<div class="well sidebar-nav">
 			<div id="map-canvas" style="width: 445px; height: 300px"></div>
 			<div id="pano" style="width: 445px; height: 300px"></div>
-		</div>
+		</div>-->
 	</div>
 </div>
 {% endblock %}
