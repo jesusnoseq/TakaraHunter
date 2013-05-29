@@ -153,8 +153,13 @@ def borrarRuta(request, ruta):
 def detalleBusqueda(request, busqueda):
 	busqueda = Busqueda.objects.get(id=busqueda)
 	participantes = busqueda.participantes.all()
+	participo = False
+	for participante in participantes:
+		if participante == request.user:
+			participo = True
 	return render_to_response('detalleBusqueda.html',
 	{
+		'participo':participo,
 		'participantes':participantes,
 		'busqueda':busqueda
 	},context_instance=RequestContext(request))
@@ -181,9 +186,12 @@ def miListaBusquedas(request):
 	
 @login_required(login_url='/login')
 def miDetallesBusquedas(request, busqueda):
-	return render_to_response('prueba.html',
+	busqueda = Busqueda.objects.get(id=busqueda)
+	participantes = busqueda.participantes.all()
+	return render_to_response('miDetalleBusqueda.html',
 	{
-		'mensaje':'hola'
+		'participantes':participantes,
+		'busqueda':busqueda
 	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
