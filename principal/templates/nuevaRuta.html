@@ -3,6 +3,12 @@
 {% block titulo %}TH | Nueva ruta{% endblock %}
 
 {% block footerScripts %}
+	<style>
+		#mapa img
+		{
+			max-width: none;
+		}
+	</style>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
 	<script type="text/javascript">
 		$(document).ready(function()
