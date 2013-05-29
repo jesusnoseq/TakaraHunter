@@ -9,6 +9,10 @@ class RutaForm(ModelForm):
     class Meta:
         model = Ruta
         
+class BusquedaForm(ModelForm):
+    class Meta:
+        model = Busqueda
+                
 class UserForm(ModelForm):
     class Meta:
         model = User

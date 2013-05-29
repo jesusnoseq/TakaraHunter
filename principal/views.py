@@ -150,10 +150,13 @@ def borrarRuta(request, ruta):
 	return HttpResponseRedirect('/rutas')
 
 @login_required(login_url='/login')
-def detalleBusqueda(request):
+def detalleBusqueda(request, busqueda):
+	busqueda = Busqueda.objects.get(id=busqueda)
+	participantes = busqueda.participantes.all()
 	return render_to_response('detalleBusqueda.html',
 	{
-		'mensaje':'hola'
+		'participantes':participantes,
+		'busqueda':busqueda
 	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
@@ -177,8 +180,11 @@ def miListaBusquedas(request):
 	},context_instance=RequestContext(request))
 	
 @login_required(login_url='/login')
-def miDetallesBusquedas(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+def miDetallesBusquedas(request, busqueda):
+	return render_to_response('prueba.html',
+	{
+		'mensaje':'hola'
+	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def miSalirBusquedas(request):
@@ -206,9 +212,21 @@ def hall(request):
 
 @staff_member_required
 def crearBusqueda(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	if request.method=='POST':
+			formulario = BusquedaForm(request.POST, request.FILES)		
+			if formulario.is_valid():
+				formulario.save()
+				pagina_de_vuelta='/busquedas/'
+				return HttpResponseRedirect(pagina_de_vuelta)
+	else:
+		formulario = BusquedaForm()
+	return render_to_response('nuevaBusqueda.html',
+	{
+		'formulario':formulario
+	},context_instance=RequestContext(request))
 
 @staff_member_required
-def borrarBusqueda(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+def borrarBusqueda(request, busqueda):
+	busquedaABorrar = Busqueda.objects.get(id=busqueda).delete()
+	return HttpResponseRedirect('/busquedas')
 
