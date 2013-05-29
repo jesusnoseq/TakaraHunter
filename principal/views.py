@@ -165,15 +165,18 @@ def detalleBusqueda(request, busqueda):
 	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
-def unirseBusqueda(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+def unirseBusqueda(request, busqueda):
+
+	return HttpResponseRedirect('/busquedas')
 
 @login_required(login_url='/login')
 def listaBusquedas(request):
-	listaBusquedas = Busqueda.objects.all()
+	busquedas1 = Busqueda.objects.filter(participantes=request.user)
+	busquedas2 = Busqueda.objects.exclude(participantes=request.user)
 	return render_to_response('listaBusquedas.html',
 	{
-		'busquedas':listaBusquedas
+		'busquedas1':busquedas1,
+		'busquedas2':busquedas2
 	},context_instance=RequestContext(request))
 	
 @login_required(login_url='/login')
@@ -195,16 +198,14 @@ def miDetallesBusquedas(request, busqueda):
 	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
-def miSalirBusquedas(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+def salirBusqueda(request, busqueda):
+
+	return HttpResponseRedirect('/busquedas')
 
 @login_required(login_url='/login')
-def salirBusqueda(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
-
-@login_required(login_url='/login')
-def atraparTesoros(request):
-	return render_to_response('tesoro.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+def miSalirBusquedas(request, busqueda):
+	
+	return HttpResponseRedirect('/misbusquedas')
 
 @login_required(login_url='/login')
 def matriz(request):
@@ -217,6 +218,13 @@ def hall(request):
 	for row in result:
 		row['username']=User.objects.get(pk=row['recogidaPor']).username
 	return render_to_response('hallDeLaFama.html',{'lista':result},context_instance=RequestContext(request))
+
+def realizandoBusqueda(request, busqueda):
+	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+
+@login_required(login_url='/login')
+def atraparTesoros(request):
+	return render_to_response('tesoro.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
 @staff_member_required
 def crearBusqueda(request):
