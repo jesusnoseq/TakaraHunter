@@ -2,123 +2,22 @@
 
 {% block titulo %}TH | Tesoro X{% endblock %}
 
-{% endblock %}
-
-{% block menu_pagina %}
-<div class="navbar">
-	<div class="navbar-inner">
-		<div class="container">
-			<ul class="nav">
-				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> <p>Mis rutas</p></a></li>
-				<li><a href="/misbusquedas"><i class="icon-list"></i><i class="icon-flag"></i> <p>Mis búsquedas</p></a></li>
-				<li>Ola k ashe</li>
-			</ul>
-		</div>
-	</div>
-</div>
-{% endblock %}
-
-{% block menu_inferior %}
-<div class="navbar">
-	<div class="navbar-inner">
-		<div class="container">
-			<ul class="nav">
-				<li><a href="/rutas/borrar/{{id_ruta}}"><i class="icon-trash"></i><i class="icon-flag"></i> <p>Borrar ruta</p></a></li>
-				<li><a href="/rutas/nueva"><i class="icon-file"></i><i class="icon-map-marker"></i> <p>Nueva ruta</p></a></li>
-			</ul>
-		</div>
-	</div>
-</div>
-{% endblock %}
-
 {% block contenido %}
 <div class="row-fluid">
 	<div class="span6">
 		<div class="well sidebar-nav">
-			<form method="post">{% csrf_token %}
-				<table class="table table-bordered table-condensed">
-					{% if formulario.non_field_errors %}
-						<tr>
-							<td></td>
-							<td>
-    							{{ formulario.non_field_errors }}
-							</td>
-						</tr>
-					{% endif %}
-					{% if formulario.titulo.errors %}
-						<tr class="error">
-							<td><i class="icon-warning-sign"></i></td>
-							<td>
-    							{{ formulario.titulo.errors }}
-							</td>
-						</tr>
-					{% endif %}
-					<tr>
-						<td><strong>Título:</strong></td>
-						<td>{{ formulario.titulo }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ formulario.titulo.help_text }}</td>
-					</tr>
-					{% if formulario.origen.errors %}
-						<tr class="error">
-							<td><i class="icon-warning-sign"></i></td>
-							<td>
-    							{{ formulario.origen.errors }}
-							</td>
-						</tr>
-					{% endif %}
-					<tr>
-						<td><strong>Origen:</strong></td>
-						<td>{{ formulario.origen }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ formulario.origen.help_text }}</td>
-					</tr>
-					{% if formulario.destino.errors %}
-						<tr class="error">
-							<td><i class="icon-warning-sign"></i></td>
-							<td>
-    							{{ formulario.destino.errors }}
-							</td>
-						</tr>
-					{% endif %}
-					<tr>
-						<td><strong>Destino:</strong></td>
-						<td>{{ formulario.destino }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ formulario.destino.help_text }}</td>
-					</tr>
-					{% if formulario.modo.errors %}
-						<tr class="error">
-							<td><i class="icon-warning-sign"></i></td>
-							<td>
-    							{{ formulario.modo.errors }}
-							</td>
-						</tr>
-					{% endif %}
-					<tr>
-						<td><strong>Modo:</strong></td>
-						<td>{{ formulario.modo }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ formulario.modo.help_text }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>Deberías pulsar primero el botón <strong>"Calcular ruta"</strong> para comprobar que la ruta se crea y funciona correctamente.</td>
-					</tr>
-					<tr>
-						<td><input class="btn btn-primary" type="submit" value="Modificar ruta" /></td>
-						<td><input class="btn btn-primary" onclick="calcularRuta();return false;" value="Calcular ruta" /></td>
-					</tr>
-				</table>
-			</form>
+			<p><strong>Título: </strong>{{busqueda.titulo}}</p>
+			<p><strong>Descripción: </strong>{{busqueda.descripcion}}</p>
+			<p><strong>Participantes: </p>
+			{% if participantes %}
+				{% for participante in participantes %}
+					<ul>
+						<li>{{participante.username}}</li>
+					</ul>
+				{% endfor %}
+			{% else %}
+				<p>No hay participantes.</p>
+			{% endif %}	
 		</div>
 	</div>
  	<div class="span6">
