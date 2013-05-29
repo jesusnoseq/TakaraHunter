@@ -224,10 +224,13 @@ def hall(request):
 def realizandoBusqueda(request, busqueda):
 	busqueda = Busqueda.objects.get(id=busqueda)
 	participantes = busqueda.participantes.all()
+	tesoro = Tesoro.objects.filter(busqueda=busqueda)
+	
 	return render_to_response('tesoro.html',
 	{
 		'participantes':participantes,
-		'busqueda':busqueda
+		'busqueda':busqueda,
+		'tesoro':tesoro
 	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
