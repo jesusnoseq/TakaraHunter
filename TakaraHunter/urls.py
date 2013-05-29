@@ -38,6 +38,7 @@ urlpatterns = patterns('',
 		
 	url(r'^about/$', direct_to_template, {'template': 'sobreNosotros.html'}),
 	url('^404testing/$', direct_to_template, {'template': '404.html'}),
+	url(r'^tesoro/$', direct_to_template, {'template': 'tesoro.html'}),
 	#url(r'^login/$', 'auth.views.login_user'),
 
 	url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT,}),
