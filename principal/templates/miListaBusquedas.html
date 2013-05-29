@@ -21,17 +21,20 @@
 		<tr>
 			<td>Título</td>
 			<td>Descripción</td>
+			<td>COLUMNA</td>
 		</tr>
 		{% if busquedas %}
 			{% for busqueda in busquedas %}
 				<tr>
 					<td><a href="/busquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
 					<td>{{ busqueda.descripcion }}</td>
+					<td><input class="btn btn-primary" type="submit" value="Participar"/></td>
 				</tr>
 			{% endfor %}
     	{% else %}
 			<tr>
 				<td>No hay búsquedas.</td>
+				<td></td>
 				<td></td>
 			</tr>
     	{% endif %}
