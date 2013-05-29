@@ -7,8 +7,8 @@
 	<div class="navbar-inner">
 		<div class="container">
 			<ul class="nav">
-				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> <p>Mis rutas</p></a></li>
-				<li><a href="/misbusquedas"><i class="icon-list"></i><i class="icon-flag"></i> <p>Mis búsquedas</p></a></li>
+				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> Mis rutas</a></li>
+				<li><a href="/misbusquedas"><i class="icon-list"></i><i class="icon-flag"></i> Mis búsquedas</a></li>
 			</ul>
 		</div>
 	</div>
@@ -29,8 +29,8 @@
 				<tr>
 					<td><a href="/misbusquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
 					<td>{{ busqueda.descripcion }}</td>
-					<td><a class="btn btn-success btn-block" href="/misbusquedas/realizar/{{ busqueda.id }}"><i class="icon-play"></i><i class="icon-globe"></i> Realizar búsqueda</a></td>
-					<td><a class="btn btn-warning btn-block" href="/misbusquedas/salir/{{ busqueda.id }}"><i class="icon-remove"></i><i class="icon-globe"></i> Abandonar búsqueda</a></td>
+					<td><a class="btn btn-success btn-block" href="/misbusquedas/realizar/{{ busqueda.id }}"><i class="icon-play"></i><i class="icon-globe"></i> Realizar</a></td>
+					<td><a class="btn btn-warning btn-block" href="/misbusquedas/salir/{{ busqueda.id }}"><i class="icon-remove"></i><i class="icon-globe"></i> Abandonar</a></td>
 				</tr>
 			{% endfor %}
     	{% else %}
