@@ -168,7 +168,8 @@ def detalleBusqueda(request, busqueda):
 
 @login_required(login_url='/login')
 def unirseBusqueda(request, busqueda):
-
+	busqueda = Busqueda.objects.get(id=busqueda)
+	busqueda.participantes.add(request.user)
 	return HttpResponseRedirect('/busquedas')
 
 @login_required(login_url='/login')
@@ -201,7 +202,8 @@ def miDetallesBusquedas(request, busqueda):
 
 @login_required(login_url='/login')
 def salirBusqueda(request, busqueda):
-
+	busqueda = Busqueda.objects.get(id=busqueda)
+	busqueda.participantes.remove(request.user)
 	return HttpResponseRedirect('/busquedas')
 
 @login_required(login_url='/login')
