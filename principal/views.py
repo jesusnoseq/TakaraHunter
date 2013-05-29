@@ -151,7 +151,10 @@ def borrarRuta(request, ruta):
 
 @login_required(login_url='/login')
 def detalleBusqueda(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	return render_to_response('detalleBusqueda.html',
+	{
+		'mensaje':'hola'
+	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def unirseBusqueda(request):
