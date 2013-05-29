@@ -222,14 +222,13 @@ def hall(request):
 	return render_to_response('hallDeLaFama.html',{'lista':result},context_instance=RequestContext(request))
 
 def realizandoBusqueda(request, busqueda):
-	busqueda = Busqueda.objects.get(id=busqueda)
-	participantes = busqueda.participantes.all()
-	tesoro = Tesoro.objects.filter(busqueda=busqueda)
-	
+	busquedaARealizar = Busqueda.objects.get(id=busqueda)
+	participantes = busquedaARealizar.participantes.all()
+	tesoro = Tesoro.objects.get(busqueda=busquedaARealizar)
 	return render_to_response('tesoro.html',
 	{
 		'participantes':participantes,
-		'busqueda':busqueda,
+		'busqueda':busquedaARealizar,
 		'tesoro':tesoro
 	},context_instance=RequestContext(request))
 
