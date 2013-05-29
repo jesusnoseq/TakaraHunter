@@ -208,7 +208,8 @@ def salirBusqueda(request, busqueda):
 
 @login_required(login_url='/login')
 def miSalirBusquedas(request, busqueda):
-	
+	busqueda = Busqueda.objects.get(id=busqueda)
+	busqueda.participantes.remove(request.user)
 	return HttpResponseRedirect('/misbusquedas')
 
 @login_required(login_url='/login')
