@@ -219,10 +219,40 @@ def matriz(request):
 
 @login_required(login_url='/login')
 def hall(request):
+	campeon = []
+	diamante = []
+	platino = []
+	oro = []
+	plata = []
+	bronce = []
+	elresto = []
 	result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
 	for row in result:
 		row['username']=User.objects.get(pk=row['recogidaPor']).username
-	return render_to_response('hallDeLaFama.html',{'lista':result},context_instance=RequestContext(request))
+	if result.count() >= 1:
+		campeon = result[0]
+	if result.count() >= 2:
+		diamante = result[1]
+	if result.count() >= 3:
+		platino = result[2]
+	if result.count() >= 4:
+		oro = result[3]
+	if result.count() >= 5:
+		plata = result[4]
+	if result.count() >= 6:
+		bronce = result[5]
+	if result.count() >= 7:
+		elresto = result[6:]
+	return render_to_response('hallDeLaFama.html',
+	{
+		'campeon':campeon,
+		'diamante':diamante,
+		'platino':platino,
+		'oro':oro,
+		'plata':plata,
+		'bronce':bronce,
+		'elresto':elresto,
+	},context_instance=RequestContext(request))
 
 def realizandoBusqueda(request, busqueda):
 	busquedaARealizar = Busqueda.objects.get(id=busqueda)
