@@ -289,3 +289,30 @@ def borrarBusqueda(request, busqueda):
 	busquedaABorrar = Busqueda.objects.get(id=busqueda).delete()
 	return HttpResponseRedirect('/busquedas')
 
+@login_required(login_url='/login')
+def listaTesoros(request):
+	tesoros = Tesoro.objects.filter(participantes=request.user) 
+	return render_to_response('listaTesoros.html',
+	{
+		'tesoros':tesoros,
+	},context_instance=RequestContext(request))
+
+@login_required(login_url='/login')
+def borrarTesoro(request, ruta):
+	tesoroABorrar = Tesoro.objects.get(id=tesoro).delete()
+	return HttpResponseRedirect('/tesoros')
+
+def crearTesoro(request):
+	if request.method=='POST':
+			formulario = TesoroForm(request.POST, request.FILES)		
+			if formulario.is_valid():
+				formulario.save()
+				pagina_de_vuelta='/tesoros/'
+				return HttpResponseRedirect(pagina_de_vuelta)
+	else:
+		formulario = TesoroForm()
+	return render_to_response('nuevoTesoro.html',
+	{
+		'formulario':formulario
+	},context_instance=RequestContext(request))
+
