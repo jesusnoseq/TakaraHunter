@@ -12,6 +12,10 @@ class RutaForm(ModelForm):
 class BusquedaForm(ModelForm):
     class Meta:
         model = Busqueda
+
+class TesoroForm(ModelForm):
+    class Meta:
+        model = Tesoro
                 
 class UserForm(ModelForm):
     class Meta:

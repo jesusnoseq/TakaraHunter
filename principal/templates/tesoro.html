@@ -2,15 +2,96 @@
 
 {% block titulo %}TH | Tesoro X{% endblock %}
 
+{% block footerScripts %}
+	<style>
+		#mapa img
+		{
+			max-width: none;
+		}
+	</style>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			inicializar()
+		});
+	
+		var geocoder;
+		var infoWindow;
+		var marker;
+		var rendererOptions = 
+		{
+			draggable: true
+		};
+		var directionDisplay;
+		var directionsService = new google.maps.DirectionsService();
+		geocoder = new google.maps.Geocoder();
+    	infowindow = new google.maps.InfoWindow();
+
+		function inicializar() 
+		{
+			var coordX = document.getElementById('coordx').innerHTML;
+			var coordY = document.getElementById('coordy').innerHTML;
+			var stockholm = new google.maps.LatLng(coordX, coordY);
+			var parliament = new google.maps.LatLng(coordX, coordY);
+			var marker;
+			var map;
+
+			function initialize() {
+  				var mapOptions = {
+    			zoom: 13,
+   				mapTypeId: google.maps.MapTypeId.ROADMAP, 
+   			    center: stockholm
+  			};
+
+ 			map = new google.maps.Map(document.getElementById('mapa'), mapOptions);
+
+  			marker = new google.maps.Marker({
+    		map:map,
+    		draggable:true,
+    		animation: google.maps.Animation.DROP,
+    		position: parliament
+  		});
+  		google.maps.event.addListener(marker, 'click', toggleBounce);
+	}
+
+	function toggleBounce() {
+
+  		if (marker.getAnimation() != null) {
+    		marker.setAnimation(null);
+  		} else {
+    		marker.setAnimation(google.maps.Animation.BOUNCE);
+  		}
+	}
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+	}
+		
+		
+	</script>
+{% endblock %}
+
 {% block contenido %}
 <div class="row-fluid">
 	<div class="span6">
 		<div class="well sidebar-nav">
+			<p><strong>Tesoro:</strong>
+				<table class="table table-bordered table-condensed">
+					<tr>
+						<td><p><strong>Coordenada X:</strong></p></td>
+						<td id="coordx">{{tesoro.x|stringformat:"f" }}</td>
+					</tr>
+					<tr>
+						<td><p><strong>Coordenada Y:</strong></p></td>
+						<td id="coordy">{{tesoro.y|stringformat:"f" }}</td>
+					</tr>
+				</table>
+				
 			<p><strong>Título:</strong> {{busqueda.titulo}}</p>
 			<p><strong>Descripción:</strong> {{busqueda.descripcion}}</p>
 			<p><strong>Tesoro: </strong></p>
-			<p><strong>Coordenada X:</strong> {{tesoro.x}}</p>
-			<p><strong>Coordenada Y:</strong> {{tesoro.y}}</p>
+			
+			
 			<p><strong>Participantes: </p>
 			{% if participantes %}
 				{% for participante in participantes %}
@@ -22,6 +103,7 @@
 				<p>No hay participantes.</p>
 			{% endif %}	
 		</div>
+		<input class="btn btn-primary" type="submit" value="Recoger Tesoro" />
 	</div>
  	<div class="span6">
 		<div class="well sidebar-nav">

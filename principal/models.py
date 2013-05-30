@@ -45,12 +45,12 @@ User.add_to_class('foto', models.ImageField(upload_to='fotos_usuario', blank=Tru
 class Ruta(models.Model):
     titulo = models.CharField(max_length=100, verbose_name="Nombre", help_text="Nombre de la ruta. 100 caracteres máximo.")
     user =  models.ForeignKey(User, verbose_name="Poseedor", null=True, blank=True, editable=False)
-    """ Pienso que no es correcto asi, a partir de una coordenada se puede pillar la direccion facilmente
-    sin problemas, ahora, ¿una direccion? puesdes guardar "mi calle"? eso donde esta? XD o si quiero poner un punto
-    en mitad del campo o el desierto, eso que direccion tiene ¿diseminado?
-    En fin, el perfil se queda con px y py. Haced con vuestra parte lo que querais. """
-    origen = models.CharField(max_length = 100, verbose_name="Origen", help_text="Origen de la ruta. 100 caracteres máximo.")
-    destino = models.CharField(max_length = 100, verbose_name="Destino", help_text="Destino de la ruta. 100 caracteres máximo.")
+    #origen = models.CharField(max_length = 100, verbose_name="Origen", help_text="Origen de la ruta. 100 caracteres máximo.")
+    #destino = models.CharField(max_length = 100, verbose_name="Destino", help_text="Destino de la ruta. 100 caracteres máximo.")
+    origen_x = models.FloatField(verbose_name="Origen - Coordenada X", help_text="Coordenada X del origen de la ruta.")
+    origen_y = models.FloatField(verbose_name="Origen - Coordenada Y", help_text="Coordenada Y del origen de la ruta.")
+    destino_x = models.FloatField(verbose_name="Destino - Coordenada X", help_text="Coordenada X del destino de la ruta.")
+    destino_y = models.FloatField(verbose_name="Destino - Coordenada Y", help_text="Coordenada Y del destino de la ruta.")
     modo = models.CharField(max_length = 10, verbose_name="Modo", choices=MODE_CHOICES, help_text="Modo o medio de transporte de la ruta.")
     fecha_modificacion = models.DateTimeField(db_index=True, auto_now=True)
     class Meta:
@@ -80,7 +80,7 @@ class Tesoro(models.Model):
     y = models.FloatField()
     busqueda = models.ForeignKey(Busqueda)
     fecha_recogida = models.DateTimeField(auto_now=True)
-    recogidaPor =  models.OneToOneField(User,null=True,blank=True)
+    recogidaPor =  models.ForeignKey(User,null=True,blank=True)
     def __unicode__(self):
         return u"%s - (%0.2f, %0.2f)" % (self.busqueda.titulo,self.x,self.y)
     
