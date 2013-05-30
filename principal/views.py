@@ -69,10 +69,12 @@ def salir(request):
 
 @login_required(login_url='/login')
 def perfil(request):
+	numero_tesoros = Tesoro.objects.filter(recogidaPor=request.user).count()
 	listaRutas = Ruta.objects.filter(user=request.user)[:10]
 	listaBusquedas = Busqueda.objects.filter(participantes=request.user)[:10]
 	return render_to_response('perfil.html',
 	{
+		'numero_tesoros':numero_tesoros,
 		'ultimas_rutas':listaRutas,
 		'ultimas_busquedas':listaBusquedas
 	},context_instance=RequestContext(request))
