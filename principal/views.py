@@ -380,6 +380,7 @@ def hall(request):
 		'elresto':elresto,
 	},context_instance=RequestContext(request))
 
+@login_required(login_url='/login')
 def realizandoBusqueda(request, busqueda):
 	busquedaARealizar = Busqueda.objects.get(id=busqueda)
 	participantes = busquedaARealizar.participantes.all()
