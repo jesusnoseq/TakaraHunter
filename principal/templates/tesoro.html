@@ -9,14 +9,13 @@
 			max-width: none;
 		}
 	</style>
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true&amp;libraries=geometry"></script>
 	<script type="text/javascript">
 		$(document).ready(function()
 		{
 			inicializar()
 		});
-	
-		var geocoder;
+		/*var geocoder;
 		var infoWindow;
 		var marker;
 		var rendererOptions = 
@@ -32,42 +31,152 @@
 		{
 			var coordX = document.getElementById('coordx').innerHTML;
 			var coordY = document.getElementById('coordy').innerHTML;
-			var stockholm = new google.maps.LatLng(coordX, coordY);
-			var parliament = new google.maps.LatLng(coordX, coordY);
-			var marker;
-			var map;
+			if(navigator.geolocation)
+  			{
+  				 navigator.geolocation.getCurrentPosition(coordenadas);
+  			}
+  			else
+  			{
+  				alert("Tu navegador no soporta geolocalización y no podemos calcular la ruta hasta el tesoro.")
+  			}
+  			
+  			 function coordenadas()
+  			 {
+           		 var posActual = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+     		}
+  			var myLatlng = new google.maps.LatLng(coordX,coordY);
+  			var mapOptions = {
+   				zoom: 15,
+    			center: myLatlng,
+    			mapTypeId: google.maps.MapTypeId.ROADMAP
+  			}
+  			var map = new google.maps.Map(document.getElementById('mapa'), mapOptions);
+  			
+     		
+  			var marker = new google.maps.Marker({
+      			position: myLatlng,
+      			map: map,
+      			title: 'Tesoro'
+  			});
+  			
+  			var marker_mov = new google.maps.Marker({
+  				position: posActual,
+  				map: map,
+  				title: 'Posicion actual'
+  			});
+  			
+  			marker_mov.setMap(map);
+}*/
 
-			function initialize() {
-  				var mapOptions = {
-    			zoom: 13,
-   				mapTypeId: google.maps.MapTypeId.ROADMAP, 
-   			    center: stockholm
+		var map;
+		var distancia;
+		var coordX = document.getElementById('coordx').innerHTML;
+		var coordY = document.getElementById('coordy').innerHTML;
+		var myLatlng = new google.maps.LatLng(coordX,coordY);
+
+		function inicializar() {
+			
+  			var mapOptions = {
+    		zoom: 10,
+    		mapTypeId: google.maps.MapTypeId.ROADMAP
+  		};
+  		map = new google.maps.Map(document.getElementById('mapa'), mapOptions);
+  		
+  		var marker = new google.maps.Marker({
+      		position: myLatlng,
+      		map: map,
+      		title: 'Tesoro',
+      		icon: '{{STATIC_URL}}img/moneda_takara.png'
+  		});
+
+  		// Try HTML5 geolocation
+ 		if(navigator.geolocation) {
+    		navigator.geolocation.getCurrentPosition(function(position) {
+     		var posActual = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+     		document.getElementById('posx').innerHTML = position.coords.latitude;
+     		document.getElementById('posy').innerHTML = position.coords.longitude;
+
+			var marker_mov = new google.maps.Marker({
+ 				position: posActual,
+  				map: map,
+  				title: 'Posicion actual'
+  			});
+
+      		map.setCenter((myLatlng));
+      		
+      		var lineCoordinates = [
+    			posActual, 
+    			myLatlng
+  			];
+  			
+  			var lineSymbol = {
+    			path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+    			scale: 5,
+    			strokeColor: '#393'
   			};
 
- 			map = new google.maps.Map(document.getElementById('mapa'), mapOptions);
+  			line = new google.maps.Polyline({
+    			path: lineCoordinates,
+    			strokeColor: '#393',
+    			icons: [{
+      				icon: lineSymbol,
+      				offset: '100%'
+    			}],
+    			map: map
+ 			});
+ 			
+ 			var count = 0;
+    		window.setInterval(function() {
+      			count = (count + 1) % 200;
 
-  			marker = new google.maps.Marker({
-    		map:map,
-    		draggable:true,
-    		animation: google.maps.Animation.DROP,
-    		position: parliament
-  		});
-  		google.maps.event.addListener(marker, 'click', toggleBounce);
-	}
-
-	function toggleBounce() {
-
-  		if (marker.getAnimation() != null) {
-    		marker.setAnimation(null);
+      			var icons = line.get('icons');
+      			icons[0].offset = (count / 2) + '%';
+      			line.set('icons', icons);
+  			}, 20);
+  			
+  			distancia = google.maps.geometry.spherical.computeDistanceBetween(myLatlng, posActual);
+  			document.getElementById('dist').innerHTML = distancia + ' m';
+  			
+  			if(distancia <= 0.5)
+  			{
+  				document.getElementById('recoger').disabled = false;
+  			}
+  			else
+  			{
+  				document.getElementById('recoger').disabled = true;
+  			}
+  			
+    		}, function() {
+      			handleNoGeolocation(true);
+    		});
   		} else {
-    		marker.setAnimation(google.maps.Animation.BOUNCE);
+    		// Browser doesn't support Geolocation
+    		handleNoGeolocation(false);
   		}
+		}
+
+		function handleNoGeolocation(errorFlag) {
+  			if (errorFlag) {
+    			var content = 'Error: The Geolocation service failed.';
+  			} else {
+    			var content = 'Error: Your browser doesn\'t support geolocation.';
+  			}
+
+  			var options = {
+    			map: map,
+    			position: new google.maps.LatLng(60, 105),
+    			content: content
+  			};
+
+  			var infowindow = new google.maps.InfoWindow(options); 
+  			map.setCenter(options.position);
 	}
 
-		google.maps.event.addDomListener(window, 'load', initialize);
-	}
-		
-		
+	google.maps.event.addDomListener(window, 'load', initialize);
+
+
+			
+	
 	</script>
 {% endblock %}
 
@@ -85,14 +194,27 @@
 						<td><p><strong>Coordenada Y:</strong></p></td>
 						<td id="coordy">{{tesoro.y|stringformat:"f" }}</td>
 					</tr>
+					<tr>
+						<td><p><strong>Distancia:</strong></p></td>
+						<td id="dist"></td>
+					</tr>
+				</table>
+				<br>
+				<p><strong>Tu posicion:</strong>
+				<table class="table table-bordered table-condensed">
+					<tr>
+						<td><p><strong>Coordenada X:</strong></p></td>
+						<td id="posx"></td>
+					</tr>
+					<tr>
+						<td><p><strong>Coordenada Y:</strong></p></td>
+						<td id="posy"></td>
+					</tr>
 				</table>
 				
 			<p><strong>Título:</strong> {{busqueda.titulo}}</p>
 			<p><strong>Descripción:</strong> {{busqueda.descripcion}}</p>
-			<p><strong>Tesoro: </strong></p>
-			
-			
-			<p><strong>Participantes: </p>
+			<p><strong>Participantes:</strong> </p>
 			{% if participantes %}
 				{% for participante in participantes %}
 					<ul>
@@ -103,7 +225,7 @@
 				<p>No hay participantes.</p>
 			{% endif %}	
 		</div>
-		<input class="btn btn-primary" type="submit" value="Recoger Tesoro" />
+		<input id="recoger" class="btn btn-primary" type="submit" value="Recoger Tesoro" />
 	</div>
  	<div class="span6">
 		<div class="well sidebar-nav">
@@ -111,11 +233,5 @@
 		</div>
 	</div>
 </div>
-<div class="row-fluid">
-	<div class="span12">
-		<div class="well sidebar-nav">
-			<div id="panel_direcciones"><center><strong>Información de la ruta</strong></center></div>
-		</div>
-	</div>
-</div>
+<br><br>
 {% endblock %}

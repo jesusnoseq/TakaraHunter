@@ -298,10 +298,11 @@ def listaTesoros(request):
 	},context_instance=RequestContext(request))
 
 @staff_member_required
-def borrarTesoro(request, ruta):
+def borrarTesoro(request, tesoro):
 	tesoroABorrar = Tesoro.objects.get(id=tesoro).delete()
 	return HttpResponseRedirect('/tesoros')
 
+@staff_member_required
 def crearTesoro(request):
 	if request.method=='POST':
 			formulario = TesoroForm(request.POST, request.FILES)		
@@ -316,3 +317,10 @@ def crearTesoro(request):
 		'formulario':formulario
 	},context_instance=RequestContext(request))
 
+@staff_member_required
+def detalleTesoro(request, tesoro):
+	tesoro = Tesoro.objects.get(id=tesoro)
+	return render_to_response('detalleTesoro.html',
+	{
+		'tesoro':tesoro
+	},context_instance=RequestContext(request))
