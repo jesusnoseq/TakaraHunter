@@ -289,15 +289,15 @@ def borrarBusqueda(request, busqueda):
 	busquedaABorrar = Busqueda.objects.get(id=busqueda).delete()
 	return HttpResponseRedirect('/busquedas')
 
-@login_required(login_url='/login')
+@staff_member_required
 def listaTesoros(request):
-	tesoros = Tesoro.objects.filter(participantes=request.user) 
+	tesoros = Tesoro.objects.all()
 	return render_to_response('listaTesoros.html',
 	{
 		'tesoros':tesoros,
 	},context_instance=RequestContext(request))
 
-@login_required(login_url='/login')
+@staff_member_required
 def borrarTesoro(request, ruta):
 	tesoroABorrar = Tesoro.objects.get(id=tesoro).delete()
 	return HttpResponseRedirect('/tesoros')
