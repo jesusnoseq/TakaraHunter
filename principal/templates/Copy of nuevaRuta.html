@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block titulo %}TH | Detalle ruta{% endblock %}
+{% block titulo %}TH | Nueva ruta{% endblock %}
 
 {% block footerScripts %}
 	<style>
@@ -31,7 +31,7 @@
 		function inicializar() 
 		{
 			var centromapa = new google.maps.LatLng(37.88472,-4.77889);
-			directionsDisplay = new google.maps.DirectionsRenderer();
+			directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 			var myOptions = 
 			{
 				zoom: 14,
@@ -80,7 +80,7 @@
 			{
 				origin:origen,
 				destination:destino,
-				travelMode:google.maps.DirectionsTravelMode[modo]
+				travelMode: google.maps.DirectionsTravelMode[modo]
 			};
 			
 			directionsService.route(request, function(response, status)
@@ -138,19 +138,6 @@
 </div>
 {% endblock %}
 
-{% block menu_inferior %}
-<div class="navbar">
-	<div class="navbar-inner">
-		<div class="container">
-			<ul class="nav">
-				<li><a href="/rutas/borrar/{{id_ruta}}"><i class="icon-trash"></i><i class="icon-flag"></i> Borrar</a></li>
-				<li><a href="/rutas/nueva"><i class="icon-file"></i><i class="icon-map-marker"></i> Nueva</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
-{% endblock %}
-
 {% block contenido %}
 <div class="row-fluid">
 	<div class="span6">
@@ -165,7 +152,6 @@
 							</td>
 						</tr>
 					{% endif %}
-					<!---------------------------------------------------------------------------------------------------->
 					{% if formulario.titulo.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
@@ -182,75 +168,38 @@
 						<td></td>
 						<td>{{ formulario.titulo.help_text }}</td>
 					</tr>
-					<!---------------------------------------------------------------------------------------------------->
-					{% if formulario.origen_x.errors %}
+					{% if formulario.origen.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
 							<td>
-    							{{ formulario.origen_x.errors }}
+    							{{ formulario.origen.errors }}
 							</td>
 						</tr>
 					{% endif %}
 					<tr>
-						<td><strong>Origen - X:</strong></td>
-						<td>{{ formulario.origen_x }}</td>
+						<td><strong>Origen:</strong></td>
+						<td>{{ formulario.origen }}</td>
 					</tr>
 					<tr>
 						<td></td>
-						<td>{{ formulario.origen_x.help_text }}</td>
+						<td>{{ formulario.origen.help_text }}</td>
 					</tr>
-					<!---------------------------------------------------------------------------------------------------->
-					{% if formulario.origen_y.errors %}
+					{% if formulario.destino.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
 							<td>
-    							{{ formulario.origen_y.errors }}
+    							{{ formulario.destino.errors }}
 							</td>
 						</tr>
 					{% endif %}
 					<tr>
-						<td><strong>Origen - Y:</strong></td>
-						<td>{{ formulario.origen_y }}</td>
+						<td><strong>Destino:</strong></td>
+						<td>{{ formulario.destino }}</td>
 					</tr>
 					<tr>
 						<td></td>
-						<td>{{ formulario.origen_y.help_text }}</td>
+						<td>{{ formulario.destino.help_text }}</td>
 					</tr>
-					<!---------------------------------------------------------------------------------------------------->
-					{% if formulario.destino_x.errors %}
-						<tr class="error">
-							<td><i class="icon-warning-sign"></i></td>
-							<td>
-    							{{ formulario.destino_x.errors }}
-							</td>
-						</tr>
-					{% endif %}
-					<tr>
-						<td><strong>Destino - X:</strong></td>
-						<td>{{ formulario.destino_x }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ formulario.destino_x.help_text }}</td>
-					</tr>
-					<!---------------------------------------------------------------------------------------------------->
-					{% if formulario.destino_y.errors %}
-						<tr class="error">
-							<td><i class="icon-warning-sign"></i></td>
-							<td>
-    							{{ formulario.destino_y.errors }}
-							</td>
-						</tr>
-					{% endif %}
-					<tr>
-						<td><strong>Destino - Y:</strong></td>
-						<td>{{ formulario.destino_y }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ formulario.destino_y.help_text }}</td>
-					</tr>
-					<!---------------------------------------------------------------------------------------------------->
 					{% if formulario.modo.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
@@ -267,13 +216,12 @@
 						<td></td>
 						<td>{{ formulario.modo.help_text }}</td>
 					</tr>
-					<!---------------------------------------------------------------------------------------------------->
 					<tr>
 						<td></td>
 						<td>Deberías pulsar primero el botón <strong>"Calcular ruta"</strong> para comprobar que la ruta se crea y funciona correctamente.</td>
 					</tr>
 					<tr>
-						<td><input class="btn btn-primary" type="submit" value="Modificar ruta" /></td>
+						<td><input class="btn btn-primary" type="submit" value="Crear ruta" /></td>
 						<td><input class="btn btn-primary" onclick="calcularRuta();return false;" value="Calcular ruta" /></td>
 					</tr>
 				</table>
