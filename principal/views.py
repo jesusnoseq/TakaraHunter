@@ -327,8 +327,14 @@ def realizandoBusqueda(request, busqueda):
 	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
-def atraparTesoros(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+def atraparTesoros(request, busqueda):
+	busquedaAAtrapar = Busqueda.objects.get(id=busqueda)
+	tesoro = Tesoro.objects.get(busqueda=busquedaAAtrapar)
+	tesoro.recogidaPor.add(request.user)
+	busquedaAAtrapar.delete()
+	return render_to_response('tesoroAtrapado.html',{
+		'tesoro':tesoro,
+	},context_instance=RequestContext(request))
 
 @staff_member_required
 def crearBusqueda(request):
