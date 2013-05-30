@@ -11,9 +11,148 @@
 	</style>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
 	<script type="text/javascript">
+		/*//Declaramos las variables que vamos a user
+		var lat = null;
+		var lng = null;
+		var map = null;
+		var geocoder = null;
+		var marker1 = null;
+		var marker2 = null;
+         
 		$(document).ready(function()
 		{
-			inicializar()
+     		//Asignamos al evento click del boton la funcion codeAddress
+     		$('#pasar').click(function()
+     		{
+				codeAddress();
+        		return false;
+			});
+			//Inicializamos la función de google maps una vez el DOM este cargado
+			initialize();
+		});
+     
+		function initialize()
+		{
+			geocoder = new google.maps.Geocoder();
+        
+			var centromapa = new google.maps.LatLng(37.88472,-4.77889);
+ 			
+ 			latLng1 = new google.maps.LatLng($('#id_origen_x').value,$('#id_origen_y').value);
+ 			latLng2 = new google.maps.LatLng($('#id_destino_x').value,$('#id_destino_y').value);
+ 			
+			//Definimos algunas opciones del mapa a crear
+			var myOptions =
+			{
+				center: centromapa,//centro del mapa
+				zoom: 15,//zoom del mapa
+				mapTypeId: google.maps.MapTypeId.ROADMAP //tipo de mapa, carretera, híbrido,etc
+			};
+			//creamos el mapa con las opciones anteriores y le pasamos el elemento div
+			map = new google.maps.Map(document.getElementById("mapa"), myOptions);
+         
+			//creamos el marcador en el mapa
+			marker1 = new google.maps.Marker({
+				map: map,//el mapa creado en el paso anterior
+				position: latLng1,//objeto con latitud y longitud
+				draggable: true //que el marcador se pueda arrastrar
+			});
+			
+			//creamos el marcador en el mapa
+			marker2 = new google.maps.Marker({
+				map: map,//el mapa creado en el paso anterior
+				position: latLng2,//objeto con latitud y longitud
+				draggable: true //que el marcador se pueda arrastrar
+			});
+        
+			//función que actualiza los input del formulario con las nuevas latitudes
+			//Estos campos suelen ser hidden
+			updatePositionOrigen(latLng1);
+			updatePositionDestino(latLng2);
+		}
+     
+		//funcion que traduce la direccion en coordenadas
+		function codeAddress()
+		{
+			//obtengo la direccion del formulario
+			var address1 = document.getElementById("direccion_origen").value;
+			var address2 = document.getElementById("direccion_destino").value;
+			//hago la llamada al geodecoder
+			geocoder.geocode(
+			{
+				'address1': address1,
+			}, function(results, status)
+			{
+				//si el estado de la llamado es OK
+				if (status == google.maps.GeocoderStatus.OK)
+				{
+					//centro el mapa en las coordenadas obtenidas
+					//map.setCenter(results[0].geometry.location);
+					//coloco el marcador en dichas coordenadas
+					marker1.setPosition(results[0].geometry.location);
+ 					//actualizo el formulario      
+					updatePositionOrigen(results[0].geometry.location);
+             
+					//Añado un listener para cuando el markador se termine de arrastrar
+					//actualize el formulario con las nuevas coordenadas
+					google.maps.event.addListener(marker1, 'dragend', function()
+					{
+						updatePositionOrigen(marker1.getPosition());
+					});
+				}
+				else
+				{
+					//si no es OK devuelvo error
+					alert("No podemos encontrar la direcci&oacute;n, error: " + status);
+				}
+			});
+			
+			geocoder.geocode(
+			{
+				'address2': address2,
+			}, function(results, status)
+			{
+				//si el estado de la llamado es OK
+				if (status == google.maps.GeocoderStatus.OK)
+				{
+					//centro el mapa en las coordenadas obtenidas
+					//map.setCenter(results[0].geometry.location);
+					//coloco el marcador en dichas coordenadas
+					marker2.setPosition(results[0].geometry.location);
+ 					//actualizo el formulario      
+					updatePositionDestino(results[0].geometry.location);
+             
+					//Añado un listener para cuando el markador se termine de arrastrar
+					//actualize el formulario con las nuevas coordenadas
+					google.maps.event.addListener(marker2, 'dragend', function()
+					{
+						updatePositionOrigen(marker2.getPosition());
+					});
+				}
+				else
+				{
+					//si no es OK devuelvo error
+					alert("No podemos encontrar la direcci&oacute;n, error: " + status);
+				}
+			});
+		}
+   
+		//funcion que simplemente actualiza los campos del formulario
+		function updatePositionOrigen(latLng)
+  		{
+			$('#id_origen_x').val(latLng.lat());
+			$('#id_origen_y').val(latLng.lng());
+		}
+		
+		//funcion que simplemente actualiza los campos del formulario
+		function updatePositionDestino(latLng)
+  		{
+			$('#id_destino_x').val(latLng.lat());
+			$('#id_destino_y').val(latLng.lng());
+		}*/
+		
+		$(document).ready(function()
+		{
+			inicializar();
 		});
 	
 		var geocoder;
@@ -74,8 +213,8 @@
 		function calcularRuta() 
 		{
 			var modo = document.getElementById('id_modo').value;
-			var origen = document.getElementById("id_origen").value;
-			var destino = document.getElementById("id_destino").value;
+			var origen = document.getElementById("direccion_origen").value;
+			var destino = document.getElementById("direccion_destino").value;
 			var request = 
 			{
 				origin:origen,
@@ -152,6 +291,7 @@
 							</td>
 						</tr>
 					{% endif %}
+					<!---------------------------------------------------------------------------------------------------->
 					{% if formulario.titulo.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
@@ -168,38 +308,75 @@
 						<td></td>
 						<td>{{ formulario.titulo.help_text }}</td>
 					</tr>
-					{% if formulario.origen.errors %}
+					<!---------------------------------------------------------------------------------------------------->
+					{% if formulario.origen_x.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
 							<td>
-    							{{ formulario.origen.errors }}
+    							{{ formulario.origen_x.errors }}
 							</td>
 						</tr>
 					{% endif %}
 					<tr>
-						<td><strong>Origen:</strong></td>
-						<td>{{ formulario.origen }}</td>
+						<td><strong>Origen - X:</strong></td>
+						<td>{{ formulario.origen_x }}</td>
 					</tr>
 					<tr>
 						<td></td>
-						<td>{{ formulario.origen.help_text }}</td>
+						<td>{{ formulario.origen_x.help_text }}</td>
 					</tr>
-					{% if formulario.destino.errors %}
+					<!---------------------------------------------------------------------------------------------------->
+					{% if formulario.origen_y.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
 							<td>
-    							{{ formulario.destino.errors }}
+    							{{ formulario.origen_y.errors }}
 							</td>
 						</tr>
 					{% endif %}
 					<tr>
-						<td><strong>Destino:</strong></td>
-						<td>{{ formulario.destino }}</td>
+						<td><strong>Origen - Y:</strong></td>
+						<td>{{ formulario.origen_y }}</td>
 					</tr>
 					<tr>
 						<td></td>
-						<td>{{ formulario.destino.help_text }}</td>
+						<td>{{ formulario.origen_y.help_text }}</td>
 					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					{% if formulario.destino_x.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.destino_x.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Destino - X:</strong></td>
+						<td>{{ formulario.destino_x }}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>{{ formulario.destino_x.help_text }}</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					{% if formulario.destino_y.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.destino_y.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Destino - Y:</strong></td>
+						<td>{{ formulario.destino_y }}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>{{ formulario.destino_y.help_text }}</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
 					{% if formulario.modo.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
@@ -216,13 +393,23 @@
 						<td></td>
 						<td>{{ formulario.modo.help_text }}</td>
 					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					<tr>
+						<td><strong>Origen:</strong></td>
+						<td><input type="text" id="direccion_origen"/></td>
+					</tr>
+					<tr>
+						<td><strong>Destino:</strong></td>
+						<td><input type="text" id="direccion_destino"/></td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
 					<tr>
 						<td></td>
 						<td>Deberías pulsar primero el botón <strong>"Calcular ruta"</strong> para comprobar que la ruta se crea y funciona correctamente.</td>
 					</tr>
 					<tr>
 						<td><input class="btn btn-primary" type="submit" value="Crear ruta" /></td>
-						<td><input class="btn btn-primary" onclick="calcularRuta();return false;" value="Calcular ruta" /></td>
+						<td><input class="btn btn-primary" onclick="calcularRuta();" value="Calcular ruta" /></td>
 					</tr>
 				</table>
 			</form>
