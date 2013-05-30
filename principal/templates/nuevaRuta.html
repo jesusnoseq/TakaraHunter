@@ -8,7 +8,7 @@
 		{
 			max-width: none;
 		}
-		/*#id_origen_x
+		#id_origen_x
 		{
 			display: none;
 		}
@@ -23,9 +23,9 @@
 		#id_destino_y
 		{
 			display: none;
-		}*/
+		}
 	</style>
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&libraries=places&sensor=true"></script>
 	<script type="text/javascript">
 		/*//Declaramos las variables que vamos a user
 		var lat = null;
@@ -177,7 +177,7 @@
 		var marker;
 		var rendererOptions = 
 		{
-			draggable: true
+			draggable: false
 		};
 		var directionDisplay;
 		var directionsService = new google.maps.DirectionsService();
@@ -230,6 +230,47 @@
 						}
 					} 
 				});
+			});
+		}
+		
+		function buscarLugares()
+		{
+			var destino = document.getElementById("direccion_destino").value;
+			var request =
+			{
+    			location: destino,
+    			radius: 500,
+    			types: ['store']
+  			};
+  			infowindow = new google.maps.InfoWindow();
+  			var service = new google.maps.places.PlacesService(map);
+  			service.nearbySearch(request, callback);
+		}
+
+		function callback(results, status)
+		{
+  			if (status == google.maps.places.PlacesServiceStatus.OK)
+  			{
+    			for (var i = 0; i < results.length; i++)
+    			{
+      				createMarker(results[i]);
+    			}
+  			}
+		}
+
+		function createMarker(place)
+		{
+			var placeLoc = place.geometry.location;
+			var marker = new google.maps.Marker(
+			{
+				map: map,
+				position: place.geometry.location
+			});
+
+			google.maps.event.addListener(marker, 'click', function()
+			{
+				infowindow.setContent(place.name);
+				infowindow.open(map, this);
 			});
 		}
 		
@@ -338,7 +379,7 @@
 	<div class="span6">
 		<div class="well sidebar-nav">
 			<form method="post">{% csrf_token %}
-				<table class="table table-bordered table-condensed">
+				<table class="table table-condensed">
 					{% if formulario.non_field_errors %}
 						<tr>
 							<td></td>
@@ -466,6 +507,10 @@
 						<td><strong>Origen:</strong></td>
 						<td><input type="text" id="direccion_origen"/></td>
 					</tr>
+					<tr>
+						<td></td>
+						<td>Dirección de origen de la ruta.</td>
+					</tr>
 					{% if formulario.destino_y.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
@@ -478,14 +523,37 @@
 						<td><strong>Destino:</strong></td>
 						<td><input type="text" id="direccion_destino"/></td>
 					</tr>
+					<tr>
+						<td></td>
+						<td>Dirección de destino de la ruta.</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					<tr>
+						<td><strong>Lugares:</strong></td>
+						<td>
+							<select id="tipo_lugar">
+								<option value="store">Tiendas</option>
+								<option value="university">Universidades</option>
+								<option value="hospital">Hospitales</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>Filtro para los lugares de destino de la ruta.</td>
+					</tr>
 					<!---------------------------------------------------------------------------------------------------->
 					<tr>
 						<td></td>
-						<td>Debes pulsar primero el botón <strong>"Calcular ruta"</strong> para comprobar que la ruta se crea y funciona correctamente.</td>
+						<td>Debes pulsar primero el botón <strong>"Generar ruta"</strong> para crear la ruta y después guardarla. Puedes pulsar el botón <strong>"Buscar lugares"</strong> para buscar lugares del tipo seleccionado en el destino.</td>
 					</tr>
 					<tr>
-						<td><input class="btn btn-primary" type="submit" value="Crear ruta" /></td>
-						<td><input class="btn btn-primary" onclick="calcularRuta();return false;" value="Calcular ruta" /></td>
+						<td><input class="btn btn-primary btn-block" type="submit" value="Guardar ruta"/></td>
+						<td><input class="btn btn-primary btn-block" onclick="calcularRuta();return false;" value="Generar ruta"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input class="btn btn-info btn-block" onclick="buscarLugares();return false;" value="Buscar lugares"/></td>
 					</tr>
 				</table>
 			</form>
