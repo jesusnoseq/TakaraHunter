@@ -1,4 +1,4 @@
-Añadid algunos datos mas al fichero fixtures/initial_data.json
+
 
 Para crear las busquedas
 http://gmaps-samples-v3.googlecode.com/svn/trunk/rectangle-overlay/rectangle-overlay.html
@@ -7,8 +7,19 @@ http://gmaps-samples-v3.googlecode.com/svn/trunk/rectangle-overlay/rectangle-ove
 Localizador de coordenadas y direccion(buscador)
 http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html
 
+Geocode simple
+https://developers.google.com/maps/documentation/javascript/examples/geocoding-simple?hl=es
+
 Marcas simples
 http://www.lootogo.com/googlemapsapi3/markerPlugin.html
 
+
 Ejemplos?
 https://developers.google.com/maps/documentation/javascript/examples/?hl=es
+
+TO-DO
+Añadir algunos datos mas al fichero fixtures/initial_data.json
+contraseña perfil
+actualizar formularios
+google places con categorias
+matriz de usuarios
