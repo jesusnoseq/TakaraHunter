@@ -8,6 +8,10 @@
 		{
 			max-width: none;
 		}
+		#recoger
+		{
+			visibility:hidden;
+		}
 	</style>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true&amp;libraries=geometry"></script>
 	<script type="text/javascript">
@@ -86,13 +90,15 @@
   			distancia = google.maps.geometry.spherical.computeDistanceBetween(myLatlng, posActual);
   			document.getElementById('dist').innerHTML = distancia + ' m';
   			
-  			if(distancia >= 0.5) //Esto hay que cambiarlo cuando acabemos
+  			if(distancia > 10.0) //Esto hay que cambiarlo cuando acabemos
   			{
-  				document.getElementById('recoger').disabled = false;
+  				document.getElementById('recoger').style.visibility = "hidden";
+  				document.getElementById('aviso').innerHTML = "<b>La opcion 'Atrapar Tesoro' se mostrará cuando tu distancia sea inferior a 10 metros. Tu distancia actual es de " + distancia + "m</b>";
   			}
   			else
   			{
-  				document.getElementById('recoger').disabled = true;
+  				document.getElementById('recoger').style.visibility = "visible";
+  				document.getElementById('aviso').innerHTML = "";
   			}
   			
     		}, function() {
@@ -175,6 +181,7 @@
 			{% endif %}	
 		</div>
 		<a id="recoger" class="btn btn-info btn-block" href="/misbusquedas/tesoros/atrapar/{{ busqueda.id }}">Recoger Tesoro</a>
+		<p id="aviso"></p>
 	</div>
  	<div class="span6">
 		<div class="well sidebar-nav">
