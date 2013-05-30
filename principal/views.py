@@ -70,9 +70,11 @@ def salir(request):
 @login_required(login_url='/login')
 def perfil(request):
 	listaRutas = Ruta.objects.filter(user=request.user)[:10]
+	listaBusquedas = Busqueda.objects.filter(participantes=request.user)[:10]
 	return render_to_response('perfil.html',
 	{
-		'ultimas_rutas':listaRutas
+		'ultimas_rutas':listaRutas,
+		'ultimas_busquedas':listaBusquedas
 	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
@@ -98,7 +100,7 @@ def listaRutas(request):
 		if ruta.modo == "WALKING":
 			ruta.modo = "A pie"
 		if ruta.modo == "BICYCLING":
-			ruta.modo = "Biciclet"
+			ruta.modo = "Bicicleta"
 		if ruta.modo == "TRANSIT":
 			ruta.modo = "Transporte público"
 	return render_to_response('listaRutas.html',
@@ -166,7 +168,8 @@ def detalleBusqueda(request, busqueda):
 
 @login_required(login_url='/login')
 def unirseBusqueda(request, busqueda):
-
+	busqueda = Busqueda.objects.get(id=busqueda)
+	busqueda.participantes.add(request.user)
 	return HttpResponseRedirect('/busquedas')
 
 @login_required(login_url='/login')
@@ -199,12 +202,14 @@ def miDetallesBusquedas(request, busqueda):
 
 @login_required(login_url='/login')
 def salirBusqueda(request, busqueda):
-
+	busqueda = Busqueda.objects.get(id=busqueda)
+	busqueda.participantes.remove(request.user)
 	return HttpResponseRedirect('/busquedas')
 
 @login_required(login_url='/login')
 def miSalirBusquedas(request, busqueda):
-	
+	busqueda = Busqueda.objects.get(id=busqueda)
+	busqueda.participantes.remove(request.user)
 	return HttpResponseRedirect('/misbusquedas')
 
 @login_required(login_url='/login')
@@ -214,17 +219,55 @@ def matriz(request):
 
 @login_required(login_url='/login')
 def hall(request):
+	campeon = []
+	diamante = []
+	platino = []
+	oro = []
+	plata = []
+	bronce = []
+	elresto = []
 	result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
 	for row in result:
 		row['username']=User.objects.get(pk=row['recogidaPor']).username
-	return render_to_response('hallDeLaFama.html',{'lista':result},context_instance=RequestContext(request))
+	if result.count() >= 1:
+		campeon = result[0]
+	if result.count() >= 2:
+		diamante = result[1]
+	if result.count() >= 3:
+		platino = result[2]
+	if result.count() >= 4:
+		oro = result[3]
+	if result.count() >= 5:
+		plata = result[4]
+	if result.count() >= 6:
+		bronce = result[5]
+	if result.count() >= 7:
+		elresto = result[6:]
+	return render_to_response('hallDeLaFama.html',
+	{
+		'campeon':campeon,
+		'diamante':diamante,
+		'platino':platino,
+		'oro':oro,
+		'plata':plata,
+		'bronce':bronce,
+		'elresto':elresto,
+	},context_instance=RequestContext(request))
 
 def realizandoBusqueda(request, busqueda):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	busquedaARealizar = Busqueda.objects.get(id=busqueda)
+	participantes = busquedaARealizar.participantes.all()
+	tesoro = Tesoro.objects.get(busqueda=busquedaARealizar)
+	return render_to_response('tesoro.html',
+	{
+		'participantes':participantes,
+		'busqueda':busquedaARealizar,
+		'tesoro':tesoro
+	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def atraparTesoros(request):
-	return render_to_response('tesoro.html',{'mensaje':'hola'},context_instance=RequestContext(request))
+	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
 
 @staff_member_required
 def crearBusqueda(request):

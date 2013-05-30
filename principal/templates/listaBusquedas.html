@@ -4,7 +4,7 @@
 
 {% block menu_inferior %}
 {% if user.is_superuser %}
-	<div class="navbar">
+	<!--<div class="navbar">
 		<div class="navbar-inner">
 			<div class="container">
 				<ul class="nav">
@@ -12,7 +12,7 @@
 				</ul>
 			</div>
 		</div>
-	</div>
+	</div>-->
 {% endif %}
 {% endblock %}
 
@@ -23,16 +23,18 @@
 			<td><strong>Título</strong></td>
 			<td><strong>Descripción</strong></td>
 			<td></td>
-			<td></td>
+			{% if user.is_superuser %}
+				<td><a class="btn btn-info btn-block" href="/busquedas/nueva"><i class="icon-file"></i><i class="icon-globe"></i> Nueva</a></td>
+			{% endif %}
 		</tr>
 		{% if busquedas1 %}
 			{% for busqueda in busquedas1 %}
 				<tr>
 					<td><a href="/busquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
 					<td>{{ busqueda.descripcion }}</td>
-					<td><a class="btn btn btn-warning btn-block" href="/busquedas/salir/{{ busqueda.id }}">Abandonar búsqueda</a></td>
+					<td><a class="btn btn btn-warning btn-block" href="/busquedas/salir/{{ busqueda.id }}"><i class="icon-remove"></i><i class="icon-globe"></i> Abandonar</a></td>
 					{% if user.is_superuser %}
-						<td><a class="btn btn btn-danger btn-block" href="/busquedas/borrar/{{ busqueda.id }}">Borrar búsqueda</a></td>
+						<td><a class="btn btn btn-danger btn-block" href="/busquedas/borrar/{{ busqueda.id }}"><i class="icon-trash"></i><i class="icon-globe"></i> Borrar</a></td>
 					{% endif %}
 				</tr>
 			{% endfor %}
@@ -41,7 +43,9 @@
 				<td><strong>No hay búsquedas en las que participes</strong></td>
 				<td></td>
 				<td></td>
-				<td></td>
+				{% if user.is_superuser %}
+					<td></td>
+				{% endif %}
 			</tr>
     	{% endif %}
     	{% if busquedas2 %}
@@ -49,18 +53,20 @@
 				<tr>
 					<td><a href="/busquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
 					<td>{{ busqueda.descripcion }}</td>
-					<td><a class="btn btn btn-success btn-block" href="/busquedas/unirse/{{ busqueda.id }}">Unirse a búsqueda</a></td>
+					<td><a class="btn btn btn-success btn-block" href="/busquedas/unirse/{{ busqueda.id }}"><i class="icon-ok"></i><i class="icon-globe"></i> Unirse</a></td>
 					{% if user.is_superuser %}
-						<td><a class="btn btn btn-danger btn-block" href="/busquedas/borrar/{{ busqueda.id }}">Borrar búsqueda</a></td>
+						<td><a class="btn btn btn-danger btn-block" href="/busquedas/borrar/{{ busqueda.id }}"><i class="icon-trash"></i><i class="icon-globe"></i> Borrar</a></td>
 					{% endif %}
 				</tr>
 			{% endfor %}
     	{% else %}
 			<tr>
-				<td><strong>No hay búsquedas en las que no participes.</strong></td>
+				<td><strong>No hay búsquedas en las que no participes</strong></td>
 				<td></td>
 				<td></td>
-				<td></td>
+				{% if user.is_superuser %}
+					<td></td>
+				{% endif %}
 			</tr>
     	{% endif %}
 	</table>

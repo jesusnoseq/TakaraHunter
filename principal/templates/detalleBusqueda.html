@@ -8,13 +8,13 @@
 		<div class="container">
 			<ul class="nav">
 				{% if participo %}
-					<li><a href="/busquedas/salir/{{busqueda.id}}"><i class="icon-remove"></i><i class="icon-globe"></i> <p>Abandonar búsqueda</p></a></li>
+					<li><a href="/busquedas/salir/{{busqueda.id}}"><i class="icon-remove"></i><i class="icon-globe"></i> Abandonar búsqueda</a></li>
 				{% else %}
-					<li><a href="/busquedas/unirse/{{busqueda.id}}"><i class="icon-ok"></i><i class="icon-globe"></i> <p>Unirse a búsqueda</p></a></li>
+					<li><a href="/busquedas/unirse/{{busqueda.id}}"><i class="icon-ok"></i><i class="icon-globe"></i> Unirse a búsqueda</a></li>
 				{% endif %}
 				{% if user.is_superuser %}
-					<li><a href="/busquedas/borrar/{{busqueda.id}}"><i class="icon-trash"></i><i class="icon-globe"></i> <p>Borrar búsqueda</p></a></li>
-					<li><a href="/busquedas/nueva"><i class="icon-file"></i><i class="icon-globe"></i> <p>Nueva búsqueda</p></a></li>
+					<li><a href="/busquedas/borrar/{{busqueda.id}}"><i class="icon-trash"></i><i class="icon-globe"></i> Borrar búsqueda</a></li>
+					<li><a href="/busquedas/nueva"><i class="icon-file"></i><i class="icon-globe"></i> Nueva búsqueda</a></li>
 				{% endif %}
 			</ul>
 		</div>
@@ -36,7 +36,7 @@
 					</ul>
 				{% endfor %}
 			{% else %}
-				<p>No hay participantes.</p>
+				<p>No hay participantes</p>
 			{% endif %}
 		</div>
 	</div>
