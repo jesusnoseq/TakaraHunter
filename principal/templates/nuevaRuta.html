@@ -8,6 +8,22 @@
 		{
 			max-width: none;
 		}
+		/*#id_origen_x
+		{
+			display: none;
+		}
+		#id_origen_y
+		{
+			display: none;
+		}
+		#id_destino_x
+		{
+			display: none;
+		}
+		#id_destino_y
+		{
+			display: none;
+		}*/
 	</style>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
 	<script type="text/javascript">
@@ -228,7 +244,7 @@
 				destination:destino,
 				travelMode: google.maps.DirectionsTravelMode[modo]
 			};
-			
+
 			directionsService.route(request, function(response, status)
 			{
 				// La ruta es correcta
@@ -244,7 +260,7 @@
 						if (status == google.maps.GeocoderStatus.OK)
 						{
       						document.getElementById("id_origen_x").value = results[0].geometry.location.lat();
-							document.getElementById("id_origen_y").value = results[0].geometry.location.lat();
+							document.getElementById("id_origen_y").value = results[0].geometry.location.lng();
     					}
     					else
     					{
@@ -259,7 +275,7 @@
 						if (status == google.maps.GeocoderStatus.OK)
 						{
       						document.getElementById("id_destino_x").value = results[0].geometry.location.lat();
-							document.getElementById("id_destino_y").value = results[0].geometry.location.lat();
+							document.getElementById("id_destino_y").value = results[0].geometry.location.lng();
     					}
     					else
     					{
@@ -349,7 +365,7 @@
 						<td>{{ formulario.titulo.help_text }}</td>
 					</tr>
 					<!---------------------------------------------------------------------------------------------------->
-					{% if formulario.origen_x.errors %}
+					<!--{% if formulario.origen_x.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
 							<td>
@@ -364,9 +380,10 @@
 					<tr>
 						<td></td>
 						<td>{{ formulario.origen_x.help_text }}</td>
-					</tr>
+					</tr>-->
+					{{ formulario.origen_x }}
 					<!---------------------------------------------------------------------------------------------------->
-					{% if formulario.origen_y.errors %}
+					<!--{% if formulario.origen_y.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
 							<td>
@@ -381,9 +398,10 @@
 					<tr>
 						<td></td>
 						<td>{{ formulario.origen_y.help_text }}</td>
-					</tr>
+					</tr>-->
+					{{ formulario.origen_y }}
 					<!---------------------------------------------------------------------------------------------------->
-					{% if formulario.destino_x.errors %}
+					<!--{% if formulario.destino_x.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
 							<td>
@@ -398,9 +416,10 @@
 					<tr>
 						<td></td>
 						<td>{{ formulario.destino_x.help_text }}</td>
-					</tr>
+					</tr>-->
+					{{ formulario.destino_x }}
 					<!---------------------------------------------------------------------------------------------------->
-					{% if formulario.destino_y.errors %}
+					<!--{% if formulario.destino_y.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
 							<td>
@@ -415,7 +434,8 @@
 					<tr>
 						<td></td>
 						<td>{{ formulario.destino_y.help_text }}</td>
-					</tr>
+					</tr>-->
+					{{ formulario.destino_y }}
 					<!---------------------------------------------------------------------------------------------------->
 					{% if formulario.modo.errors %}
 						<tr class="error">
@@ -434,10 +454,26 @@
 						<td>{{ formulario.modo.help_text }}</td>
 					</tr>
 					<!---------------------------------------------------------------------------------------------------->
+					{% if formulario.origen_y.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.origen_y.errors }}
+							</td>
+						</tr>
+					{% endif %}
 					<tr>
 						<td><strong>Origen:</strong></td>
 						<td><input type="text" id="direccion_origen"/></td>
 					</tr>
+					{% if formulario.destino_y.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.destino_y.errors }}
+							</td>
+						</tr>
+					{% endif %}
 					<tr>
 						<td><strong>Destino:</strong></td>
 						<td><input type="text" id="direccion_destino"/></td>
@@ -445,7 +481,7 @@
 					<!---------------------------------------------------------------------------------------------------->
 					<tr>
 						<td></td>
-						<td>Deberías pulsar primero el botón <strong>"Calcular ruta"</strong> para comprobar que la ruta se crea y funciona correctamente.</td>
+						<td>Debes pulsar primero el botón <strong>"Calcular ruta"</strong> para comprobar que la ruta se crea y funciona correctamente.</td>
 					</tr>
 					<tr>
 						<td><input class="btn btn-primary" type="submit" value="Crear ruta" /></td>
