@@ -17,6 +17,10 @@ MODE_CHOICES = (
                     ('BICYCLING','Bicicleta'),
                     ('TRANSIT','Transporte público'),
                 )
+ESTADOS_BUSQUEDA = (
+                        ('a',"Abierta"), 
+                        ('c',"Cerrada"), 
+                    )    
 ################################################################################
 #										CLASE USUARIO
 #-------------------------------------------------------------------------------
@@ -67,11 +71,7 @@ class Busqueda(models.Model):
     descripcion = models.TextField(verbose_name="Descripción", help_text="Descripción de la búsqueda.")
     fecha_modificacion = models.DateTimeField(db_index=True, auto_now=True)
     participantes = models.ManyToManyField(User,blank=True,null=True)
-    ESTADOS = (
-               ('a',"abierta"), 
-               ('c',"cerrada"), 
-               )
-    estado = models.CharField(max_length=1, choices=ESTADOS, default='a')
+    estado = models.CharField(max_length=1, choices=ESTADOS_BUSQUEDA, default='a', verbose_name="Estado", help_text="La búsqueda puede estar abierta o cerrada.")
     class Meta:
         ordering=['-fecha_modificacion']
     def __unicode__(self):

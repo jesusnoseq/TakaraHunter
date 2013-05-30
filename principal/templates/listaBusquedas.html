@@ -22,6 +22,9 @@
 		<tr>
 			<td><strong>Título</strong></td>
 			<td><strong>Descripción</strong></td>
+			{% if user.is_superuser %}
+				<td><strong>Estado</strong></td>
+			{% endif %}
 			<td></td>
 			{% if user.is_superuser %}
 				<td><a class="btn btn-info btn-block" href="/busquedas/nueva"><i class="icon-file"></i><i class="icon-globe"></i> Nueva</a></td>
@@ -32,6 +35,9 @@
 				<tr>
 					<td><a href="/busquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
 					<td>{{ busqueda.descripcion }}</td>
+					{% if user.is_superuser %}
+						<td>{{ busqueda.estado }}</td>
+					{% endif %}
 					<td><a class="btn btn btn-warning btn-block" href="/busquedas/salir/{{ busqueda.id }}"><i class="icon-remove"></i><i class="icon-globe"></i> Abandonar</a></td>
 					{% if user.is_superuser %}
 						<td><a class="btn btn btn-danger btn-block" href="/busquedas/borrar/{{ busqueda.id }}"><i class="icon-trash"></i><i class="icon-globe"></i> Borrar</a></td>
@@ -42,6 +48,9 @@
 			<tr>
 				<td><strong>No hay búsquedas en las que participes</strong></td>
 				<td></td>
+				{% if user.is_superuser %}
+					<td></td>
+				{% endif %}
 				<td></td>
 				{% if user.is_superuser %}
 					<td></td>
@@ -53,6 +62,9 @@
 				<tr>
 					<td><a href="/busquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
 					<td>{{ busqueda.descripcion }}</td>
+					{% if user.is_superuser %}
+						<td>{{ busqueda.estado }}</td>
+					{% endif %}
 					<td><a class="btn btn btn-success btn-block" href="/busquedas/unirse/{{ busqueda.id }}"><i class="icon-ok"></i><i class="icon-globe"></i> Unirse</a></td>
 					{% if user.is_superuser %}
 						<td><a class="btn btn btn-danger btn-block" href="/busquedas/borrar/{{ busqueda.id }}"><i class="icon-trash"></i><i class="icon-globe"></i> Borrar</a></td>
@@ -63,6 +75,9 @@
 			<tr>
 				<td><strong>No hay búsquedas en las que no participes</strong></td>
 				<td></td>
+				{% if user.is_superuser %}
+					<td></td>
+				{% endif %}
 				<td></td>
 				{% if user.is_superuser %}
 					<td></td>

@@ -32,7 +32,7 @@ def entrar(request):
 				state = "Bienvenido %s" % username
 				numero_tesoros = Tesoro.objects.filter(recogidaPor=request.user).count()
 				listaRutas = Ruta.objects.filter(user=request.user)[:10]
-				listaBusquedas = Busqueda.objects.filter(participantes=request.user)[:10]
+				listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)[:10]
 				########################################################################## WARNING CODIGO FEO Y PELIGROSO
 				campeon = []
 				diamante = []
@@ -91,6 +91,7 @@ def entrar(request):
 					'bronce':soy_bronce,
 					'nada':soy_nada,
 					########################################################################## WARNING CODIGO FEO Y PELIGROSO
+					'ultimas_busquedas':listaBusquedas,
 					'ultimas_rutas':listaRutas,
 					'mensaje':state
 				},context_instance=RequestContext(request))
@@ -129,7 +130,7 @@ def salir(request):
 def perfil(request):
 	numero_tesoros = Tesoro.objects.filter(recogidaPor=request.user).count()
 	listaRutas = Ruta.objects.filter(user=request.user)[:10]
-	listaBusquedas = Busqueda.objects.filter(participantes=request.user)[:10]
+	listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)[:10]
 	########################################################################## WARNING CODIGO FEO Y PELIGROSO
 	campeon = []
 	diamante = []
@@ -290,8 +291,14 @@ def unirseBusqueda(request, busqueda):
 
 @login_required(login_url='/login')
 def listaBusquedas(request):
-	busquedas1 = Busqueda.objects.filter(participantes=request.user)
-	busquedas2 = Busqueda.objects.exclude(participantes=request.user)
+	if request.user.is_superuser == True:
+		busquedas1 = Busqueda.objects.filter(participantes=request.user)
+	else:
+		busquedas1 = Busqueda.objects.filter(estado="a").filter(participantes=request.user)
+	if request.user.is_superuser == True:
+		busquedas2 = Busqueda.objects.exclude(participantes=request.user)
+	else:
+		busquedas2 = Busqueda.objects.filter(estado="a").exclude(participantes=request.user)
 	return render_to_response('listaBusquedas.html',
 	{
 		'busquedas1':busquedas1,
@@ -300,7 +307,7 @@ def listaBusquedas(request):
 	
 @login_required(login_url='/login')
 def miListaBusquedas(request):
-	listaBusquedas = Busqueda.objects.filter(participantes=request.user)
+	listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)
 	return render_to_response('miListaBusquedas.html',
 	{
 		'busquedas':listaBusquedas

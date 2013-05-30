@@ -37,10 +37,10 @@ class RutaAdmin(admin.ModelAdmin):
     )
 	
 class BusquedaAdmin(admin.ModelAdmin):
-	list_display = ('titulo', 'slug', 'descripcion', )
+	list_display = ('titulo', 'slug', 'descripcion', 'estado')
 	fieldsets = (
         ('Información de la búsqueda', {
-            'fields': ('titulo', 'slug', 'descripcion')
+            'fields': ('titulo', 'slug', 'descripcion', 'estado')
         }),
         ('Participantes', {
             'fields': ('participantes', )
