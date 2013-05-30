@@ -324,3 +324,5 @@ def detalleTesoro(request, tesoro):
 	{
 		'tesoro':tesoro
 	},context_instance=RequestContext(request))
+	
+	
