@@ -155,6 +155,7 @@
 			inicializar();
 		});
 	
+		// Variables necesarias
 		var geocoder;
 		var infoWindow;
 		var marker;
@@ -169,22 +170,28 @@
 
 		function inicializar() 
 		{
+			// Crear el mapa
 			var centromapa = new google.maps.LatLng(37.88472,-4.77889);
-			directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 			var myOptions = 
 			{
 				zoom: 14,
 				center: centromapa,
-				mapTypeId: google.maps.MapTypeId.ROADMAP,
-				mapTypeControl: false
+				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
 			var map = new google.maps.Map(document.getElementById("mapa"),myOptions);
+			
+			// Bloque para el panel del recorrido de abajo.
+			directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 			directionsDisplay.setMap(map);
 			directionsDisplay.setPanel(document.getElementById("panel_direcciones"));
 		
+			// Bloque para ver información de un punto en el marcador.
 			google.maps.event.addListener(map, 'click', function(e)
 			{
-          		geocoder.geocode({'latLng':e.latLng},function(results, status)
+          		geocoder.geocode(
+          		{
+          			'latLng':e.latLng
+          		},function(results, status)
 				{
 					if (status == google.maps.GeocoderStatus.OK) 
 					{
@@ -224,10 +231,43 @@
 			
 			directionsService.route(request, function(response, status)
 			{
+				// La ruta es correcta
 				if (status == google.maps.DirectionsStatus.OK)
 				{
 					directionsDisplay.setDirections(response);
+					
+					geocoder.geocode(
+					{
+						'address':origen,
+					}, function(results, status)
+					{
+						if (status == google.maps.GeocoderStatus.OK)
+						{
+      						document.getElementById("id_origen_x").value = results[0].geometry.location.lat();
+							document.getElementById("id_origen_y").value = results[0].geometry.location.lat();
+    					}
+    					else
+    					{
+      						alert("No podemos encontrar la dirección, error: " + status);
+    					}
+					});
+					geocoder.geocode(
+					{
+						'address':destino,
+					}, function(results, status)
+					{
+						if (status == google.maps.GeocoderStatus.OK)
+						{
+      						document.getElementById("id_destino_x").value = results[0].geometry.location.lat();
+							document.getElementById("id_destino_y").value = results[0].geometry.location.lat();
+    					}
+    					else
+    					{
+      						alert("No podemos encontrar la dirección, error: " + status);
+    					}
+					});
 				} 
+				// La ruta no es correcta
 				else
 				{
 					if (status == 'ZERO_RESULTS')
@@ -409,7 +449,7 @@
 					</tr>
 					<tr>
 						<td><input class="btn btn-primary" type="submit" value="Crear ruta" /></td>
-						<td><input class="btn btn-primary" onclick="calcularRuta();" value="Calcular ruta" /></td>
+						<td><input class="btn btn-primary" onclick="calcularRuta();return false;" value="Calcular ruta" /></td>
 					</tr>
 				</table>
 			</form>
