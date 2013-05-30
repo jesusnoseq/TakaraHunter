@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block titulo %}TH | Nuevo tesoro{% endblock %}
+
+{% block contenido %}
+<div class="row-fluid">
+	<div class="span6">
+		<div class="well sidebar-nav">
+			<form class="" method="post" action="">
+				<table>
+					{% csrf_token %}
+					{{formulario}}
+				</table>
+				<input class="btn btn-primary" type="submit" value="Nuevo tesoro" />
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
