@@ -13,6 +13,9 @@ https://developers.google.com/maps/documentation/javascript/examples/geocoding-s
 Marcas simples
 http://www.lootogo.com/googlemapsapi3/markerPlugin.html
 
+Rutas simples
+https://developers.google.com/maps/documentation/javascript/examples/directions-simple?hl=es
+
 
 Ejemplos?
 https://developers.google.com/maps/documentation/javascript/examples/?hl=es

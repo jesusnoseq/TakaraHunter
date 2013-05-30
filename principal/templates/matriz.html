@@ -4,35 +4,54 @@
 
 
 {% block footerScripts %}
-		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
-		<script>
-			$(document).ready(function(){
-				initialize()
-			});
-			function initialize() {
-				var fenway = new google.maps.LatLng(42.345573, -71.098326);
-				var mapOptions = {
-					center : fenway,
-					zoom : 14,
-					mapTypeId : google.maps.MapTypeId.ROADMAP
-				};
-				var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-				var panoramaOptions = {
-					position : fenway,
-					pov : {
-						heading : 34,
-						pitch : 10
-					}
-				};
-				var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
-				map.setStreetView(panorama);
-			}
-		</script>
-		<style>
-			#map_canvas img {
-				max-width: none;
-			}
-		</style>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+<script>
+	var directionsDisplay;
+	var directionsService = new google.maps.DirectionsService();
+	var map;
+	
+	$(document).ready(function() {
+		initialize()
+		$('.cell').over(calcRoute);
+		//$('#id_modo').change(calcRoute);
+	});
+	function initialize() {
+		directionsDisplay = new google.maps.DirectionsRenderer();
+
+		var centro = new google.maps.LatLng(37.735261, -4.791666);
+		var mapOptions = {
+			center : centro,
+			zoom : 9,
+			mapTypeId : google.maps.MapTypeId.ROADMAP
+		};
+		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		directionsDisplay.setMap(map);
+
+	}
+	
+	function calcRoute(evt) {
+	  var start = $(this).parent("sx").val()+','+$(this).parent("sy").val();
+	  var end =  $(this).parent("ex").val()+','+$(this).parent("ey").val();
+	  var transporte="google.maps.DirectionsTravelMode."+$('#id_modo').value;
+	  
+	  var request = {
+	      origin:start,
+	      destination:end,
+	      travelMode: transporte
+	  };
+	  directionsService.route(request, function(response, status) {
+	    if (status == google.maps.DirectionsStatus.OK) {
+	      directionsDisplay.setDirections(response);
+	    }
+	  });
+	}
+
+</script>
+<style>
+	#map_canvas img {
+		max-width: none;
+	}
+</style>
 {% endblock %}
 
 
@@ -40,6 +59,22 @@
 {% block contenido %}
 Ejemplo:
 https://developers.google.com/maps/location-based-apps?hl=es
+<br/>
+http://maps.googleapis.com/maps/api/distancematrix/json?origins={% for usuario in usuarios %}
+	{% if forloop.last %}
+		{{ usuario.px|stringformat:"f" }},{{ usuario.py|stringformat:"f" }}
+	{% else %}
+		{{ usuario.px|stringformat:"f" }},{{ usuario.py|stringformat:"f" }}|
+	{% endif %}
+{% endfor %}
+&destinations={% for usuario in usuarios %}
+	{% if forloop.last %}
+		{{ usuario.px|stringformat:"f" }},{{ usuario.py|stringformat:"f" }}
+	{% else %}
+		{{ usuario.px|stringformat:"f" }},{{ usuario.py|stringformat:"f" }}|
+	{% endif %}
+{% endfor %}
+&mode=walk&language=es-ES&sensor=false
 <ol class="well">
 {% for usuario in usuarios %}
 <li>
@@ -49,10 +84,13 @@ https://developers.google.com/maps/location-based-apps?hl=es
 	<li>No hay auténticos buscadores de tesoros en este momento.</li>
 {% endfor %}
 </ol>
-
+<select id="id_modo" name="modo">
+	<option value="WALKING">A pie</option>
+	<option value="DRIVING">Coche</option>
+	<option value="BICYCLING">Bicicleta</option>
+	<option value="TRANSIT">Transporte público</option>
+</select>
 <div>
 	<div id="map-canvas" style="width: 400px; height: 300px"></div>
-	<div id="pano" style="width: 400px; height: 300px;"></div>
 </div>
-
 {% endblock %}
