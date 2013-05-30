@@ -97,7 +97,7 @@ def entrar(request):
 			else:
 				state = "Tu cuenta no esta activa, contacta con el administrador"
 		else:
-			state = "Tu nombre de usuario y/o contraseña no son correctas"
+			state = "Tu nombre de usuario y/o contraseña no son correctos"
 	#state="Error al logearse, vuelva a intentarlo."
 	return render_to_response('login.html',
 	{
