@@ -227,23 +227,25 @@ def hall(request):
 	bronce = []
 	elresto = []
 	result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
+	resultados = []
 	for row in result:
 		if row['recogidaPor']!=None:
 			row['username']=User.objects.get(pk=row['recogidaPor']).username
-	if result.count() >= 1:
-		campeon = result[0]
-	if result.count() >= 2:
-		diamante = result[1]
-	if result.count() >= 3:
-		platino = result[2]
-	if result.count() >= 4:
-		oro = result[3]
-	if result.count() >= 5:
-		plata = result[4]
-	if result.count() >= 6:
-		bronce = result[5]
-	if result.count() >= 7:
-		elresto = result[6:]
+			resultados.append(row)
+	if len(resultados) >= 1:
+		campeon = resultados[0]
+	if len(resultados) >= 2:
+		diamante = resultados[1]
+	if len(resultados) >= 3:
+		platino = resultados[2]
+	if len(resultados) >= 4:
+		oro = resultados[3]
+	if len(resultados) >= 5:
+		plata = resultados[4]
+	if len(resultados) >= 6:
+		bronce = resultados[5]
+	if len(resultados) >= 7:
+		elresto = resultados[6:]
 	return render_to_response('hallDeLaFama.html',
 	{
 		'campeon':campeon,
