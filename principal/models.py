@@ -80,7 +80,7 @@ class Tesoro(models.Model):
     y = models.FloatField()
     busqueda = models.ForeignKey(Busqueda)
     fecha_recogida = models.DateTimeField(auto_now=True)
-    recogidaPor =  models.OneToOneField(User,null=True,blank=True)
+    recogidaPor = models.ForeignKey(User,null=True,blank=True)
     def __unicode__(self):
         return u"%s - (%0.2f, %0.2f)" % (self.busqueda.titulo,self.x,self.y)
     
