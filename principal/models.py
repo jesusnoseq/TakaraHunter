@@ -66,7 +66,12 @@ class Busqueda(models.Model):
     titulo = models.CharField(max_length=250, unique=True, verbose_name="Título", help_text="Título de la búsqueda. 250 caracteres máximo. Debe ser único.")
     descripcion = models.TextField(verbose_name="Descripción", help_text="Descripción de la búsqueda.")
     fecha_modificacion = models.DateTimeField(db_index=True, auto_now=True)
-    participantes = models.ManyToManyField(User,blank=True,null=True) 
+    participantes = models.ManyToManyField(User,blank=True,null=True)
+    ESTADOS = (
+               ('a',"abierta"), 
+               ('c',"cerrada"), 
+               )
+    estado = models.CharField(max_length=1, choices=ESTADOS, default='a')
     class Meta:
         ordering=['-fecha_modificacion']
     def __unicode__(self):

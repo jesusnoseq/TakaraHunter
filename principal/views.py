@@ -330,8 +330,8 @@ def realizandoBusqueda(request, busqueda):
 def atraparTesoros(request, busqueda):
 	busquedaAAtrapar = Busqueda.objects.get(id=busqueda)
 	tesoro = Tesoro.objects.get(busqueda=busquedaAAtrapar)
-	tesoro.recogidaPor.add(request.user)
-	busquedaAAtrapar.delete()
+	tesoro.recogidaPor = request.user
+	busquedaAAtrapar.estado = 'c'
 	return render_to_response('tesoroAtrapado.html',{
 		'tesoro':tesoro,
 	},context_instance=RequestContext(request))
