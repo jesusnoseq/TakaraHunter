@@ -302,7 +302,7 @@ def borrarTesoro(request, ruta):
 	tesoroABorrar = Tesoro.objects.get(id=tesoro).delete()
 	return HttpResponseRedirect('/tesoros')
 
-@staff_member_required
+def crearTesoro(request):
 	if request.method=='POST':
 			formulario = TesoroForm(request.POST, request.FILES)		
 			if formulario.is_valid():
