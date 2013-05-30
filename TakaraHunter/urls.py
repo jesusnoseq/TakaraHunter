@@ -36,6 +36,10 @@ urlpatterns = patterns('',
 	url(r'^busquedas/salir/(?P<busqueda>\d+)\/[-\w]*$','principal.views.salirBusqueda'),
 	url(r'^busquedas/borrar/(?P<busqueda>\d+)\/[-\w]*$','principal.views.borrarBusqueda'),
 	url(r'^busquedas/nueva/$','principal.views.crearBusqueda'),
+	
+	url(r'^tesoros/$','principal.views.listaTesoros'),
+	url(r'^tesoros/nuevo/$','principal.views.crearTesoro'),
+	url(r'^tesoros/borrar/(?P<tesoro>\d+)\/[-\w]*$','principal.views.borrarTesoro'),
 		
 	url(r'^about/$', direct_to_template, {'template': 'sobreNosotros.html'}),
 	url('^404testing/$', direct_to_template, {'template': '404.html'}),

@@ -26,13 +26,13 @@ class UserAdmin(admin.ModelAdmin):
     )
 	
 class RutaAdmin(admin.ModelAdmin):
-	list_display = ('titulo', 'user', 'origen', 'destino', 'modo')
+	list_display = ('titulo', 'user', 'origen_x', 'origen_y', 'destino_x', 'destino_y', 'modo')
 	fieldsets = (
         ('Ruta', {
             'fields': ('titulo', )
         }),
         ('Información de la ruta', {
-            'fields': ('origen', 'destino', 'modo')
+            'fields': ('origen_x', 'origen_y', 'destino_x', 'destino_y', 'modo')
         }),
     )
 	
