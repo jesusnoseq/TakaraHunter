@@ -397,7 +397,7 @@ def atraparTesoros(request, busqueda):
 	tesoro = Tesoro.objects.get(busqueda=busquedaAAtrapar)
 	if busquedaAAtrapar.estado == 'c':
 		return HttpResponseRedirect('/misbusquedas')
-	else
+	else:
 		tesoro.recogidaPor = request.user
 		busquedaAAtrapar.estado = 'c'
 		tesoro.save()
