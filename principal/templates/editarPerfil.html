@@ -27,7 +27,7 @@
 
 {% block footerScripts %}
 
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=false"></script>
 <script type="text/javascript">
 	var map;
 	var geocoder;
@@ -42,7 +42,7 @@
 	function initialize() {
 		var latlng = new google.maps.LatLng(37.88678116397235, -4.774135385131766);
 		var myOptions = {
-			zoom : 6,
+			zoom : 7,
 			center : latlng,
 			mapTypeId : google.maps.MapTypeId.ROADMAP
 		};
@@ -146,16 +146,16 @@
 </form>
 
 <div id="mapa">
-  Find Place: <input type="text" id="address"/><input type="button" value="Go" onclick="geocode()">
+  Buscar lugar: <input type="text" id="address"/><input type="button" value="Go" onclick="geocode()">
   <div id="map">
     <div id="map_canvas" style="width:100%; height:400px"></div>
-    <div  id="crosshair"></div>
+    <div  id="crosshair">X</div>
   </div>
 
   <table>
     <tr><td>Lat/Lng:</td><td><div id="latlng"></div></td></tr>
     <tr><td>Address:</td><td><div id="formatedAddress"></div></td></tr>
-    <tr><td>Zoom Level</td><td><div id="zoom_level">2</div></td></tr>
+    <tr><td>Zoom Level:</td><td><div id="zoom_level">7</div></td></tr>
   </table>
 </div>
 
