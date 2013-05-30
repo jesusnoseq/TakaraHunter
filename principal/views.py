@@ -30,16 +30,74 @@ def entrar(request):
 			if user.is_active:
 				login(request, user)
 				state = "Bienvenido %s" % username
+				numero_tesoros = Tesoro.objects.filter(recogidaPor=request.user).count()
 				listaRutas = Ruta.objects.filter(user=request.user)[:10]
+				listaBusquedas = Busqueda.objects.filter(participantes=request.user)[:10]
+				########################################################################## WARNING CODIGO FEO Y PELIGROSO
+				campeon = []
+				diamante = []
+				platino = []
+				oro = []
+				plata = []
+				bronce = []
+				soy_campeon = False
+				soy_diamante = False
+				soy_platino = False
+				soy_oro = False
+				soy_plata = False
+				soy_bronce = False
+				soy_nada = False
+				result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
+				resultados = []
+				for row in result:
+					if row['recogidaPor']!=None:
+						row['username']=User.objects.get(pk=row['recogidaPor']).username
+						resultados.append(row)
+				if len(resultados) >= 1:
+					campeon = resultados[0]
+					if campeon['username'] == request.user.username:
+						soy_campeon = True
+				if len(resultados) >= 2:
+					diamante = resultados[1]
+					if diamante['username'] == request.user.username:
+						soy_diamante = True
+				if len(resultados) >= 3:
+					platino = resultados[2]
+					if platino['username'] == request.user.username:
+						soy_platino = True
+				if len(resultados) >= 4:
+					oro = resultados[3]
+					if oro['username'] == request.user.username:
+						soy_oro = True
+				if len(resultados) >= 5:
+					plata = resultados[4]
+					if plata['username'] == request.user.username:
+						soy_plata = True
+				if len(resultados) >= 6:
+					bronce = resultados[5]
+					if bronce['username'] == request.user.username:
+						soy_bronce = True
+				if not(soy_campeon == True or soy_diamante == True or soy_platino == True or soy_oro == True or soy_plata == True or soy_bronce == True):
+					soy_nada = True
+				########################################################################## WARNING CODIGO FEO Y PELIGROSO
 				return render_to_response('perfil.html',
 				{
+					########################################################################## WARNING CODIGO FEO Y PELIGROSO
+					'campeon':soy_campeon,
+					'diamante':soy_diamante,
+					'platino':soy_platino,
+					'oro':soy_oro,
+					'plata':soy_plata,
+					'bronce':soy_bronce,
+					'nada':soy_nada,
+					########################################################################## WARNING CODIGO FEO Y PELIGROSO
 					'ultimas_rutas':listaRutas,
 					'mensaje':state
 				},context_instance=RequestContext(request))
 			else:
-				state = "Tu cuenta no esta activa, contacta con el administrador."
+				state = "Tu cuenta no esta activa, contacta con el administrador"
 		else:
-			state = "Tu nombre de usuario y/o contraseña no son correctas."
+			state = "Tu nombre de usuario y/o contraseña no son correctas"
 	#state="Error al logearse, vuelva a intentarlo."
 	return render_to_response('login.html',
 	{
@@ -64,15 +122,73 @@ def registro(request):
 @login_required(login_url='/login')
 def salir(request):
 	logout(request)
-	state='Sesión cerrada.'
+	state='Sesión cerrada'
 	return render_to_response('mensaje.html',{'mensaje':state},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def perfil(request):
+	numero_tesoros = Tesoro.objects.filter(recogidaPor=request.user).count()
 	listaRutas = Ruta.objects.filter(user=request.user)[:10]
 	listaBusquedas = Busqueda.objects.filter(participantes=request.user)[:10]
+	########################################################################## WARNING CODIGO FEO Y PELIGROSO
+	campeon = []
+	diamante = []
+	platino = []
+	oro = []
+	plata = []
+	bronce = []
+	soy_campeon = False
+	soy_diamante = False
+	soy_platino = False
+	soy_oro = False
+	soy_plata = False
+	soy_bronce = False
+	soy_nada = False
+	result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
+	resultados = []
+	for row in result:
+		if row['recogidaPor']!=None:
+			row['username']=User.objects.get(pk=row['recogidaPor']).username
+			resultados.append(row)
+	if len(resultados) >= 1:
+		campeon = resultados[0]
+		if campeon['username'] == request.user.username:
+			soy_campeon = True
+	if len(resultados) >= 2:
+		diamante = resultados[1]
+		if diamante['username'] == request.user.username:
+			soy_diamante = True
+	if len(resultados) >= 3:
+		platino = resultados[2]
+		if platino['username'] == request.user.username:
+			soy_platino = True
+	if len(resultados) >= 4:
+		oro = resultados[3]
+		if oro['username'] == request.user.username:
+			soy_oro = True
+	if len(resultados) >= 5:
+		plata = resultados[4]
+		if plata['username'] == request.user.username:
+			soy_plata = True
+	if len(resultados) >= 6:
+		bronce = resultados[5]
+		if bronce['username'] == request.user.username:
+			soy_bronce = True
+	if not(soy_campeon == True or soy_diamante == True or soy_platino == True or soy_oro == True or soy_plata == True or soy_bronce == True):
+		soy_nada = True
+	########################################################################## WARNING CODIGO FEO Y PELIGROSO
 	return render_to_response('perfil.html',
 	{
+		########################################################################## WARNING CODIGO FEO Y PELIGROSO
+		'campeon':soy_campeon,
+		'diamante':soy_diamante,
+		'platino':soy_platino,
+		'oro':soy_oro,
+		'plata':soy_plata,
+		'bronce':soy_bronce,
+		'nada':soy_nada,
+		########################################################################## WARNING CODIGO FEO Y PELIGROSO
+		'numero_tesoros':numero_tesoros,
 		'ultimas_rutas':listaRutas,
 		'ultimas_busquedas':listaBusquedas
 	},context_instance=RequestContext(request))
@@ -227,22 +343,25 @@ def hall(request):
 	bronce = []
 	elresto = []
 	result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
+	resultados = []
 	for row in result:
-		row['username']=User.objects.get(pk=row['recogidaPor']).username
-	if result.count() >= 1:
-		campeon = result[0]
-	if result.count() >= 2:
-		diamante = result[1]
-	if result.count() >= 3:
-		platino = result[2]
-	if result.count() >= 4:
-		oro = result[3]
-	if result.count() >= 5:
-		plata = result[4]
-	if result.count() >= 6:
-		bronce = result[5]
-	if result.count() >= 7:
-		elresto = result[6:]
+		if row['recogidaPor']!=None:
+			row['username']=User.objects.get(pk=row['recogidaPor']).username
+			resultados.append(row)
+	if len(resultados) >= 1:
+		campeon = resultados[0]
+	if len(resultados) >= 2:
+		diamante = resultados[1]
+	if len(resultados) >= 3:
+		platino = resultados[2]
+	if len(resultados) >= 4:
+		oro = resultados[3]
+	if len(resultados) >= 5:
+		plata = resultados[4]
+	if len(resultados) >= 6:
+		bronce = resultados[5]
+	if len(resultados) >= 7:
+		elresto = resultados[6:]
 	return render_to_response('hallDeLaFama.html',
 	{
 		'campeon':campeon,
@@ -324,3 +443,5 @@ def detalleTesoro(request, tesoro):
 	{
 		'tesoro':tesoro
 	},context_instance=RequestContext(request))
+	
+	

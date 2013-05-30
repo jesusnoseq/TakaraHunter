@@ -8,27 +8,32 @@
 	<table class="table table-striped table-hover">
 		<tr>
 			<td><strong>Busqueda</strong></td>
-			<td><strong>Coordenada x</strong></td>
-			<td><strong>Coordenada y</strong></td>
-			<td><strong>Recogido por</strong></td>
-			<td></td>
-				<td><a class="btn btn-info btn-block" href="/tesoros/nueva"><i class="icon-file"></i><i class="icon-globe"></i> Nuevo Tesoro</a></td>
+			<td><strong>Coordenada X</strong></td>
+			<td><strong>Coordenada Y</strong></td>
+			<td><strong>Propietario</strong></td>
+			<td><a class="btn btn-info btn-block" href="/tesoros/nueva"><i class="icon-file"></i><i class="icon-flag"></i> Nuevo</a></td>
 		</tr>
 		{% if tesoros %}
 			{% for tesoro in tesoros %}
 				<tr>
-					<td><a href="/tesoros/{{ tesoros.id }}">{{ tesoro.busqueda }}</a></td>
+					<td><a href="/tesoros/{{ tesoro.id }}">{{ tesoro.busqueda }}</a></td>
 					<td>{{ tesoro.x }}</td>
 					<td>{{ tesoro.y }}</td>
-					<td>{{ tesoro.recogidaPor }}</td>
-					{% if user.is_superuser %}
-						<td><a class="btn btn btn-danger btn-block" href="/tesoros/borrar/{{ tesoro.id }}"><i class="icon-trash"></i><i class="icon-globe"></i> Borrar</a></td>
-					{% endif %}
+					<td>
+						{% if tesoro.recogidaPor %}
+							{{ tesoro.recogidaPor }}
+						{% else %}
+							Nadie
+						{% endif %}
+					</td>
+					<td><a class="btn btn-danger btn-block" href="/tesoros/borrar/{{ tesoro.id }}"><i class="icon-trash"></i><i class="icon-flag"></i> Borrar</a></td>
 				</tr>
 			{% endfor %}
     	{% else %}
 			<tr>
 				<td><strong>No hay tesoros</strong></td>
+				<td></td>
+				<td></td>
 				<td></td>
 				<td></td>
 			</tr>

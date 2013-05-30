@@ -4,8 +4,8 @@
 
 {% block mensaje_informativo %}
 	{% if mensaje %}
-		<div class="jumbotron">
-			<h2>{{mensaje}}</h2>
+		<div class="well sidebar-nav">
+			<center><h2>{{mensaje}}</h2></center>
 		</div>
 	{% endif %}
 {% endblock %}
@@ -136,11 +136,11 @@
 			<ul class="nav nav-list">
 				<a class="btn btn-info btn-block" href="/perfil/editar"><i class="icon-edit"></i><i class="icon-user"></i></a>
 				<li class="nav-header"><center>Perfil</center></li>
-				<li><center>
-					{% if  user.foto %}
-						<img src="{{MEDIA_URL}}{{user.foto}}" class="img-rounded"/>
-					{% endif %}
-				</center></li>
+				{% if  user.foto %}
+					<li>
+						<center><img src="{{MEDIA_URL}}{{user.foto}}" class="img-rounded"/></center>
+					</li>
+				{% endif %}
 				<li class="nav-header"><center>Datos de cuenta</center></li>
 				<li><strong>Nombre de usuario:</strong> {{ user.username }}</li>
 				<li><strong>Correo:</strong> {{ user.email }}</li>
@@ -174,6 +174,46 @@
 					{% else %}
 						
 					{% endif %}</li>
+				{% if campeon %}
+					<li class="nav-header"><center>Takara Hunter</center></li>
+					<li>
+						<center><img src="{{STATIC_URL}}img/medalla_campeon_p.png" height="50px" width="50px"/></center>
+					</li>
+				{% endif %}
+				{% if diamante %}
+					<li class="nav-header"><center>Cazador legendario</center></li>
+					<li>
+						<center><img src="{{STATIC_URL}}img/medalla_diamante1_p.png" height="50px" width="50px"/></center>
+					</li>
+				{% endif %}
+				{% if platino %}
+					<li class="nav-header"><center>Maestro cazador</center></li>
+					<li>
+						<center><img src="{{STATIC_URL}}img/medalla_platino1_p.png" height="50px" width="50px"/></center>
+					</li>
+				{% endif %}
+				{% if oro %}
+					<li class="nav-header"><center>Líder cazador</center></li>
+					<li>
+						<center><img src="{{STATIC_URL}}img/medalla_oro1_p.png" height="50px" width="50px"/></center>
+					</li>
+				{% endif %}
+				{% if plata %}
+					<li class="nav-header"><center>Cazador experto</center></li>
+					<li>
+						<center><img src="{{STATIC_URL}}img/medalla_plata1_p.png" height="50px" width="50px"/></center>
+					</li>
+				{% endif %}
+				{% if bronce %}
+					<li class="nav-header"><center>Cazador novato</center></li>
+					<li>
+						<center><img src="{{STATIC_URL}}img/medalla_bronce1_p.png" height="50px" width="50px"/></center>
+					</li>
+				{% endif %}
+				{% if nada %}
+					<li class="nav-header"><center>Desconocido</center></li>
+				{% endif %}
+				<li><strong>Tesoros recogidos:</strong> {{ numero_tesoros}}</li>
 			</ul>
 		</div>
 	</div>

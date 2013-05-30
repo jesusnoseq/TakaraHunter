@@ -46,11 +46,22 @@ class BusquedaAdmin(admin.ModelAdmin):
             'fields': ('participantes', )
         }),
     )
+	
+class TesoroAdmin(admin.ModelAdmin):
+	list_display = ('x', 'y', 'busqueda', 'recogidaPor')
+	fieldsets = (
+        ('Información del tesoro', {
+            'fields': ('busqueda', 'recogidaPor')
+        }),
+		('Localización', {
+            'fields': ('x', 'y', )
+        }),
+    )
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Ruta, RutaAdmin)
 admin.site.register(Busqueda, BusquedaAdmin)
-admin.site.register(Tesoro)
+admin.site.register(Tesoro, TesoroAdmin)
 #admin.site.register(Participa)
 

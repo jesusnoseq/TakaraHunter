@@ -10,9 +10,9 @@
 			<p><strong>Busqueda: </strong>{{tesoro.busqueda}}</p>
 			<p><strong>Coordenada x: </strong>{{tesoro.x}}</p>
 			<p><strong>Coordenada y: </strong>{{tesoro.y}}</p>
-			{% if recogidaPor %}
-				<p><strong>Recogido Por: </strong>{{tesoro.recogidaPor}}</p>
-			
+			{% if tesoro.recogidaPor %}
+				<p><strong>Recogido por: </strong>{{tesoro.recogidaPor}}</p>
+			{% endif %}
 		</div>
 	</div>
  	<div class="span6">
