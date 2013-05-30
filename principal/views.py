@@ -397,6 +397,8 @@ def atraparTesoros(request, busqueda):
 	tesoro = Tesoro.objects.get(busqueda=busquedaAAtrapar)
 	tesoro.recogidaPor = request.user
 	busquedaAAtrapar.estado = 'c'
+	tesoro.save()
+	busquedaAAtrapar.save()
 	return render_to_response('tesoroAtrapado.html',{
 		'tesoro':tesoro,
 	},context_instance=RequestContext(request))
