@@ -228,7 +228,8 @@ def hall(request):
 	elresto = []
 	result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
 	for row in result:
-		row['username']=User.objects.get(pk=row['recogidaPor']).username
+		if row['recogidaPor']!=None:
+			row['username']=User.objects.get(pk=row['recogidaPor']).username
 	if result.count() >= 1:
 		campeon = result[0]
 	if result.count() >= 2:
