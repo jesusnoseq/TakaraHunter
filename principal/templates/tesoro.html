@@ -2,6 +2,79 @@
 
 {% block titulo %}TH | Tesoro X{% endblock %}
 
+{% block footerScripts %}
+	<style>
+		#mapa img
+		{
+			max-width: none;
+		}
+	</style>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			inicializar()
+		});
+	
+		var geocoder;
+		var infoWindow;
+		var marker;
+		var rendererOptions = 
+		{
+			draggable: true
+		};
+		var directionDisplay;
+		var directionsService = new google.maps.DirectionsService();
+		geocoder = new google.maps.Geocoder();
+    	infowindow = new google.maps.InfoWindow();
+
+		function inicializar() 
+		{
+			var centromapa = new google.maps.LatLng({{tesoro.x}},{{tesoro.y}});
+			directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+			var myOptions = 
+			{
+				zoom: 14,
+				center: centromapa,
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				mapTypeControl: false
+			};
+			var map = new google.maps.Map(document.getElementById("mapa"),myOptions);
+			directionsDisplay.setMap(map);
+			directionsDisplay.setPanel(document.getElementById("panel_direcciones"));
+		
+			google.maps.event.addListener(map, 'click', function(e)
+			{
+          		geocoder.geocode({'latLng':e.latLng},function(results, status)
+				{
+					if (status == google.maps.GeocoderStatus.OK) 
+					{
+                		if (results[0]) 
+                  		{
+        	            	if (marker) 
+	                    	{
+								marker.setPosition(e.latLng);
+							} 
+							else 
+							{
+								marker = new google.maps.Marker(
+								{
+									position: e.latLng,
+									map: map
+								});
+							}
+							infowindow.setContent(results[0].formatted_address);
+							infowindow.open(map, marker);
+						}
+					} 
+				});
+			});
+		}
+		
+		
+	</script>
+{% endblock %}
+
 {% block contenido %}
 <div class="row-fluid">
 	<div class="span6">
@@ -22,6 +95,7 @@
 				<p>No hay participantes.</p>
 			{% endif %}	
 		</div>
+		<input class="btn btn-primary" type="submit" value="Recoger Tesoro" />
 	</div>
  	<div class="span6">
 		<div class="well sidebar-nav">
