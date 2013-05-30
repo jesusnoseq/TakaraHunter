@@ -27,8 +27,12 @@
 				var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
 				map.setStreetView(panorama);
 			}
-			
 		</script>
+		<style>
+			#map_canvas img {
+				max-width: none;
+			}
+		</style>
 {% endblock %}
 
 
