@@ -2,24 +2,86 @@
 
 {% block titulo %}TH | Detalle tesoro{% endblock %}
 
+{% block footerScripts %}
+	<style>
+		#mapa img
+		{
+			max-width: none;
+		}
+	</style>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true&amp;libraries=geometry"></script>
+   	<script type="text/javascript">
+   		$(document).ready(function()
+		{
+			inicializar()
+		});
+		
+		var marker;
+		var map;
+
+		function inicializar()
+		{
+			var x = document.getElementById('id_x').value;
+			var y = document.getElementById('id_y').value;
+			var loc_tesoro = new google.maps.LatLng(x, y);
+			
+  			var mapOptions =
+  			{
+    			zoom: 15,
+    			mapTypeId: google.maps.MapTypeId.ROADMAP,
+    			center: loc_tesoro,
+    			draggable:false,
+  			};
+
+  			map = new google.maps.Map(document.getElementById('mapa'), mapOptions);
+  			
+  			marker = new google.maps.Marker(
+  			{
+    			map:map,
+    			draggable:false,
+    			animation: google.maps.Animation.DROP,
+    			position: loc_tesoro,
+    			icon: '{{STATIC_URL}}img/moneda_takara.png' 
+  			});
+		}
+	</script>
+{% endblock %}
 
 {% block contenido %}
 <div class="row-fluid">
 	<div class="span6">
 		<div class="well sidebar-nav">
-			<p><strong>Busqueda: </strong>{{tesoro.busqueda}}</p>
-			<p><strong>Coordenada x: </strong>{{tesoro.x}}</p>
-			<p><strong>Coordenada y: </strong>{{tesoro.y}}</p>
-			{% if tesoro.recogidaPor %}
-				<p><strong>Recogido por: </strong>{{tesoro.recogidaPor}}</p>
-			{% endif %}
+			<table class="table table-striped table-hover">
+				<tr>
+					<td><strong>Busqueda:</strong></td>
+					<td>{{tesoro.busqueda}}</td>
+				</tr>
+				<tr>
+					<td><strong>Coordenada X:</strong></td>
+					<td><input readonly="true" id="id_x" value="{{tesoro.x}}"></td>
+				</tr>
+				<tr>
+					<td><strong>Coordenada Y:</strong></td>
+					<td><input readonly="true" id="id_y" value="{{tesoro.y}}"></td>
+				</tr>
+				{% if tesoro.recogidaPor %}
+					<tr>
+						<td><strong>Recogido por:</strong></td>
+						<td>{{tesoro.recogidaPor}}</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td><strong>Recogido por:</strong></td>
+						<td>Nadie</td>
+					</tr>
+				{% endif %}
+			</table>
 		</div>
 	</div>
  	<div class="span6">
-		<!--<div class="well sidebar-nav">
-			<div id="map-canvas" style="width: 445px; height: 300px"></div>
-			<div id="pano" style="width: 445px; height: 300px"></div>
-		</div>-->
+		<div class="well sidebar-nav">
+			<div id="mapa" style="width: 445px; height: 300px"></div>
+		</div>
 	</div>
 </div>
 {% endblock %}
