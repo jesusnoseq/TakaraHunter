@@ -27,12 +27,21 @@
 			document.getElementById('id_y').value = markerLatLng.lng()
 		}
 
-		function inicializar() {
+		function inicializar()
+		{
 			
-  			var mapOptions = {
+  			var mapOptions =
+  			{
     			zoom: 15,
     			mapTypeId: google.maps.MapTypeId.ROADMAP,
-    			center: cordoba
+    			center: cordoba,
+    			draggable:true,
+				panControl:true,
+				zoomControl:true,
+				mapTypeControl:false,
+				scaleControl:false,
+				streetViewControl:false,
+				overviewMapControl:false,
   			};
 
   			map = new google.maps.Map(document.getElementById('mapa'), mapOptions);

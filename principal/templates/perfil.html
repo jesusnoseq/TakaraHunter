@@ -11,31 +11,48 @@
 {% endblock %}
 
 {% block footerScripts %}
-		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
-		<script>
-			$(document).ready(function(){
-				initialize()
-			});
-			function initialize() {
-				var fenway = new google.maps.LatLng(42.345573, -71.098326);
-				var mapOptions = {
-					center : fenway,
-					zoom : 14,
-					mapTypeId : google.maps.MapTypeId.ROADMAP
-				};
-				var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-				var panoramaOptions = {
-					position : fenway,
-					pov : {
-						heading : 34,
-						pitch : 10
-					}
-				};
-				var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
-				map.setStreetView(panorama);
-			}
-			
-		</script>
+	<style>
+		#mapa img
+		{
+			max-width: none;
+		}
+	</style>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+	<script>
+		$(document).ready(function()
+		{
+			initialize()
+		});
+		function initialize()
+		{
+			var x = document.getElementById('user_px').value;
+			var y = document.getElementById('user_py').value;
+			var center = new google.maps.LatLng(x, y);
+			var mapOptions =
+			{
+				center:center,
+				zoom:14,
+				mapTypeId:google.maps.MapTypeId.ROADMAP,
+				draggable:true,
+				panControl:false,
+				zoomControl:true,
+				mapTypeControl:false,
+				scaleControl:false,
+				streetViewControl:false,
+				overviewMapControl:false,
+			};
+			var map = new google.maps.Map(document.getElementById('mapa'), mapOptions);
+  			
+  			var marker = new google.maps.Marker(
+  			{
+    			map:map,
+    			draggable:false,
+    			animation: google.maps.Animation.DROP,
+    			position: center,
+    			icon: '{{STATIC_URL}}img/moneda_takara.png' 
+  			});
+		}
+	</script>
 {% endblock %}
 
 {% block menu_pagina %}
@@ -162,18 +179,24 @@
 				<li><strong>Profesión:</strong> {{ user.profesion}}</li>
 				<li><strong>Sexo:</strong> {{ user.sexo}}</li>
 				<li class="nav-header"><center>Localización</center></li>
-				<li><strong>Coordenada X:</strong> 
+				<li>
+					<strong>X:</strong> 
 					{% if user.px %}
-						{{ user.px}}
+						<input type="text" id="user_px" value="{{user.px|stringformat:'f'}}" readonly="true">
 					{% else %}
-						
-					{% endif %}</li>
-				<li><strong>Coordenada Y:</strong> 
+						<input type="text" id="user_px" value="" readonly="true">
+					{% endif %}
+				</li>
+				<li>
+					<strong>Y:</strong> 
 					{% if user.py %}
-						{{ user.py}}
+						<input type="text" id="user_py" value="{{user.py|stringformat:'f'}}" readonly="true">
 					{% else %}
-						
-					{% endif %}</li>
+						<input type="text" id="user_py" value="" readonly="true">
+					{% endif %}
+				</li>
+				<br>
+				<li><center><div id="mapa" style="width: 200px; height: 200px"></div></center></li>
 				{% if campeon %}
 					<li class="nav-header"><center>Takara Hunter</center></li>
 					<li>

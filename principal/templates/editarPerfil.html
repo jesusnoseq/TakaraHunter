@@ -35,13 +35,16 @@
 	var reverseGeocodedLast;
 	var currentReverseGeocodeResponse;
 
-	$(document).ready(function() {
+	$(document).ready(function()
+	{
 		initialize()
 	});
 
-	function initialize() {
+	function initialize()
+	{
 		var latlng = new google.maps.LatLng(37.88678116397235, -4.774135385131766);
-		var myOptions = {
+		var myOptions =
+		{
 			zoom : 7,
 			center : latlng,
 			mapTypeId : google.maps.MapTypeId.ROADMAP
@@ -53,34 +56,40 @@
 		centerChanged();
 	}
 
-	function setupEvents() {
+	function setupEvents()
+	{
 		reverseGeocodedLast = new Date();
 		centerChangedLast = new Date();
 
 		setInterval(function() {
-			if ((new Date()).getSeconds() - centerChangedLast.getSeconds() > 1) {
+			if ((new Date()).getSeconds() - centerChangedLast.getSeconds() > 1)
+			{
 				if (reverseGeocodedLast.getTime() < centerChangedLast.getTime())
 					reverseGeocode();
 			}
 		}, 1000);
 
-		google.maps.event.addListener(map, 'zoom_changed', function() {
+		google.maps.event.addListener(map, 'zoom_changed', function()
+		{
 			document.getElementById("zoom_level").innerHTML = map.getZoom();
 		});
 
 		google.maps.event.addListener(map, 'center_changed', centerChanged);
 
-		google.maps.event.addDomListener(document.getElementById('crosshair'), 'dblclick', function() {
+		google.maps.event.addDomListener(document.getElementById('crosshair'), 'dblclick', function()
+		{
 			map.setZoom(map.getZoom() + 1);
 		});
 
 	}
 
-	function getCenterLatLngText() {
+	function getCenterLatLngText()
+	{
 		return '(' + map.getCenter().lat() + ', ' + map.getCenter().lng() + ')';
 	}
 
-	function centerChanged() {
+	function centerChanged()
+	{
 		centerChangedLast = new Date();
 		var latlng = getCenterLatLngText();
 		document.getElementById('latlng').innerHTML = latlng;
@@ -94,48 +103,223 @@
 		currentReverseGeocodeResponse = null;
 	}
 
-	function reverseGeocode() {
+	function reverseGeocode()
+	{
 		reverseGeocodedLast = new Date();
 		geocoder.geocode({
 			latLng : map.getCenter()
 		}, reverseGeocodeResult);
 	}
 
-	function reverseGeocodeResult(results, status) {
+	function reverseGeocodeResult(results, status)
+	{
 		currentReverseGeocodeResponse = results;
-		if (status == 'OK') {
-			if (results.length == 0) {
+		if (status == 'OK')
+		{
+			if (results.length == 0)
+			{
 				document.getElementById('formatedAddress').innerHTML = 'None';
-			} else {
+			}
+			else
+			{
 				document.getElementById('formatedAddress').innerHTML = results[0].formatted_address;
 			}
-		} else {
+		}
+		else
+		{
 			document.getElementById('formatedAddress').innerHTML = 'Error';
 		}
 	}
 
-	function geocode() {
+	function geocode()
+	{
 		var address = document.getElementById("address").value;
-		geocoder.geocode({
+		geocoder.geocode(
+		{
 			'address' : address,
 			'partialmatch' : true
 		}, geocodeResult);
 	}
 
-	function geocodeResult(results, status) {
-		if (status == 'OK' && results.length > 0) {
+	function geocodeResult(results, status)
+	{
+		if (status == 'OK' && results.length > 0)
+		{
 			map.fitBounds(results[0].geometry.viewport);
-		} else {
+		}
+		else
+		{
 			alert("Geocode was not successful for the following reason: " + status);
 		}
 	}
-
 </script>	
 {% endblock %}
 
+{% block menu_pagina %}
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<ul class="nav">
+				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> Mis rutas</a></li>
+				<li><a href="/misbusquedas"><i class="icon-list"></i><i class="icon-flag"></i> Mis búsquedas</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}
 
 {% block contenido %}
-
+<div class="well sidebar-nav">
+<!--<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+				<table class="table table-condensed">
+					{% if formulario.non_field_errors %}
+						<tr>
+							<td></td>
+							<td>
+    							{{ formulario.non_field_errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<!---------------------------------------------------------------------------------------------------->
+					<!--{% if formulario.first_name.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.first_name.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Nombre:</strong></td>
+						<td>{{ formulario.first_name }}</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					<!--{% if formulario.last_name.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.last_name.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Apellidos:</strong></td>
+						<td>{{ formulario.last_name }}</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					<!--{% if formulario.email.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.email.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Email:</strong></td>
+						<td>{{ formulario.email }}</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					<!--{% if formulario.sexo.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.sexo.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Sexo:</strong></td>
+						<td>{{ formulario.sexo }}</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					<!--{% if formulario.telefono.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.telefono.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Teléfono:</strong></td>
+						<td>{{ formulario.telefono }}</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					<!--{% if formulario.px.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.px.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Ubicación - Coordenada X:</strong></td>
+						<td>{{ formulario.px }}</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					<!--{% if formulario.py.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.py.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Ubicación - Coordenada Y:</strong></td>
+						<td>{{ formulario.py }}</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					<!--{% if formulario.fecha_nacimiento.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.fecha_nacimiento.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Fecha de nacimiento:</strong></td>
+						<td>{{ formulario.fecha_nacimiento }}</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					<!--{% if formulario.profesion.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.profesion.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Profesión:</strong></td>
+						<td>{{ formulario.profesion }}</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					<!--{% if formulario.foto.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.foto.errors }}
+							</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Foto:</strong></td>
+						<td>{{ formulario.foto }}</td>
+					</tr>
+					<!---------------------------------------------------------------------------------------------------->
+					<!--<tr>
+						<td></td>
+						<td><input class="btn btn-primary btn-block" type="submit" value="Guardar"/></td>
+					</tr>
+				</table>
+			</form>
+</div>-->
+	
 <form class="" method="post" action="" enctype="multipart/form-data">
 	<table>
 		{% csrf_token %}
@@ -144,7 +328,8 @@
 	<input class="btn btn-primary" type="submit" value="Guardar" />
 	<!--<input class="btnA unselected" type="reset" value="Cancelar" />-->
 </form>
-
+</div>
+<div class="well sidebar-nav">
 <div id="mapa">
   Buscar lugar: <input type="text" id="address"/><input type="button" value="Go" onclick="geocode()">
   <div id="map">
@@ -158,6 +343,6 @@
     <tr><td>Zoom Level:</td><td><div id="zoom_level">7</div></td></tr>
   </table>
 </div>
-
+</div>
 
 {% endblock %}

@@ -30,7 +30,13 @@
     			zoom: 15,
     			mapTypeId: google.maps.MapTypeId.ROADMAP,
     			center: loc_tesoro,
-    			draggable:false,
+    			draggable:true,
+				panControl:true,
+				zoomControl:true,
+				mapTypeControl:false,
+				scaleControl:false,
+				streetViewControl:false,
+				overviewMapControl:false,
   			};
 
   			map = new google.maps.Map(document.getElementById('mapa'), mapOptions);
@@ -58,11 +64,11 @@
 				</tr>
 				<tr>
 					<td><strong>Coordenada X:</strong></td>
-					<td><input readonly="true" id="id_x" value="{{tesoro.x}}"></td>
+					<td><input type="text" readonly="true" id="id_x" value="{{tesoro.x|stringformat:'f'}}"></td>
 				</tr>
 				<tr>
 					<td><strong>Coordenada Y:</strong></td>
-					<td><input readonly="true" id="id_y" value="{{tesoro.y}}"></td>
+					<td><input type="text" readonly="true" id="id_y" value="{{tesoro.y|stringformat:'f'}}"></td>
 				</tr>
 				{% if tesoro.recogidaPor %}
 					<tr>

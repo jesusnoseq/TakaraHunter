@@ -70,6 +70,60 @@
 				<div class="navbar">
 					<div class="navbar-inner">
 						<div class="container">
+							<div class="row-fluid" >
+  								<div class="span4">
+  									<h4>Takara Hunter</h4>
+  									<br>
+  									<ul class="unstyled">
+  									{% if user.is_anonymous %}
+										<li><a href="/"><p>Inicio</p></a></li>
+										<li><a href="/login"><p>Login</p></a></li>
+										<li><a href="/registro"><p>Registro</p></a></li>
+									{% else %}
+										<li><a href="/perfil">Perfil</a></li>
+										<li><a href="/busquedas">Búsquedas</a></li>
+									{% if user.is_superuser %}
+										<li><a href="/tesoros">Tesoros</a></li>
+									{% endif %}
+										<li><a href="/hall">Hall</a></li>
+										<li><a href="/matriz">Matriz</a></li>
+									{% if user.is_superuser %}
+										<li><a href="/admin">Administración</a></li>
+									{% endif %}
+										<li><a href="/logout">Logout</a></li>
+									{% endif %}
+  									</ul>
+  								</div>
+  								<div class="span4">
+									<h4>Tecnologías</h4>
+									<br>
+									<ul class="unstyled">
+										<li><img src="{{ STATIC_URL }}img/django.png" class="img-rounded" width="120px" height="120px"><p>Django project</p></li>
+										<li><img src="{{ STATIC_URL }}img/google_maps.png" class="img-rounded" width="50px" height="50px"><p>Google Maps</p></li>
+									</ul>
+								</div>
+  								<div class="span4">
+  									<h4>Autores</h4>
+  									<br>
+  									<ul class="unstyled">
+  										<li>Raúl Arroyo Lubián</li>
+  										<li>Alfonso Lacalle García</li>
+  										<li>Pedro Daniel López González</li>
+  										<li>Jesús Rodríguez Pérez</li>
+  									</ul>
+  								</div>
+  							</div>
+  						</div>
+  					</div>
+				</div>
+				<div class="well sidebar-nav">
+				<div class="span10">
+  							<center><p><img src="{{STATIC_URL}}img/favicon.png"> 2013 Takara Hunter | Todos los derechos reservados</p></center>
+  						</div>
+  					</div>
+				<!--<div class="navbar">
+					<div class="navbar-inner">
+						<div class="container">
 							<ul class="nav">
 								<li><img src="{{ STATIC_URL }}img/django.png" class="img-rounded" width="160px" height="160px"><p>Con la tecnología de Django</p></li>
 								<li><img src="{{ STATIC_URL }}img/google_maps.png" class="img-rounded" width="70px" height="70px"><p>Con la tecnología de Google Maps</p></li>
@@ -78,7 +132,7 @@
 							</ul>
 						</div>
 					</div>
-				</div>
+				</div>-->
 			</div>
 			<!------------------------------------------------- PIE DE PÁGINA ----------------------------------------------------->
 		<!------------------------------------------------------- CONTENIDO ------------------------------------------------------->
