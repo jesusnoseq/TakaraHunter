@@ -289,6 +289,7 @@ def detalleBusqueda(request, busqueda):
 @login_required(login_url='/login')
 def unirseBusqueda(request, busqueda):
 	busqueda = get_object_or_404(Busqueda,pk=busqueda,estado='a')
+	get_object_or_404(Tesoro, busqueda=busqueda)
 	busqueda.participantes.add(request.user)
 	return HttpResponseRedirect('/busquedas')
 
