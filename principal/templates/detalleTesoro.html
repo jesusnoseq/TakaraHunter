@@ -58,11 +58,11 @@
 				</tr>
 				<tr>
 					<td><strong>Coordenada X:</strong></td>
-					<td><input readonly="true" id="id_x" value="{{tesoro.x}}"></td>
+					<td><input readonly="true" id="id_x" value="{{tesoro.x|stringformat:'f'}}"></td>
 				</tr>
 				<tr>
 					<td><strong>Coordenada Y:</strong></td>
-					<td><input readonly="true" id="id_y" value="{{tesoro.y}}"></td>
+					<td><input readonly="true" id="id_y" value="{{tesoro.y|stringformat:'f'}}"></td>
 				</tr>
 				{% if tesoro.recogidaPor %}
 					<tr>
