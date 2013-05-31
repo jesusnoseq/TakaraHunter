@@ -9,15 +9,16 @@
 	var directionsDisplay;
 	var directionsService = new google.maps.DirectionsService();
 	var map;
-	
+
 	$(document).ready(function() {
 		initialize()
-		$('.cell').over(calcRoute);
+		$('.cell').hover(calcRoute);
 		//$('#id_modo').change(calcRoute);
 	});
+
 	function initialize() {
 		directionsDisplay = new google.maps.DirectionsRenderer();
-
+	
 		var centro = new google.maps.LatLng(37.735261, -4.791666);
 		var mapOptions = {
 			center : centro,
@@ -26,24 +27,45 @@
 		};
 		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 		directionsDisplay.setMap(map);
-
 	}
 	
+	function getMatriz(){
+		var modo=$('#id_modo').val();
+		var url = "http://maps.googleapis.com/maps/api/distancematrix/json?origins=
+		{% for usuario in usuarios %}
+			{% if forloop.last %}
+				{{ usuario.px|stringformat:"f" }},{{ usuario.py|stringformat:"f" }}
+			{% else %}
+				{{ usuario.px|stringformat:"f" }},{{ usuario.py|stringformat:"f" }}|
+			{% endif %}
+		{% endfor %}
+		&destinations={% for usuario in usuarios %}
+			{% if forloop.last %}
+				{{ usuario.px|stringformat:"f" }},{{ usuario.py|stringformat:"f" }}
+			{% else %}
+				{{ usuario.px|stringformat:"f" }},{{ usuario.py|stringformat:"f" }}|
+			{% endif %}
+		{% endfor %}&mode="+modo+"&language=es-ES&sensor=false"
+		return url;
+	}
+
 	function calcRoute(evt) {
-	  var start = $(this).parent("sx").val()+','+$(this).parent("sy").val();
-	  var end =  $(this).parent("ex").val()+','+$(this).parent("ey").val();
-	  var transporte="google.maps.DirectionsTravelMode."+$('#id_modo').value;
-	  
-	  var request = {
-	      origin:start,
-	      destination:end,
-	      travelMode: transporte
-	  };
-	  directionsService.route(request, function(response, status) {
-	    if (status == google.maps.DirectionsStatus.OK) {
-	      directionsDisplay.setDirections(response);
-	    }
-	  });
+		alert("hola");
+		console.log(getMatriz());
+		var start = $(this).parent("sx").val()+','+$(this).parent("sy").val();
+		var end =  $(this).parent("ex").val()+','+$(this).parent("ey").val();
+		var transporte="google.maps.DirectionsTravelMode."+$('#id_modo').val();
+	
+		var request = {
+			origin:start,
+			destination:end,
+			travelMode: transporte
+		};
+		directionsService.route(request, function(response, status) {
+			if (status == google.maps.DirectionsStatus.OK) {
+				directionsDisplay.setDirections(response);
+			}
+		});
 	}
 
 </script>
@@ -60,21 +82,7 @@
 Ejemplo:
 https://developers.google.com/maps/location-based-apps?hl=es
 <br/>
-http://maps.googleapis.com/maps/api/distancematrix/json?origins={% for usuario in usuarios %}
-	{% if forloop.last %}
-		{{ usuario.px|stringformat:"f" }},{{ usuario.py|stringformat:"f" }}
-	{% else %}
-		{{ usuario.px|stringformat:"f" }},{{ usuario.py|stringformat:"f" }}|
-	{% endif %}
-{% endfor %}
-&destinations={% for usuario in usuarios %}
-	{% if forloop.last %}
-		{{ usuario.px|stringformat:"f" }},{{ usuario.py|stringformat:"f" }}
-	{% else %}
-		{{ usuario.px|stringformat:"f" }},{{ usuario.py|stringformat:"f" }}|
-	{% endif %}
-{% endfor %}
-&mode=walk&language=es-ES&sensor=false
+
 <ol class="well">
 {% for usuario in usuarios %}
 <li>

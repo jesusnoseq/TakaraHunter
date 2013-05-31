@@ -34,6 +34,7 @@ def entrar(request):
 				listaRutas = Ruta.objects.filter(user=request.user)[:10]
 				listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)[:10]
 				########################################################################## WARNING CODIGO FEO Y PELIGROSO
+								############################## ponlo en una funcion hombre XD y almenos no repites codigo. -Jesus
 				campeon = []
 				diamante = []
 				platino = []
@@ -132,6 +133,7 @@ def perfil(request):
 	listaRutas = Ruta.objects.filter(user=request.user)[:10]
 	listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)[:10]
 	########################################################################## WARNING CODIGO FEO Y PELIGROSO
+	## OMG la que me has liado. Yo paso XD
 	campeon = []
 	diamante = []
 	platino = []
