@@ -39,7 +39,7 @@ urlpatterns = patterns('',
 	
 	url(r'^tesoros/$','principal.views.listaTesoros'),
 	url(r'^tesoros/(?P<tesoro>\d+)\/[-\w]*$','principal.views.detalleTesoro'),
-	url(r'^tesoros/nueva/$','principal.views.crearTesoro'),
+	url(r'^tesoros/nuevo/$','principal.views.crearTesoro'),
 	url(r'^tesoros/borrar/(?P<tesoro>\d+)\/[-\w]*$','principal.views.borrarTesoro'),
 		
 	url(r'^about/$', direct_to_template, {'template': 'sobreNosotros.html'}),

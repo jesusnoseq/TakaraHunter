@@ -44,9 +44,18 @@
     			position: cordoba,
     			icon: '{{STATIC_URL}}img/moneda_takara.png' 
   			});
-  			google.maps.event.addListener(marker, 'mouseup', function(){
+  			
+  			var posicion_inicial = marker.getPosition();
+  			document.getElementById('id_x').value = posicion_inicial.lat()
+			document.getElementById('id_y').value = posicion_inicial.lng()
+			
+			document.getElementById('id_x').readOnly=true;
+			document.getElementById('id_y').readOnly=true;
+			
+  			google.maps.event.addListener(marker, 'drag', function()
+  			{
   				calcularCoords(marker);
-  				});	
+  			});	
 		}
 	</script>
 {% endblock %}
