@@ -37,12 +37,13 @@
 
 	$(document).ready(function()
 	{
-		initialize()
+		initialize();
+		$("#buscarLugar").click(geocode);
 	});
 
 	function initialize()
 	{
-		var latlng = new google.maps.LatLng(37.88678116397235, -4.774135385131766);
+		var latlng = new google.maps.LatLng({{formulario.px.value|stringformat:"f"}}, {{formulario.py.value|stringformat:"f"}});
 		var myOptions =
 		{
 			zoom : 7,
@@ -170,6 +171,7 @@
 
 {% block contenido %}
 <div class="well sidebar-nav">
+
 <!--<form method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 				<table class="table table-condensed">
@@ -331,17 +333,19 @@
 </div>
 <div class="well sidebar-nav">
 <div id="mapa">
-  Buscar lugar: <input type="text" id="address"/><input type="button" value="Go" onclick="geocode()">
+  <label for="address">Buscar lugar:</label> <input type="text" id="address"/>
+  <input id="#buscarLugar" class="btn" type="button" value="Buscar">
   <div id="map">
     <div id="map_canvas" style="width:100%; height:400px"></div>
     <div  id="crosshair">X</div>
   </div>
-
+<!--
   <table>
     <tr><td>Lat/Lng:</td><td><div id="latlng"></div></td></tr>
     <tr><td>Address:</td><td><div id="formatedAddress"></div></td></tr>
     <tr><td>Zoom Level:</td><td><div id="zoom_level">7</div></td></tr>
   </table>
+ -->
 </div>
 </div>
 

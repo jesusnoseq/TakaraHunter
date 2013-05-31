@@ -3,7 +3,9 @@ body
 	padding-top: 20px;
 	padding-bottom: 60px;
 	background-color: #f5f5f5;
-	background: url(../img/mapa_del_tesoro_2.jpg);
+	background: url(../img/mapa_del_tesoro_3.jpg);
+	background-attachment:fixed;
+	background-size: 100%;
 	/*color: gold!important;*/
 }
 
