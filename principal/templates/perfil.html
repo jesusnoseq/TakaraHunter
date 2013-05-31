@@ -30,16 +30,16 @@
 			var center = new google.maps.LatLng(x, y);
 			var mapOptions =
 			{
-				center : center,
-				zoom : 14,
-				mapTypeId : google.maps.MapTypeId.ROADMAP,
-				draggable:false,
-				panControl: false,
-				zoomControl: false,
-				mapTypeControl: false,
-				scaleControl: false,
-				streetViewControl: false,
-				overviewMapControl: false
+				center:center,
+				zoom:14,
+				mapTypeId:google.maps.MapTypeId.ROADMAP,
+				draggable:true,
+				panControl:false,
+				zoomControl:true,
+				mapTypeControl:false,
+				scaleControl:false,
+				streetViewControl:false,
+				overviewMapControl:false,
 			};
 			var map = new google.maps.Map(document.getElementById('mapa'), mapOptions);
   			
@@ -182,17 +182,17 @@
 				<li>
 					<strong>X:</strong> 
 					{% if user.px %}
-						<input type="number" id="user_px" value="{{user.px|stringformat:'f'}}" readonly="true">
+						<input type="text" id="user_px" value="{{user.px|stringformat:'f'}}" readonly="true">
 					{% else %}
-						<input type="number" id="user_px" value="" readonly="true">
+						<input type="text" id="user_px" value="" readonly="true">
 					{% endif %}
 				</li>
 				<li>
 					<strong>Y:</strong> 
 					{% if user.py %}
-						<input type="number" id="user_py" value="{{user.py|stringformat:'f'}}" readonly="true">
+						<input type="text" id="user_py" value="{{user.py|stringformat:'f'}}" readonly="true">
 					{% else %}
-						<input type="number" id="user_py" value="" readonly="true">
+						<input type="text" id="user_py" value="" readonly="true">
 					{% endif %}
 				</li>
 				<br>
