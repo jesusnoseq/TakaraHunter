@@ -9,6 +9,7 @@
 	var directionsDisplay;
 	var directionsService = new google.maps.DirectionsService();
 	var map;
+	var datos;
 	//var usuarios=[];
 	var usuarios=[];
 	{% for usuario in usuarios %}
@@ -51,13 +52,13 @@
 		$.getJSON(url, function(data) {
 			console.log(url);
 			console.log(data);
-		var items = [];
-		$.each(data, function(key, val) {
-			items.push('<li id="' + key + '">' + val + '</li>');
-		});
-		$('<ul/>', {
-			'class': 'my-new-list',
-			html: items.join('')
+			var items = [];
+			$.each(data, function(key, val) {
+				items.push('<li id="' + key + '">' + val + '</li>');
+			});
+			$('<ul/>', {
+				'class': 'my-new-list',
+				html: items.join('')
 			}).appendTo('body');
 		});
 		
@@ -67,7 +68,10 @@
 			tabla+='<th>'+user.username+'</th>';
 		}
 		tabla+='</tr>';
-		
+		for (var user in usuarios){
+			console.log(user);
+			tabla+='<th>'+user.username+'</th>';
+		}
 		tabla+='</tabla>';
 		console.log(tabla);
 		return url;
@@ -110,7 +114,6 @@ https://developers.google.com/maps/location-based-apps?hl=es
 </ul>
 
 <div>
-	
 	<a class="cell">hola</a>
 </div>
 
