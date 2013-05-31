@@ -403,7 +403,8 @@ def atraparTesoros(request, busqueda):
 		busquedaAAtrapar.estado = 'c'
 		tesoro.save()
 		busquedaAAtrapar.save()
-		return render_to_response('tesoroAtrapado.html',{
+		return render_to_response('tesoroAtrapado.html',
+		{
 			'tesoro':tesoro,
 		},context_instance=RequestContext(request))
 		
