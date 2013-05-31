@@ -13,8 +13,8 @@ from principal.models import *
 from principal.forms import *
 
 def inicio(request):
-	#if not request.user.is_anonymous():
-	#	return HttpResponseRedirect('/perfil')
+	if not request.user.is_anonymous():
+		return HttpResponseRedirect('/perfil')
 	return render_to_response('inicio.html',{},context_instance=RequestContext(request))
 
 def entrar(request):
