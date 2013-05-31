@@ -8,22 +8,6 @@
 		{
 			max-width: none;
 		}
-		#id_origen_x
-		{
-			display: none;
-		}
-		#id_origen_y
-		{
-			display: none;
-		}
-		#id_destino_x
-		{
-			display: none;
-		}
-		#id_destino_y
-		{
-			display: none;
-		}
 	</style>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&libraries=places&sensor=true"></script>
 	<script type="text/javascript">
@@ -188,6 +172,10 @@
 
 		function inicializar() 
 		{
+			document.getElementById('id_origen_x').readOnly=true;
+			document.getElementById('id_origen_y').readOnly=true;
+			document.getElementById('id_destino_x').readOnly=true;
+			document.getElementById('id_destino_y').readOnly=true;
 			// Crear el mapa
 			var centromapa = new google.maps.LatLng(37.88472,-4.77889);
 			var myOptions = 
@@ -232,47 +220,6 @@
 						}
 					} 
 				});
-			});
-		}
-		
-		function buscarLugares()
-		{
-			var destino = document.getElementById("direccion_destino").value;
-			var request =
-			{
-    			location: destino,
-    			radius: 500,
-    			types: ['store']
-  			};
-  			infowindow = new google.maps.InfoWindow();
-  			var service = new google.maps.places.PlacesService(map);
-  			service.nearbySearch(request, callback);
-		}
-
-		function callback(results, status)
-		{
-  			if (status == google.maps.places.PlacesServiceStatus.OK)
-  			{
-    			for (var i = 0; i < results.length; i++)
-    			{
-      				createMarker(results[i]);
-    			}
-  			}
-		}
-
-		function createMarker(place)
-		{
-			var placeLoc = place.geometry.location;
-			var marker = new google.maps.Marker(
-			{
-				map: map,
-				position: place.geometry.location
-			});
-
-			google.maps.event.addListener(marker, 'click', function()
-			{
-				infowindow.setContent(place.name);
-				infowindow.open(map, this);
 			});
 		}
 		
@@ -400,8 +347,8 @@
 						</tr>
 					{% endif %}
 					<tr>
-						<td><strong>Coordenada X:</strong></td>
-						<td>{{ formulario.x }}</td>
+						<td><strong>Título:</strong></td>
+						<td>{{ formulario.titulo }}</td>
 					</tr>
 					<tr>
 						<td></td>
@@ -424,7 +371,7 @@
 						<td></td>
 						<td>{{ formulario.origen_x.help_text }}</td>
 					</tr>-->
-					{{ formulario.origen_x }}
+					
 					<!---------------------------------------------------------------------------------------------------->
 					<!--{% if formulario.origen_y.errors %}
 						<tr class="error">
@@ -442,7 +389,6 @@
 						<td></td>
 						<td>{{ formulario.origen_y.help_text }}</td>
 					</tr>-->
-					{{ formulario.origen_y }}
 					<!---------------------------------------------------------------------------------------------------->
 					<!--{% if formulario.destino_x.errors %}
 						<tr class="error">
@@ -460,7 +406,6 @@
 						<td></td>
 						<td>{{ formulario.destino_x.help_text }}</td>
 					</tr>-->
-					{{ formulario.destino_x }}
 					<!---------------------------------------------------------------------------------------------------->
 					<!--{% if formulario.destino_y.errors %}
 						<tr class="error">
@@ -478,7 +423,6 @@
 						<td></td>
 						<td>{{ formulario.destino_y.help_text }}</td>
 					</tr>-->
-					{{ formulario.destino_y }}
 					<!---------------------------------------------------------------------------------------------------->
 					{% if formulario.modo.errors %}
 						<tr class="error">
@@ -507,7 +451,7 @@
 					{% endif %}
 					<tr>
 						<td><strong>Origen:</strong></td>
-						<td><input type="text" id="direccion_origen"/></td>
+						<td><input type="text" id="direccion_origen"/><br>{{ formulario.origen_x }}<br>{{ formulario.origen_y }}</td>
 					</tr>
 					<tr>
 						<td></td>
@@ -523,7 +467,7 @@
 					{% endif %}
 					<tr>
 						<td><strong>Destino:</strong></td>
-						<td><input type="text" id="direccion_destino"/></td>
+						<td><input type="text" id="direccion_destino"/><br>{{ formulario.destino_x }}<br>{{ formulario.destino_y }}</td>
 					</tr>
 					<tr>
 						<td></td>
@@ -531,31 +475,12 @@
 					</tr>
 					<!---------------------------------------------------------------------------------------------------->
 					<tr>
-						<td><strong>Lugares:</strong></td>
-						<td>
-							<select id="tipo_lugar">
-								<option value="store">Tiendas</option>
-								<option value="university">Universidades</option>
-								<option value="hospital">Hospitales</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
 						<td></td>
-						<td>Filtro para los lugares de destino de la ruta.</td>
-					</tr>
-					<!---------------------------------------------------------------------------------------------------->
-					<tr>
-						<td></td>
-						<td>Debes pulsar primero el botón <strong>"Generar ruta"</strong> para crear la ruta y después guardarla. Puedes pulsar el botón <strong>"Buscar lugares"</strong> para buscar lugares del tipo seleccionado en el destino.</td>
+						<td>Debes pulsar primero el botón <strong>"Generar ruta"</strong> para crear la ruta.</td>
 					</tr>
 					<tr>
-						<td><input class="btn btn-primary btn-block" type="submit" value="Guardar ruta"/></td>
+						<td><input class="btn btn-primary btn-block" type="submit" value="Nueva ruta"/></td>
 						<td><input class="btn btn-primary btn-block" id="generarRuta" value="Generar ruta"/></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input class="btn btn-info btn-block" id="buscarLugares" value="Buscar lugares"/></td>
 					</tr>
 				</table>
 			</form>
