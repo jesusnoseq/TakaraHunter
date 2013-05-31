@@ -4,8 +4,8 @@
 
 {% block mensaje_informativo %}
 	{% if mensaje %}
-		<div class="jumbotron">
-			<i class="icon-warning-sign"></i><h3 class="text-error">{{ mensaje }}</h3>
+		<div class="well sidebar-nav">
+			<center><i class="icon-warning-sign"></i><h3 class="text-error">{{mensaje}}</h2></center>
 		</div>
 	{% endif %}
 {% endblock %}

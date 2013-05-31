@@ -32,7 +32,7 @@ def entrar(request):
 				state = "Bienvenido %s" % username
 				numero_tesoros = Tesoro.objects.filter(recogidaPor=request.user).count()
 				listaRutas = Ruta.objects.filter(user=request.user)[:10]
-				listaBusquedas = Busqueda.objects.filter(participantes=request.user)[:10]
+				listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)[:10]
 				########################################################################## WARNING CODIGO FEO Y PELIGROSO
 				campeon = []
 				diamante = []
@@ -91,13 +91,14 @@ def entrar(request):
 					'bronce':soy_bronce,
 					'nada':soy_nada,
 					########################################################################## WARNING CODIGO FEO Y PELIGROSO
+					'ultimas_busquedas':listaBusquedas,
 					'ultimas_rutas':listaRutas,
 					'mensaje':state
 				},context_instance=RequestContext(request))
 			else:
 				state = "Tu cuenta no esta activa, contacta con el administrador"
 		else:
-			state = "Tu nombre de usuario y/o contraseña no son correctas"
+			state = "Tu nombre de usuario y/o contraseña no son correctos"
 	#state="Error al logearse, vuelva a intentarlo."
 	return render_to_response('login.html',
 	{
@@ -129,7 +130,7 @@ def salir(request):
 def perfil(request):
 	numero_tesoros = Tesoro.objects.filter(recogidaPor=request.user).count()
 	listaRutas = Ruta.objects.filter(user=request.user)[:10]
-	listaBusquedas = Busqueda.objects.filter(participantes=request.user)[:10]
+	listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)[:10]
 	########################################################################## WARNING CODIGO FEO Y PELIGROSO
 	campeon = []
 	diamante = []
@@ -290,8 +291,14 @@ def unirseBusqueda(request, busqueda):
 
 @login_required(login_url='/login')
 def listaBusquedas(request):
-	busquedas1 = Busqueda.objects.filter(participantes=request.user)
-	busquedas2 = Busqueda.objects.exclude(participantes=request.user)
+	if request.user.is_superuser == True:
+		busquedas1 = Busqueda.objects.filter(participantes=request.user)
+	else:
+		busquedas1 = Busqueda.objects.filter(estado="a").filter(participantes=request.user)
+	if request.user.is_superuser == True:
+		busquedas2 = Busqueda.objects.exclude(participantes=request.user)
+	else:
+		busquedas2 = Busqueda.objects.filter(estado="a").exclude(participantes=request.user)
 	return render_to_response('listaBusquedas.html',
 	{
 		'busquedas1':busquedas1,
@@ -300,7 +307,7 @@ def listaBusquedas(request):
 	
 @login_required(login_url='/login')
 def miListaBusquedas(request):
-	listaBusquedas = Busqueda.objects.filter(participantes=request.user)
+	listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)
 	return render_to_response('miListaBusquedas.html',
 	{
 		'busquedas':listaBusquedas
@@ -373,6 +380,7 @@ def hall(request):
 		'elresto':elresto,
 	},context_instance=RequestContext(request))
 
+@login_required(login_url='/login')
 def realizandoBusqueda(request, busqueda):
 	busquedaARealizar = Busqueda.objects.get(id=busqueda)
 	participantes = busquedaARealizar.participantes.all()
@@ -385,9 +393,20 @@ def realizandoBusqueda(request, busqueda):
 	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
-def atraparTesoros(request):
-	return render_to_response('prueba.html',{'mensaje':'hola'},context_instance=RequestContext(request))
-
+def atraparTesoros(request, busqueda):
+	busquedaAAtrapar = Busqueda.objects.get(id=busqueda)
+	tesoro = Tesoro.objects.get(busqueda=busquedaAAtrapar)
+	if busquedaAAtrapar.estado == 'c':
+		return HttpResponseRedirect('/misbusquedas')
+	else:
+		tesoro.recogidaPor = request.user
+		busquedaAAtrapar.estado = 'c'
+		tesoro.save()
+		busquedaAAtrapar.save()
+		return render_to_response('tesoroAtrapado.html',{
+			'tesoro':tesoro,
+		},context_instance=RequestContext(request))
+		
 @staff_member_required
 def crearBusqueda(request):
 	if request.method=='POST':

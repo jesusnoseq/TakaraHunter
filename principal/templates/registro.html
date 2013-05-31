@@ -3,13 +3,90 @@
 {% block titulo %}TH | Registro{% endblock %}
 
 {% block contenido %}
-<form class="" method="post" action="">
-	<table>
+		<div class="well sidebar-nav">
+			<form method="post">{% csrf_token %}
+				<table class="table table-condensed">
+					{% if formulario.non_field_errors %}
+						<tr>
+							<td></td>
+							<td>
+    							{{ formulario.non_field_errors }}
+							</td>
+							<td></td>
+						</tr>
+					{% endif %}
+					<!---------------------------------------------------------------------------------------------------->
+					{% if formulario.username.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.username.errors }}
+							</td>
+							<td></td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Nombre de usuario:</strong></td>
+						<td>{{ formulario.username }}</td>
+						<td>{{ formulario.username.help_text }}</td>
+					</tr>
+					{% if formulario.password1.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.password1.errors }}
+							</td>
+							<td></td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Contraseña:</strong></td>
+						<td>{{ formulario.password1 }}</td>
+						<td>{{ formulario.password1.help_text }}</td>
+					</tr>
+					{% if formulario.password2.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.password2.errors }}
+							</td>
+							<td></td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Contraseña (confirmación):</strong></td>
+						<td>{{ formulario.password2 }}</td>
+						<td>{{ formulario.password2.help_text }}</td>
+					</tr>
+					{% if formulario.email.errors %}
+						<tr class="error">
+							<td><i class="icon-warning-sign"></i></td>
+							<td>
+    							{{ formulario.email.errors }}
+							</td>
+							<td></td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td><strong>Email:</strong></td>
+						<td>{{ formulario.email }}</td>
+						<td>{{ formulario.email.help_text }}</td>
+					</tr>
+					<tr>
+						<td><input class="btn btn-primary btn-block" type="submit" value="Registrarme"/></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+<!--<form class="" method="post" action="">
+<table>
 		{% csrf_token %}
 		{{formulario}}
 		<!--<tr><td><label>Correo electronico: </label></td><td><input type="email" name="email" id="email" /></td></tr>-->
-	</table>
+	<!--<</table>
 	<input class="btn btn-primary" type="submit" value="Registrarse" />
-</form>
+</form>-->
 
 {% endblock %}
