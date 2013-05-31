@@ -9,7 +9,20 @@
 	var directionsDisplay;
 	var directionsService = new google.maps.DirectionsService();
 	var map;
-	//var usuarios
+	//var usuarios=[];
+	var usuarios=[];
+	{% for usuario in usuarios %}
+		usuarios[{{forloop.counter0}}]=
+			{id:{{forloop.counter0}},
+			username:'{{usuario.username}}',
+			px:{{ usuario.px|stringformat:"f" }},
+			py:{{ usuario.py|stringformat:"f" }}
+		};
+	{% endfor %}		
+	console.log(usuarios);
+	
+
+	
 
 	$(document).ready(function() {
 		initialize();
@@ -47,6 +60,16 @@
 			html: items.join('')
 			}).appendTo('body');
 		});
+		
+		tabla="<table><tr>";
+		for (var user in usuarios){
+			console.log(user);
+			tabla+='<th>'+user.username+'</th>';
+		}
+		tabla+='</tr>';
+		
+		tabla+='</tabla>';
+		console.log(tabla);
 		return url;
 	}
 

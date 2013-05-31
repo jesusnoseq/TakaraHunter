@@ -248,7 +248,7 @@ def nuevaRuta(request):
 def detalleRuta(request, ruta):
 	rutaAEditar = Ruta.objects.get(id=ruta)
 	if request.method=='POST':
-		formulario = RutaForm(request.POST, request.FILES, instance=rutaAEditar)		
+		formulario = RutaForm(request.POST, request.FILES, instance=rutaAEditar)
 		if formulario.is_valid():
 			ruta = formulario.save(commit=False)
 			ruta.save()
@@ -273,6 +273,7 @@ def borrarRuta(request, ruta):
 @login_required(login_url='/login')
 def detalleBusqueda(request, busqueda):
 	busqueda = Busqueda.objects.get(id=busqueda)
+	
 	participantes = busqueda.participantes.all()
 	participo = False
 	for participante in participantes:
@@ -287,7 +288,7 @@ def detalleBusqueda(request, busqueda):
 
 @login_required(login_url='/login')
 def unirseBusqueda(request, busqueda):
-	busqueda = Busqueda.objects.get(id=busqueda)
+	busqueda = get_object_or_404(Busqueda,pk=busqueda,estado='a')
 	busqueda.participantes.add(request.user)
 	return HttpResponseRedirect('/busquedas')
 
