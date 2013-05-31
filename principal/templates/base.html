@@ -75,15 +75,28 @@
   									<h4>Takara Hunter</h4>
   									<br>
   									<ul class="unstyled">
-  										<li><a href="/perfil">Perfil</a></li>
-  										<li><a href="/busquedas">Búsquedas</a></li>
-  										<li><a href="/tesoros">Tesoros</a></li>
-  										<li><a href="/hall">Hall</a></li>
-  										<li><a href="/matriz">Matriz</a></li>
+  									{% if user.is_anonymous %}
+										<li><a href="/"><p>Inicio</p></a></li>
+										<li><a href="/login"><p>Login</p></a></li>
+										<li><a href="/registro"><p>Registro</p></a></li>
+									{% else %}
+										<li><a href="/perfil">Perfil</a></li>
+										<li><a href="/busquedas">Búsquedas</a></li>
+									{% if user.is_superuser %}
+										<li><a href="/tesoros">Tesoros</a></li>
+									{% endif %}
+										<li><a href="/hall">Hall</a></li>
+										<li><a href="/matriz">Matriz</a></li>
+									{% if user.is_superuser %}
+										<li><a href="/admin">Administración</a></li>
+									{% endif %}
+										<li><a href="/logout">Logout</a></li>
+									{% endif %}
   									</ul>
   								</div>
   								<div class="span4">
 									<h4>Tecnologías</h4>
+									<br>
 									<ul class="unstyled">
 										<li><img src="{{ STATIC_URL }}img/django.png" class="img-rounded" width="120px" height="120px"><p>Django project</p></li>
 										<li><img src="{{ STATIC_URL }}img/google_maps.png" class="img-rounded" width="50px" height="50px"><p>Google Maps</p></li>
