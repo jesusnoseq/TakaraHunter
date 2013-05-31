@@ -88,12 +88,12 @@
   			}, 20);
   			
   			distancia = google.maps.geometry.spherical.computeDistanceBetween(myLatlng, posActual);
-  			document.getElementById('dist').innerHTML = distancia + ' m';
+  			document.getElementById('dist').innerHTML = distancia + ' metros';
   			
   			if(distancia > 10.0) //Esto hay que cambiarlo cuando acabemos
   			{
   				document.getElementById('recoger').style.visibility = "hidden";
-  				document.getElementById('aviso').innerHTML = "<b>La opcion 'Atrapar Tesoro' se mostrará cuando tu distancia sea inferior a 10 metros. Tu distancia actual es de " + distancia + "m</b>";
+  				document.getElementById('aviso').innerHTML = "La opcion '<b>Atrapar Tesoro'</b> se mostrará cuando tu distancia sea inferior a <b>10 metros</b><br> Tu distancia actual es de <b>" + distancia + " metros</b>";
   			}
   			else
   			{
@@ -112,9 +112,9 @@
 
 		function handleNoGeolocation(errorFlag) {
   			if (errorFlag) {
-    			var content = 'Error: The Geolocation service failed.';
+    			var content = 'Error: El servicio de geolocalización ha fallado.';
   			} else {
-    			var content = 'Error: Your browser doesn\'t support geolocation.';
+    			var content = 'Error: Tu navegador no soporta geolocalización.';
   			}
 
   			var options = {
@@ -136,6 +136,10 @@
 {% endblock %}
 
 {% block contenido %}
+<div class="well sidebar-nav">
+	<center><a id="recoger" class="btn btn-info btn-block" href="/misbusquedas/tesoros/atrapar/{{ busqueda.id }}">Recoger Tesoro</a></center>
+	<center><p id="aviso"></p></center>
+</div>
 <div class="row-fluid">
 	<div class="span6">
 		<div class="well sidebar-nav">
@@ -177,11 +181,9 @@
 					</ul>
 				{% endfor %}
 			{% else %}
-				<p>No hay participantes.</p>
+				<p>No hay participantes</p>
 			{% endif %}	
 		</div>
-		<a id="recoger" class="btn btn-info btn-block" href="/misbusquedas/tesoros/atrapar/{{ busqueda.id }}">Recoger Tesoro</a>
-		<p id="aviso"></p>
 	</div>
  	<div class="span6">
 		<div class="well sidebar-nav">
@@ -189,5 +191,4 @@
 		</div>
 	</div>
 </div>
-<br><br>
 {% endblock %}
