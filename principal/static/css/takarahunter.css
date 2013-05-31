@@ -3,9 +3,13 @@ body
 	padding-top: 20px;
 	padding-bottom: 60px;
 	background-color: #f5f5f5;
+<<<<<<< HEAD
 	background: url(../img/mapa_del_tesoro_3.jpg);
 	background-attachment:fixed;
 	background-size: 100%;
+=======
+	background: url(../img/mapa_del_tesoro_2.png) center top no-repeat, url(../img/papel.png) repeat;
+>>>>>>> PetterKunMAC
 	/*color: gold!important;*/
 }
 
