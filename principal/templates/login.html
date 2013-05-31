@@ -11,9 +11,9 @@
 {% endblock %}
 
 {% block contenido %}
-<div class="container">
-	<form class="form-signin" method="post" action="/login/">
-		<h2 class="form-signin-heading">Login</h2>
+<div class="well sidebar-nav">
+	<center><form class="form-signin" method="post" action="/login/">
+		<!--<h2 class="form-signin-heading">Login</h2>-->
 		{% csrf_token %}
 		<input type="text" name="username" required="" class="input-block-level" placeholder="Nombre de usuario">
 		<input type="password" name="password" required="" class="input-block-level" placeholder="Password">
@@ -21,6 +21,6 @@
 			<input type="checkbox" value="remember-me"> Recordarme
 		</label>-->
 		<button class="btn btn-large btn-primary" type="submit">Login</button>
-	</form>
+	</form></center>
 </div>
 {% endblock %}
