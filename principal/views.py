@@ -380,6 +380,7 @@ def hall(request):
 		'elresto':elresto,
 	},context_instance=RequestContext(request))
 
+@login_required(login_url='/login')
 def realizandoBusqueda(request, busqueda):
 	busquedaARealizar = Busqueda.objects.get(id=busqueda)
 	participantes = busquedaARealizar.participantes.all()
@@ -395,12 +396,18 @@ def realizandoBusqueda(request, busqueda):
 def atraparTesoros(request, busqueda):
 	busquedaAAtrapar = Busqueda.objects.get(id=busqueda)
 	tesoro = Tesoro.objects.get(busqueda=busquedaAAtrapar)
-	tesoro.recogidaPor = request.user
-	busquedaAAtrapar.estado = 'c'
-	return render_to_response('tesoroAtrapado.html',{
-		'tesoro':tesoro,
-	},context_instance=RequestContext(request))
-
+	if busquedaAAtrapar.estado == 'c':
+		return HttpResponseRedirect('/misbusquedas')
+	else:
+		tesoro.recogidaPor = request.user
+		busquedaAAtrapar.estado = 'c'
+		tesoro.save()
+		busquedaAAtrapar.save()
+		return render_to_response('tesoroAtrapado.html',
+		{
+			'tesoro':tesoro,
+		},context_instance=RequestContext(request))
+		
 @staff_member_required
 def crearBusqueda(request):
 	if request.method=='POST':

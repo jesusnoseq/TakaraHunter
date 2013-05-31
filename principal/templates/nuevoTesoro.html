@@ -3,55 +3,92 @@
 {% block titulo %}TH | Nuevo tesoro{% endblock %}
 
 {% block footerScripts %}
-    <script>
-		var stockholm = new google.maps.LatLng(59.32522, 18.07002);
-		var parliament = new google.maps.LatLng(59.327383, 18.06747);
+	<style>
+		#mapa img
+		{
+			max-width: none;
+		}
+	</style>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true&amp;libraries=geometry"></script>
+   	<script type="text/javascript">
+   		$(document).ready(function()
+		{
+			inicializar()
+		});
+		
+		var cordoba = new google.maps.LatLng(37.88778427739966, -4.7815425000000005);
 		var marker;
 		var map;
 		
-		function initialize() {
-		  var mapOptions = {
-		    zoom: 13,
-		    mapTypeId: google.maps.MapTypeId.ROADMAP,
-		    center: stockholm
-		  };
-		
-		  map = new google.maps.Map(document.getElementById('map-canvas'),
-		          mapOptions);
-		
-		  marker = new google.maps.Marker({
-		    map:map,
-		    draggable:true,
-		    animation: google.maps.Animation.DROP,
-		    position: parliament
-		  });
-		  google.maps.event.addListener(marker, 'click', toggleBounce);
+		function calcularCoords(marker)
+		{
+			var markerLatLng = marker.getPosition();
+			document.getElementById('id_x').value = markerLatLng.lat()
+			document.getElementById('id_y').value = markerLatLng.lng()
 		}
-		
-		function toggleBounce() {
-		
-		  if (marker.getAnimation() != null) {
-		    marker.setAnimation(null);
-		  } else {
-		    marker.setAnimation(google.maps.Animation.BOUNCE);
-		  }
+
+		function inicializar() {
+			
+  			var mapOptions = {
+    			zoom: 15,
+    			mapTypeId: google.maps.MapTypeId.ROADMAP,
+    			center: cordoba
+  			};
+
+  			map = new google.maps.Map(document.getElementById('mapa'), mapOptions);
+  			
+  			marker = new google.maps.Marker({
+    			map:map,
+    			draggable:true,
+    			animation: google.maps.Animation.DROP,
+    			position: cordoba,
+    			icon: '{{STATIC_URL}}img/moneda_takara.png' 
+  			});
+  			
+  			var posicion_inicial = marker.getPosition();
+  			document.getElementById('id_x').value = posicion_inicial.lat()
+			document.getElementById('id_y').value = posicion_inicial.lng()
+			
+			document.getElementById('id_x').readOnly=true;
+			document.getElementById('id_y').readOnly=true;
+			
+  			google.maps.event.addListener(marker, 'drag', function()
+  			{
+  				calcularCoords(marker);
+  			});	
 		}
-		
-		google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
 {% endblock %}
 
 {% block contenido %}
 <div class="row-fluid">
 	<div class="span6">
 		<div class="well sidebar-nav">
-			<form class="" method="post" action="">
-				<table>
-					{% csrf_token %}
-					{{formulario}}
+			<form class="" method="post">{% csrf_token %}
+				<table class="table table-condensed">
+					<tr>
+						<td><strong>Coordenada X:</strong></td>
+						<td id="coordx">{{ formulario.x }}</td>					
+					</tr>
+					<tr>
+						<td><strong>Coordenada Y:</strong></td>
+						<td id="coordy">{{ formulario.y }}</td>					
+					</tr>
+					<tr>
+						<td><strong>Búsqueda:</strong></td>
+						<td>{{ formulario.busqueda }}</td>					
+					</tr>
 				</table>
 				<input class="btn btn-primary" type="submit" value="Nuevo tesoro" />
-				<div id="map-canvas" style="width: 400px; height: 300px"></div>
 			</form>
+		</div>
+	</div>
+	<div class="span6">
+		<div class="well sidebar-nav">
+			<div id="mapa" style="width: 445px; height: 441px">
+			</div>
+			<br>
+			<center><p>Arrastra el marcador para modificar las coordenadas</p></center>
 		</div>
 	</div>
 </div>

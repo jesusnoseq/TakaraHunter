@@ -169,6 +169,8 @@
 		$(document).ready(function()
 		{
 			inicializar();
+			$("#generarRuta").click(calcularRuta);
+			$("#buscarLugares").click(buscarLugares);
 		});
 	
 		// Variables necesarias
@@ -398,8 +400,8 @@
 						</tr>
 					{% endif %}
 					<tr>
-						<td><strong>Título:</strong></td>
-						<td>{{ formulario.titulo }}</td>
+						<td><strong>Coordenada X:</strong></td>
+						<td>{{ formulario.x }}</td>
 					</tr>
 					<tr>
 						<td></td>
@@ -549,11 +551,11 @@
 					</tr>
 					<tr>
 						<td><input class="btn btn-primary btn-block" type="submit" value="Guardar ruta"/></td>
-						<td><input class="btn btn-primary btn-block" onclick="calcularRuta();return false;" value="Generar ruta"/></td>
+						<td><input class="btn btn-primary btn-block" id="generarRuta" value="Generar ruta"/></td>
 					</tr>
 					<tr>
 						<td></td>
-						<td><input class="btn btn-info btn-block" onclick="buscarLugares();return false;" value="Buscar lugares"/></td>
+						<td><input class="btn btn-info btn-block" id="buscarLugares" value="Buscar lugares"/></td>
 					</tr>
 				</table>
 			</form>
