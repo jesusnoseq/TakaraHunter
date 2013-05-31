@@ -70,10 +70,10 @@
 			}
 		}, 1000);
 
-		google.maps.event.addListener(map, 'zoom_changed', function()
+		/*google.maps.event.addListener(map, 'zoom_changed', function()
 		{
 			document.getElementById("zoom_level").innerHTML = map.getZoom();
-		});
+		});*/
 
 		google.maps.event.addListener(map, 'center_changed', centerChanged);
 
@@ -93,8 +93,8 @@
 	{
 		centerChangedLast = new Date();
 		var latlng = getCenterLatLngText();
-		document.getElementById('latlng').innerHTML = latlng;
-		document.getElementById('formatedAddress').innerHTML = '';
+		//document.getElementById('latlng').innerHTML = latlng;
+		//document.getElementById('formatedAddress').innerHTML = '';
 		/*alert(latlng);*/
 		var coords=latlng.split(',');
 		px=coords[0].split('(')[1];
@@ -109,9 +109,9 @@
 		reverseGeocodedLast = new Date();
 		geocoder.geocode({
 			latLng : map.getCenter()
-		}, reverseGeocodeResult);
+		}/*, reverseGeocodeResult*/);
 	}
-
+	/*
 	function reverseGeocodeResult(results, status)
 	{
 		currentReverseGeocodeResponse = results;
@@ -130,7 +130,7 @@
 		{
 			document.getElementById('formatedAddress').innerHTML = 'Error';
 		}
-	}
+	}*/
 
 	function geocode()
 	{
