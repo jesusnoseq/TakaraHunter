@@ -90,7 +90,7 @@
   			distancia = google.maps.geometry.spherical.computeDistanceBetween(myLatlng, posActual);
   			document.getElementById('dist').innerHTML = distancia + ' metros';
   			
-  			if(distancia >20.0) //Esto hay que cambiarlo cuando acabemos
+  			if(distancia > 20.0) //Esto hay que cambiarlo cuando acabemos
   			{
   				document.getElementById('recoger').style.visibility = "hidden";
   				document.getElementById('aviso').innerHTML = "La opcion '<b>Atrapar Tesoro'</b> se mostrará cuando tu distancia sea inferior a <b>10 metros</b><br> Tu distancia actual es de <b>" + distancia + " metros</b>";
