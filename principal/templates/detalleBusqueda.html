@@ -23,11 +23,10 @@
 {% endblock %}
 
 {% block contenido %}
-<div class="row-fluid">
-	<div class="span6">
 		<div class="well sidebar-nav">
 			<p><strong>Título: </strong>{{busqueda.titulo}}</p>
 			<p><strong>Descripción: </strong>{{busqueda.descripcion}}</p>
+			<p><strong>Estado: </strong>{{busqueda.estado}}</p>
 			<p><strong>Participantes: </p>
 			{% if participantes %}
 				{% for participante in participantes %}
@@ -39,12 +38,4 @@
 				<p>No hay participantes</p>
 			{% endif %}
 		</div>
-	</div>
- 	<div class="span6">
-		<!--<div class="well sidebar-nav">
-			<div id="map-canvas" style="width: 445px; height: 300px"></div>
-			<div id="pano" style="width: 445px; height: 300px"></div>
-		</div>-->
-	</div>
-</div>
 {% endblock %}
