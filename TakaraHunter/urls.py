@@ -5,6 +5,7 @@ from django.contrib import admin
 
 admin.autodiscover()
 
+
 urlpatterns = patterns('',
 	url(r'^$','principal.views.inicio'),
 

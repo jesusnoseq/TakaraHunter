@@ -43,7 +43,18 @@
 
 	function initialize()
 	{
-		var latlng = new google.maps.LatLng({{formulario.px.value|stringformat:"f"}}, {{formulario.py.value|stringformat:"f"}});
+		var latlng = new google.maps.LatLng(
+			{% if formulario.px.value %}
+				{{formulario.px.value|stringformat:"f"}}
+			{% else %}
+				37.333351
+			{% endif %}, 
+			{% if formulario.py.value %}
+				{{formulario.py.value|stringformat:"f"}}
+			{% else %}
+				-4.576501
+			{% endif %}
+			);
 		var myOptions =
 		{
 			zoom : 7,

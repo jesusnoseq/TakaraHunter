@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseNotFound, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import login, authenticate, logout
@@ -481,4 +481,7 @@ def detalleTesoro(request, tesoro):
 		'tesoro':tesoro
 	},context_instance=RequestContext(request))
 	
-	
+def noFound(request):
+	return HttpResponseNotFound('<h1>Page not found</h1>')
+
+
