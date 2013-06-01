@@ -288,7 +288,11 @@ def detalleBusqueda(request, busqueda):
 @login_required(login_url='/login')
 def unirseBusqueda(request, busqueda):
 	busqueda = get_object_or_404(Busqueda,pk=busqueda,estado='a')
-	get_object_or_404(Tesoro, busqueda=busqueda)
+	tesoro = Tesoro.objects.filter(busqueda=busqueda)
+	if tesoro.count() != 1:
+		return HttpResponseRedirect("/404testing")
+	else:
+		get_object_or_404(Tesoro, busqueda=busqueda)
 	busqueda.participantes.add(request.user)
 	return HttpResponseRedirect('/busquedas')
 
@@ -388,7 +392,7 @@ def realizandoBusqueda(request, busqueda):
 	busquedaARealizar = Busqueda.objects.get(id=busqueda)
 	participantes = busquedaARealizar.participantes.all()
 	tesoro = Tesoro.objects.filter(busqueda=busquedaARealizar)
-	if tesoro.count() >= 2:
+	if tesoro.count() != 1:
 		return HttpResponseRedirect("/404testing")
 	else:
 		tesoro = Tesoro.objects.get(busqueda=busquedaARealizar)
