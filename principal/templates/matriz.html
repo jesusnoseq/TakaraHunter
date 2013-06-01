@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block titulo %}TH | Hall de la fama{% endblock %}
+{% block titulo %}TH | Matriz de usuarios{% endblock %}
 
 
 {% block footerScripts %}
@@ -117,7 +117,6 @@
 			}
 		});
 	}
-
 </script>
 <style>
 	#map_canvas img {
@@ -134,13 +133,12 @@
 {% block contenido %}
 
 <div class="well">
-	<label for="id_modo">Modo de transporte: </label>
-	<select id="id_modo" name="modo">
+	<center><label for="id_modo"><strong>Modo de transporte: </strong></label><select id="id_modo" name="modo">
 		<option value="WALKING">A pie</option>
 		<option value="DRIVING">Coche</option>
 		<option value="BICYCLING">Bicicleta</option>
 		<option value="TRANSIT">Transporte público</option>
-	</select>
+	</select></center>
 	
 	<table id="tablaDatos" class="table table-bordered"></table>
 
