@@ -2,10 +2,23 @@
 
 {% block titulo %}TH | Matriz de usuarios{% endblock %}
 
-
 {% block footerScripts %}
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
-<script>
+	<style>
+		#map-canvas img
+		{
+			max-width: none;
+		}
+		.cell:hover
+		{
+			background-color: #ddd;
+		}
+		.dir
+		{
+			display: none;
+		}
+	</style>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCOK5exbY-SG6W6cr-EoH2jv9llU2uOFyA&sensor=true"></script>
+	<script type="text/javascript">
 	var directionsDisplay;
 	var directionsService = new google.maps.DirectionsService();
 	var map;
@@ -117,21 +130,10 @@
 			}
 		});
 	}
-</script>
-<style>
-	#map_canvas img {
-		max-width: none;
-	}
-	.cell:hover{
-		background-color: #ddd;
-	}
-	.dir{
-		display: none;
-	}
-</style>
+	</script>
 {% endblock %}
-{% block contenido %}
 
+{% block contenido %}
 <div class="well">
 	<center><label for="id_modo"><strong>Modo de transporte: </strong></label><select id="id_modo" name="modo">
 		<option value="WALKING">A pie</option>
