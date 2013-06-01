@@ -53,6 +53,19 @@
 	</script>
 {% endblock %}
 
+{% block menu_inferior %}
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<ul class="nav">
+				<li><a href="/tesoros/borrar/{{tesoro.id}}"><i class="icon-trash"></i><i class="icon-flag"></i> Borrar tesoro</a></li>
+				<li><a href="/tesoros/nuevo/"><i class="icon-file"></i><i class="icon-flag"></i> Nuevo tesoro</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
 {% block contenido %}
 <div class="row-fluid">
 	<div class="span6">
