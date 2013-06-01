@@ -11,6 +11,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.db.models import Count
 from principal.models import *
 from principal.forms import *
+from django.http import Http404
 
 def inicio(request):
 	if not request.user.is_anonymous():
@@ -290,7 +291,7 @@ def unirseBusqueda(request, busqueda):
 	busqueda = get_object_or_404(Busqueda,pk=busqueda,estado='a')
 	tesoro = Tesoro.objects.filter(busqueda=busqueda)
 	if tesoro.count() != 1:
-		return HttpResponseRedirect("/404testing")
+		raise Http404
 	else:
 		get_object_or_404(Tesoro, busqueda=busqueda)
 	busqueda.participantes.add(request.user)
@@ -393,7 +394,7 @@ def realizandoBusqueda(request, busqueda):
 	participantes = busquedaARealizar.participantes.all()
 	tesoro = Tesoro.objects.filter(busqueda=busquedaARealizar)
 	if tesoro.count() != 1:
-		return HttpResponseRedirect("/404testing")
+		raise Http404
 	else:
 		tesoro = Tesoro.objects.get(busqueda=busquedaARealizar)
 	return render_to_response('tesoro.html',
