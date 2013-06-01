@@ -273,7 +273,6 @@ def borrarRuta(request, ruta):
 @login_required(login_url='/login')
 def detalleBusqueda(request, busqueda):
 	busqueda = Busqueda.objects.get(id=busqueda)
-	
 	participantes = busqueda.participantes.all()
 	participo = False
 	for participante in participantes:
@@ -388,7 +387,11 @@ def hall(request):
 def realizandoBusqueda(request, busqueda):
 	busquedaARealizar = Busqueda.objects.get(id=busqueda)
 	participantes = busquedaARealizar.participantes.all()
-	tesoro = Tesoro.objects.get(busqueda=busquedaARealizar)
+	tesoro = Tesoro.objects.filter(busqueda=busquedaARealizar)
+	if tesoro.count() >= 2:
+		return HttpResponseRedirect("/404testing")
+	else:
+		tesoro = Tesoro.objects.get(busqueda=busquedaARealizar)
 	return render_to_response('tesoro.html',
 	{
 		'participantes':participantes,
