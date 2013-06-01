@@ -11,6 +11,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.db.models import Count
 from principal.models import *
 from principal.forms import *
+from django.http import Http404
 
 def inicio(request):
 	if not request.user.is_anonymous():
@@ -34,7 +35,7 @@ def entrar(request):
 				listaRutas = Ruta.objects.filter(user=request.user)[:10]
 				listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)[:10]
 				########################################################################## WARNING CODIGO FEO Y PELIGROSO
-								############################## ponlo en una funcion hombre XD y almenos no repites codigo. -Jesus
+				############################## ponlo en una funcion hombre XD y almenos no repites codigo. -Jesus
 				campeon = []
 				diamante = []
 				platino = []
@@ -92,6 +93,7 @@ def entrar(request):
 					'bronce':soy_bronce,
 					'nada':soy_nada,
 					########################################################################## WARNING CODIGO FEO Y PELIGROSO
+					'numero_tesoros':numero_tesoros,
 					'ultimas_busquedas':listaBusquedas,
 					'ultimas_rutas':listaRutas,
 					'mensaje':state
@@ -290,7 +292,7 @@ def unirseBusqueda(request, busqueda):
 	busqueda = get_object_or_404(Busqueda,pk=busqueda,estado='a')
 	tesoro = Tesoro.objects.filter(busqueda=busqueda)
 	if tesoro.count() != 1:
-		return HttpResponseRedirect("/404testing")
+		raise Http404
 	else:
 		get_object_or_404(Tesoro, busqueda=busqueda)
 	busqueda.participantes.add(request.user)
@@ -393,7 +395,7 @@ def realizandoBusqueda(request, busqueda):
 	participantes = busquedaARealizar.participantes.all()
 	tesoro = Tesoro.objects.filter(busqueda=busquedaARealizar)
 	if tesoro.count() != 1:
-		return HttpResponseRedirect("/404testing")
+		raise Http404
 	else:
 		tesoro = Tesoro.objects.get(busqueda=busquedaARealizar)
 	return render_to_response('tesoro.html',
@@ -406,7 +408,11 @@ def realizandoBusqueda(request, busqueda):
 @login_required(login_url='/login')
 def atraparTesoros(request, busqueda):
 	busquedaAAtrapar = Busqueda.objects.get(id=busqueda)
-	tesoro = Tesoro.objects.get(busqueda=busquedaAAtrapar)
+	tesoro = Tesoro.objects.filter(busqueda=busquedaAAtrapar)
+	if tesoro.count() != 1:
+		raise Http404
+	else:
+		tesoro = Tesoro.objects.get(busqueda=busquedaAAtrapar)
 	if busquedaAAtrapar.estado == 'c':
 		return HttpResponseRedirect('/misbusquedas')
 	else:
