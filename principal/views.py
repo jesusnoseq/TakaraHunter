@@ -35,7 +35,7 @@ def entrar(request):
 				listaRutas = Ruta.objects.filter(user=request.user)[:10]
 				listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)[:10]
 				########################################################################## WARNING CODIGO FEO Y PELIGROSO
-								############################## ponlo en una funcion hombre XD y almenos no repites codigo. -Jesus
+				############################## ponlo en una funcion hombre XD y almenos no repites codigo. -Jesus
 				campeon = []
 				diamante = []
 				platino = []
@@ -93,6 +93,7 @@ def entrar(request):
 					'bronce':soy_bronce,
 					'nada':soy_nada,
 					########################################################################## WARNING CODIGO FEO Y PELIGROSO
+					'numero_tesoros':numero_tesoros,
 					'ultimas_busquedas':listaBusquedas,
 					'ultimas_rutas':listaRutas,
 					'mensaje':state
@@ -407,7 +408,11 @@ def realizandoBusqueda(request, busqueda):
 @login_required(login_url='/login')
 def atraparTesoros(request, busqueda):
 	busquedaAAtrapar = Busqueda.objects.get(id=busqueda)
-	tesoro = Tesoro.objects.get(busqueda=busquedaAAtrapar)
+	tesoro = Tesoro.objects.filter(busqueda=busquedaAAtrapar)
+	if tesoro.count() != 1:
+		raise Http404
+	else:
+		tesoro = Tesoro.objects.get(busqueda=busquedaAAtrapar)
 	if busquedaAAtrapar.estado == 'c':
 		return HttpResponseRedirect('/misbusquedas')
 	else:
