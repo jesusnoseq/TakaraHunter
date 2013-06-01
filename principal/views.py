@@ -415,7 +415,7 @@ def atraparTesoros(request, busqueda):
 @staff_member_required
 def crearBusqueda(request):
 	if request.method=='POST':
-			formulario = BusquedaForm(request.POST, request.FILES)		
+			formulario = BusquedaForm(request.POST, request.FILES)	
 			if formulario.is_valid():
 				formulario.save()
 				pagina_de_vuelta='/busquedas/'
