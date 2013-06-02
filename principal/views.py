@@ -329,31 +329,36 @@ def hall(request):
 
 @login_required(login_url='/login')
 def listaBusquedas(request):
+	busquedas_cerradas = []
 	if request.user.is_superuser == True:
-		busquedas1 = Busqueda.objects.filter(participantes=request.user)
-	else:
-		busquedas1 = Busqueda.objects.filter(estado="a").filter(participantes=request.user)
-	if request.user.is_superuser == True:
-		busquedas2 = Busqueda.objects.exclude(participantes=request.user)
-	else:
-		busquedas2 = Busqueda.objects.filter(estado="a").exclude(participantes=request.user)
+		busquedas_cerradas = Busqueda.objects.filter(estado="Cerrada")
+	busquedas_abiertas_participo = Busqueda.objects.filter(estado="Abierta").filter(participantes=request.user)
+	busquedas_abiertas_no_participo = Busqueda.objects.filter(estado="Abierta").exclude(participantes=request.user)
 	return render_to_response('listaBusquedas.html',
 	{
-		'busquedas1':busquedas1,
-		'busquedas2':busquedas2
+		'busquedas1':busquedas_abiertas_participo,
+		'busquedas2':busquedas_abiertas_no_participo,
+		'busquedas3':busquedas_cerradas,
 	},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def detalleBusqueda(request, busqueda):
-	busqueda = Busqueda.objects.get(id=busqueda)
+	if not request.user.is_superuser:
+		busqueda = get_object_or_404(Busqueda,id=busqueda,estado='Abierta')
+	else:
+		busqueda = Busqueda.objects.get(id=busqueda)
 	participantes = busqueda.participantes.all()
 	participo = False
+	abierta = False
 	for participante in participantes:
 		if participante == request.user:
 			participo = True
+	if busqueda.estado == "Abierta":
+		abierta = True
 	return render_to_response('detalleBusqueda.html',
 	{
 		'participo':participo,
+		'abierta':abierta,
 		'participantes':participantes,
 		'busqueda':busqueda
 	},context_instance=RequestContext(request))
@@ -425,39 +430,33 @@ def detalleTesoro(request, tesoro):
 ############################################################### REALIZANDO BÚSQUEDA ##############################################
 
 @login_required(login_url='/login')
-def atraparTesoros(request, busqueda):
-	busquedaAAtrapar = Busqueda.objects.get(id=busqueda)
-	tesoro = Tesoro.objects.filter(busqueda=busquedaAAtrapar)
-	if tesoro.count() != 1:
-		raise Http404
-	else:
-		tesoro = Tesoro.objects.get(busqueda=busquedaAAtrapar)
-	if busquedaAAtrapar.estado == 'c':
-		return HttpResponseRedirect('/misbusquedas')
-	else:
-		tesoro.recogidoPor = request.user
-		busquedaAAtrapar.estado = 'c'
-		tesoro.save()
-		busquedaAAtrapar.save()
-		return render_to_response('tesoroAtrapado.html',
-		{
-			'tesoro':tesoro,
-		},context_instance=RequestContext(request))
-
-@login_required(login_url='/login')
 def realizandoBusqueda(request, busqueda):
-	busquedaARealizar = Busqueda.objects.get(id=busqueda)
+	busquedaARealizar = get_object_or_404(Busqueda, id=busqueda, estado="Abierta", participantes=request.user)
 	participantes = busquedaARealizar.participantes.all()
-	tesoro = Tesoro.objects.filter(busqueda=busquedaARealizar)
-	if tesoro.count() != 1:
-		raise Http404
-	else:
-		tesoro = Tesoro.objects.get(busqueda=busquedaARealizar)
+	IDtesoro = busquedaARealizar.tesoro.id
+	tesoro = Tesoro.objects.get(id=IDtesoro)
 	return render_to_response('tesoro.html',
 	{
 		'participantes':participantes,
 		'busqueda':busquedaARealizar,
 		'tesoro':tesoro
+	},context_instance=RequestContext(request))
+	
+@login_required(login_url='/login')
+def atraparTesoros(request, busqueda):
+	busquedaAFinalizar = get_object_or_404(Busqueda, id=busqueda, estado="Abierta", participantes=request.user)
+	IDtesoro = busquedaAFinalizar.tesoro.id
+	tesoro = Tesoro.objects.get(id=IDtesoro)
+	tesoro.recogidoPor = request.user
+	busquedaAFinalizar.estado = 'Cerrada'
+	tesoro.save()
+	usuarios = User.objects.all()
+	for i in usuarios:
+		busquedaAFinalizar.participantes.remove(i)
+	busquedaAFinalizar.save()
+	return render_to_response('tesoroAtrapado.html',
+	{
+		'tesoro':tesoro,
 	},context_instance=RequestContext(request))
 	
 ############################################################### VISTAS EXTRA ##############################################

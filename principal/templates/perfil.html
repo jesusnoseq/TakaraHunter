@@ -185,9 +185,9 @@
 				{% if ultimas_busquedas %}
 					{% for busqueda in ultimas_busquedas %}
 						<tr>
-							<td><a href="/misbusquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
-							<td><a class="btn btn-success btn-block" href="/misbusquedas/realizar/{{ busqueda.id }}"><i class="icon-play"></i><i class="icon-globe"></i></a></td>
-							<td><a class="btn btn-warning btn-block" href="/misbusquedas/salir/{{ busqueda.id }}"><i class="icon-remove"></i><i class="icon-globe"></i></a></td>
+							<td><a href="/busquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
+							<td><a class="btn btn-success btn-block" href="/busquedas/realizar/{{ busqueda.id }}"><i class="icon-play"></i><i class="icon-globe"></i></a></td>
+							<td><a class="btn btn-warning btn-block" href="/busquedas/salir/{{ busqueda.id }}"><i class="icon-remove"></i><i class="icon-globe"></i></a></td>
 						</tr>
 					{% endfor %}
     			{% else %}

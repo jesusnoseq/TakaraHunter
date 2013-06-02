@@ -25,7 +25,7 @@ urlpatterns = patterns('',
 	url(r'^busquedas/salir/(?P<busqueda>\d+)\/[-\w]*$','principal.views.salirBusqueda'),
 	url(r'^busquedas/nueva/$','principal.views.crearBusqueda'),
 	url(r'^busquedas/realizar/(?P<busqueda>\d+)\/[-\w]*$','principal.views.realizandoBusqueda'),
-	url(r'^busquedas/tesoros/atrapar/(?P<busqueda>\d+)\/[-\w]*$','principal.views.atraparTesoros'),
+	url(r'^busquedas/realizar/atrapar/(?P<busqueda>\d+)\/[-\w]*$','principal.views.atraparTesoros'),
 	
 	url(r'^tesoros/$','principal.views.listaTesoros'),
 	url(r'^tesoros/(?P<tesoro>\d+)\/[-\w]*$','principal.views.detalleTesoro'),

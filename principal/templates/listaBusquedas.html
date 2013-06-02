@@ -11,8 +11,11 @@
 			{% if user.is_superuser %}
 				<td><strong>Estado</strong></td>
 			{% endif %}
+			<td></td>
 			{% if user.is_superuser %}
 				<td><a class="btn btn-info btn-block" href="/busquedas/nueva"><i class="icon-file"></i><i class="icon-globe"></i> Nueva</a></td>
+			{% else %}
+				<td></td>
 			{% endif %}
 		</tr>
 		{% if busquedas1 %}
@@ -23,19 +26,19 @@
 					{% if user.is_superuser %}
 						<td>{{ busqueda.estado }}</td>
 					{% endif %}
+					<td><a class="btn btn btn-success btn-block" href="/busquedas/realizar/{{ busqueda.id }}"><i class="icon-play"></i><i class="icon-globe"></i> Realizar</a></td>
 					<td><a class="btn btn btn-warning btn-block" href="/busquedas/salir/{{ busqueda.id }}"><i class="icon-remove"></i><i class="icon-globe"></i> Abandonar</a></td>
 				</tr>
 			{% endfor %}
     	{% else %}
 			<tr>
-				<td><strong>No hay búsquedas en las que participes</strong></td>
+				<td><strong>No hay búsquedas abiertas en las que participes</strong></td>
 				<td></td>
 				{% if user.is_superuser %}
 					<td></td>
 				{% endif %}
-				{% if user.is_superuser %}
-					<td></td>
-				{% endif %}
+				<td></td>
+				<td></td>
 			</tr>
     	{% endif %}
     	{% if busquedas2 %}
@@ -46,20 +49,41 @@
 					{% if user.is_superuser %}
 						<td>{{ busqueda.estado }}</td>
 					{% endif %}
+					<td></td>
 					<td><a class="btn btn btn-success btn-block" href="/busquedas/unirse/{{ busqueda.id }}"><i class="icon-ok"></i><i class="icon-globe"></i> Unirse</a></td>
 				</tr>
 			{% endfor %}
     	{% else %}
 			<tr>
-				<td><strong>No hay búsquedas en las que no participes</strong></td>
+				<td><strong>No hay búsquedas abiertas en las que no participes</strong></td>
 				<td></td>
 				{% if user.is_superuser %}
 					<td></td>
 				{% endif %}
-				{% if user.is_superuser %}
-					<td></td>
-				{% endif %}
+				<td></td>
+				<td></td>
 			</tr>
+    	{% endif %}
+    	{% if user.is_superuser %}
+    		{% if busquedas3 %}
+				{% for busqueda in busquedas3 %}
+					<tr>
+						<td><a href="/busquedas/{{ busqueda.id }}">{{ busqueda.titulo }}</a></td>
+						<td>{{ busqueda.descripcion }}</td>
+						<td>{{ busqueda.estado }}</td>
+						<td></td>
+						<td></td>
+					</tr>
+				{% endfor %}
+    		{% else %}
+				<tr>
+					<td><strong>No hay búsquedas cerradas</strong></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+    		{% endif %}
     	{% endif %}
 	</table>
 </div>

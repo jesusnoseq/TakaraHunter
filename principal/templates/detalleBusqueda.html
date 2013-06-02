@@ -2,40 +2,52 @@
 
 {% block titulo %}TH | Detalle búsqueda{% endblock %}
 
-{% block menu_inferior %}
-<div class="navbar">
-	<div class="navbar-inner">
-		<div class="container">
-			<ul class="nav">
-				{% if participo %}
-					<li><a href="/busquedas/salir/{{busqueda.id}}"><i class="icon-remove"></i><i class="icon-globe"></i> Abandonar búsqueda</a></li>
-				{% else %}
-					<li><a href="/busquedas/unirse/{{busqueda.id}}"><i class="icon-ok"></i><i class="icon-globe"></i> Unirse a búsqueda</a></li>
-				{% endif %}
-				{% if user.is_superuser %}
-					<li><a href="/busquedas/borrar/{{busqueda.id}}"><i class="icon-trash"></i><i class="icon-globe"></i> Borrar búsqueda</a></li>
-					<li><a href="/busquedas/nueva"><i class="icon-file"></i><i class="icon-globe"></i> Nueva búsqueda</a></li>
-				{% endif %}
-			</ul>
-		</div>
-	</div>
-</div>
-{% endblock %}
-
 {% block contenido %}
 		<div class="well sidebar-nav">
-			<p><strong>Título: </strong>{{busqueda.titulo}}</p>
-			<p><strong>Descripción: </strong>{{busqueda.descripcion}}</p>
-			<p><strong>Estado: </strong>{{busqueda.estado}}</p>
-			<p><strong>Participantes: </p>
-			{% if participantes %}
-				{% for participante in participantes %}
-					<ul>
-						<li>{{participante.username}}</li>
-					</ul>
-				{% endfor %}
-			{% else %}
-				<p>No hay participantes</p>
+			{% if user.is_superuser %}
+				<a class="btn btn-info btn-block" href="/busquedas/nueva" ><i class="icon-file"></i><i class="icon-globe"></i> Nueva búsqueda</a>
 			{% endif %}
+			<table class="table table-striped table-hover">
+				{% if abierta %}
+					<tr>
+						{% if participo %}
+							<td><a class="btn btn-success btn-block" href="/busquedas/realizar/{{ busqueda.id }}"><i class="icon-play"></i><i class="icon-globe"></i> Realizar</a></td>
+							<td><a class="btn btn-warning btn-block" href="/busquedas/salir/{{ busqueda.id }}"><i class="icon-remove"></i><i class="icon-globe"></i> Abandonar</a></td>
+						{% else %}
+							<td></td>
+							<td><a class="btn btn-success btn-block" href="/busquedas/unirse/{{ busqueda.id }}"><i class="icon-ok"></i><i class="icon-globe"></i> Unirse</a></td>
+						{% endif %}
+					</tr>
+				{% endif %}
+				<tr>
+					<td><strong>Título: </strong></td>
+					<td>{{busqueda.titulo}}</td>
+				</tr>
+				<tr>
+					<td><strong>Descripción: </strong></td>
+					<td>{{busqueda.descripcion}}</td>
+				</tr>
+				<tr>
+					<td><strong>Estado: </strong></td>
+					<td>{{busqueda.estado}}</td>
+				</tr>
+				<tr>
+					<td><strong>Participantes</strong></td>
+					<td></td>
+				<tr>
+				{% if participantes %}
+					{% for participante in participantes %}
+						<tr>
+							<td></td>
+							<td>{{participante.username}}</td>
+						<tr>
+					{% endfor %}
+				{% else %}
+					<tr>
+						<td></td>
+						<td><strong>No hay participantes</strong></td>
+					<tr>
+				{% endif %}
+			</table>
 		</div>
 {% endblock %}
