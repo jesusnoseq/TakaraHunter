@@ -2,6 +2,15 @@
 
 {% block titulo %}TH | Nueva búsqueda{% endblock %}
 
+{% block footerScripts %}
+	<style>
+		#id_estado
+		{
+			display:none;
+		}
+	</style>
+{% endblock %}
+	
 {% block contenido %}
 <div class="well sidebar-nav">
 			<form method="post">{% csrf_token %}
@@ -30,21 +39,6 @@
 						<td>{{ formulario.titulo.help_text }}</td>
 					</tr>
 					<!---------------------------------------------------------------------------------------------------->
-					{% if formulario.slug.errors %}
-						<tr class="error">
-							<td><i class="icon-warning-sign"></i></td>
-							<td>
-    							{{ formulario.slug.errors }}
-							</td>
-							<td></td>
-						</tr>
-					{% endif %}
-					<tr>
-						<td><strong>Slug:</strong></td>
-						<td>{{ formulario.slug }}</td>
-						<td>{{ formulario.slug.help_text }}</td>
-					</tr>
-					<!---------------------------------------------------------------------------------------------------->
 					{% if formulario.descripcion.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
@@ -60,20 +54,21 @@
 						<td>{{ formulario.descripcion.help_text }}</td>
 					</tr>
 					<!---------------------------------------------------------------------------------------------------->
-					{% if formulario.estado.errors %}
+					{% if formulario.tesoro.errors %}
 						<tr class="error">
 							<td><i class="icon-warning-sign"></i></td>
 							<td>
-    							{{ formulario.estado.errors }}
+    							{{ formulario.tesoro.errors }}
 							</td>
 							<td></td>
 						</tr>
 					{% endif %}
 					<tr>
-						<td><strong>Estado:</strong></td>
-						<td>{{ formulario.estado }}</td>
-						<td>{{ formulario.estado.help_text }}</td>
+						<td><strong>Tesoro:</strong></td>
+						<td>{{ formulario.tesoro }}</td>
+						<td>{{ formulario.tesoro.help_text }}</td>
 					</tr>
+					{{ formulario.estado }}
 					<!---------------------------------------------------------------------------------------------------->
 					<tr>
 						<td><input class="btn btn-primary btn-block" type="submit" value="Guardar"/></td>
@@ -83,18 +78,4 @@
 				</table>
 			</form>
 		</div>
-<!--
-<div class="row-fluid">
-	<div class="span6">
-		<div class="well sidebar-nav">
-			<form class="" method="post" action="">
-				<table>
-					{% csrf_token %}
-					{{formulario}}
-				</table>
-				<input class="btn btn-primary" type="submit" value="Guardar" />
-			</form>
-		</div>
-	</div>
-</div>-->
 {% endblock %}

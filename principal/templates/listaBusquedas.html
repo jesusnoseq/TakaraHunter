@@ -2,20 +2,6 @@
 
 {% block titulo %}TH | Lista búsquedas{% endblock %}
 
-{% block menu_inferior %}
-{% if user.is_superuser %}
-	<!--<div class="navbar">
-		<div class="navbar-inner">
-			<div class="container">
-				<ul class="nav">
-					<li><a href="/busquedas/nueva"><i class="icon-file"></i><i class="icon-globe"></i> <p>Nueva búsqueda</p></a></li>
-				</ul>
-			</div>
-		</div>
-	</div>-->
-{% endif %}
-{% endblock %}
-
 {% block contenido %}
 <div class="well sidebar-nav">
 	<table class="table table-striped table-hover">
@@ -25,7 +11,6 @@
 			{% if user.is_superuser %}
 				<td><strong>Estado</strong></td>
 			{% endif %}
-			<td></td>
 			{% if user.is_superuser %}
 				<td><a class="btn btn-info btn-block" href="/busquedas/nueva"><i class="icon-file"></i><i class="icon-globe"></i> Nueva</a></td>
 			{% endif %}
@@ -39,9 +24,6 @@
 						<td>{{ busqueda.estado }}</td>
 					{% endif %}
 					<td><a class="btn btn btn-warning btn-block" href="/busquedas/salir/{{ busqueda.id }}"><i class="icon-remove"></i><i class="icon-globe"></i> Abandonar</a></td>
-					{% if user.is_superuser %}
-						<td><a class="btn btn btn-danger btn-block" href="/busquedas/borrar/{{ busqueda.id }}"><i class="icon-trash"></i><i class="icon-globe"></i> Borrar</a></td>
-					{% endif %}
 				</tr>
 			{% endfor %}
     	{% else %}
@@ -51,7 +33,6 @@
 				{% if user.is_superuser %}
 					<td></td>
 				{% endif %}
-				<td></td>
 				{% if user.is_superuser %}
 					<td></td>
 				{% endif %}
@@ -66,9 +47,6 @@
 						<td>{{ busqueda.estado }}</td>
 					{% endif %}
 					<td><a class="btn btn btn-success btn-block" href="/busquedas/unirse/{{ busqueda.id }}"><i class="icon-ok"></i><i class="icon-globe"></i> Unirse</a></td>
-					{% if user.is_superuser %}
-						<td><a class="btn btn btn-danger btn-block" href="/busquedas/borrar/{{ busqueda.id }}"><i class="icon-trash"></i><i class="icon-globe"></i> Borrar</a></td>
-					{% endif %}
 				</tr>
 			{% endfor %}
     	{% else %}
@@ -78,7 +56,6 @@
 				{% if user.is_superuser %}
 					<td></td>
 				{% endif %}
-				<td></td>
 				{% if user.is_superuser %}
 					<td></td>
 				{% endif %}

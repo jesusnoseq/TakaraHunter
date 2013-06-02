@@ -55,101 +55,10 @@
 	</script>
 {% endblock %}
 
-{% block menu_pagina %}
-<div class="navbar">
-	<div class="navbar-inner">
-		<div class="container">
-			<ul class="nav">
-				<li><a href="/rutas"><i class="icon-list"></i><i class="icon-map-marker"></i> Mis rutas</a></li>
-				<li><a href="/misbusquedas"><i class="icon-list"></i><i class="icon-flag"></i> Mis búsquedas</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
-{% endblock %}
-
-{% block menu_inferior %}
-<!--<div class="navbar">
-	<div class="navbar-inner">
-		<div class="container">
-			<ul class="nav">
-				<li><a href="/perfil/editar"><i class="icon-edit"></i><i class="icon-user"></i> Modifcar perfil</a></li>
-			</ul>
-		</div>
-	</div>
-</div>-->
-{% endblock %}
-
 {% block contenido %}
 <div class="row-fluid">
 	<div class="span4">
 		<div class="well sidebar-nav">
-			<!--<table class="table table-striped table-hover">
-				<tr>
-					<td><strong>Datos del perfil</strong></td>
-					<td><a class="btn btn-info btn-block" href="/perfil/editar"><i class="icon-edit"></i><i class="icon-user"></i></a></td>
-				</tr>
-				<tr>
-					<td><img src="{{MEDIA_URL}}{{user.foto}}" class="img-rounded"/></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><strong>Nombre de usuario:</strong></td>
-					<td>{{ user.username }}</td>
-				</tr>
-				<tr>
-					<td><strong>Correo:</strong></td>
-					<td>{{ user.email }}</td>
-				</tr>
-				<tr>
-					<td><strong>Nombre propio:</strong></td>
-					<td>{{ user.first_name }}</td>
-				</tr>
-				<tr>
-					<td><strong>Apellidos:</strong></td>
-					<td>{{ user.last_name }}</td>
-				</tr>
-				<tr>
-					<td><strong>F. nacimiento:</strong></td>
-					{% if user.fecha_nacimiento %}
-						<td>{{ user.fecha_nacimiento}}</td>
-					{% else %}
-						<td></td>
-					{% endif %}
-				</tr>
-				<tr>
-					<td><strong>Teléfono:</strong></td>
-					{% if user.telefono %}
-						<td>{{ user.telefono}}</td>
-					{% else %}
-						<td></td>
-					{% endif %}
-				</tr>
-				<tr>
-					<td><strong>Profesión:</strong></td>
-					<td>{{ user.profesion}}</td>
-				</tr>
-				<tr>
-					<td><strong>Sexo:</strong></td>
-					<td>{{ user.sexo}}</td>
-				</tr>
-				<tr>
-					<td><strong>Coordenada X:</strong></td>
-					{% if user.px %}
-						<td>{{ user.px}}</td>
-					{% else %}
-						<td></td>
-					{% endif %}
-				</tr>
-				<tr>
-					<td><strong>Coordenada Y:</strong></td>
-					{% if user.py %}
-						<td>{{ user.py}}</td>
-					{% else %}
-						<td></td>
-					{% endif %}
-				</tr>
-			</table>-->
 			<ul class="nav nav-list">
 				<a class="btn btn-info btn-block" href="/perfil/editar"><i class="icon-edit"></i><i class="icon-user"></i></a>
 				<li class="nav-header"><center>Perfil</center></li>
@@ -242,10 +151,12 @@
 	</div>
 	<div class="span4">
 		<div class="well sidebar-nav">
+			<a class="btn btn-info btn-block" href="/rutas/nueva"><i class="icon-file"></i><i class="icon-map-marker"></i></a>
+			<br>
 			<table class="table table-striped table-hover">
 				<tr>
 					<td><strong>Últimas rutas</strong></td>
-					<td><a class="btn btn-info btn-block" href="/rutas/nueva"><i class="icon-file"></i><i class="icon-map-marker"></i></a></td>
+					<td></td>
 				</tr>
 				{% if ultimas_rutas %}
 					{% for ruta in ultimas_rutas %}

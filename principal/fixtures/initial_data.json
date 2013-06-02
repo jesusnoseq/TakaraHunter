@@ -1,16 +1,2 @@
 [
-	{ "model": "auth.user",
-	"pk": 2,
-	"fields": {"username": "user1", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user1@takarahunter.com"}
-	},
-	{
-	"model": "principal.Busqueda",
-	"pk": 1,
-	"fields": {      "slug": "onepiece",      "titulo": "One Piece",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"pero esto que eeeeeeee e eeeeee e e e eee eeeeee" }
-	},
-	{
-	"model": "principal.Busqueda",
-	"pk": 2,
-	"fields": {      "slug": "dagronballs",      "titulo": "Bolas de dragon",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"pero esto que eeeeeeee e eeeeee e e e eee eeeeee" }
-	}
 ]

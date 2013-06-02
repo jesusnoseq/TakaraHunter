@@ -53,28 +53,26 @@
 	</script>
 {% endblock %}
 
-{% block menu_inferior %}
-<div class="navbar">
-	<div class="navbar-inner">
-		<div class="container">
-			<ul class="nav">
-				<li><a href="/tesoros/borrar/{{tesoro.id}}"><i class="icon-trash"></i><i class="icon-flag"></i> Borrar tesoro</a></li>
-				<li><a href="/tesoros/nuevo/"><i class="icon-file"></i><i class="icon-flag"></i> Nuevo tesoro</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
-{% endblock %}
-
 {% block contenido %}
 <div class="row-fluid">
 	<div class="span6">
 		<div class="well sidebar-nav">
 			<table class="table table-striped table-hover">
 				<tr>
-					<td><strong>Busqueda:</strong></td>
-					<td>{{tesoro.busqueda}}</td>
+					<td></td>
+					<td><a class="btn btn-info btn-block" href="/tesoros/nuevo"><i class="icon-file"></i><i class="icon-flag"></i> Nuevo</a></td>
 				</tr>
+				{% if tesoro.recogidoPor %}
+					<tr>
+						<td><strong>Recogido por:</strong></td>
+						<td>{{tesoro.recogidoPor}}</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td><strong>Recogido por:</strong></td>
+						<td>Nadie</td>
+					</tr>
+				{% endif %}
 				<tr>
 					<td><strong>Coordenada X:</strong></td>
 					<td><input type="text" readonly="true" id="id_x" value="{{tesoro.x|stringformat:'f'}}"></td>
@@ -83,17 +81,6 @@
 					<td><strong>Coordenada Y:</strong></td>
 					<td><input type="text" readonly="true" id="id_y" value="{{tesoro.y|stringformat:'f'}}"></td>
 				</tr>
-				{% if tesoro.recogidaPor %}
-					<tr>
-						<td><strong>Recogido por:</strong></td>
-						<td>{{tesoro.recogidaPor}}</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td><strong>Recogido por:</strong></td>
-						<td>Nadie</td>
-					</tr>
-				{% endif %}
 			</table>
 		</div>
 	</div>

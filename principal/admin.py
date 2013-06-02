@@ -37,10 +37,10 @@ class RutaAdmin(admin.ModelAdmin):
     )
 	
 class BusquedaAdmin(admin.ModelAdmin):
-	list_display = ('titulo', 'slug', 'descripcion', 'estado')
+	list_display = ('titulo', 'descripcion', 'estado', 'tesoro')
 	fieldsets = (
         ('Información de la búsqueda', {
-            'fields': ('titulo', 'slug', 'descripcion', 'estado')
+            'fields': ('titulo', 'descripcion', 'estado', 'tesoro')
         }),
         ('Participantes', {
             'fields': ('participantes', )
@@ -48,10 +48,10 @@ class BusquedaAdmin(admin.ModelAdmin):
     )
 	
 class TesoroAdmin(admin.ModelAdmin):
-	list_display = ('x', 'y', 'busqueda', 'recogidaPor')
+	list_display = ('x', 'y', 'recogidoPor')
 	fieldsets = (
         ('Información del tesoro', {
-            'fields': ('busqueda', 'recogidaPor')
+            'fields': ('recogidoPor',)
         }),
 		('Localización', {
             'fields': ('x', 'y', )
@@ -63,5 +63,3 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Ruta, RutaAdmin)
 admin.site.register(Busqueda, BusquedaAdmin)
 admin.site.register(Tesoro, TesoroAdmin)
-#admin.site.register(Participa)
-

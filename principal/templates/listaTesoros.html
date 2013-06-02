@@ -2,37 +2,33 @@
 
 {% block titulo %}TH | Lista tesoros{% endblock %}
 
-
 {% block contenido %}
 <div class="well sidebar-nav">
 	<table class="table table-striped table-hover">
 		<tr>
-			<td><strong>Busqueda</strong></td>
+			<td><strong>Propietario</strong></td>
 			<td><strong>Coordenada X</strong></td>
 			<td><strong>Coordenada Y</strong></td>
-			<td><strong>Propietario</strong></td>
 			<td><a class="btn btn-info btn-block" href="/tesoros/nuevo"><i class="icon-file"></i><i class="icon-flag"></i> Nuevo</a></td>
 		</tr>
 		{% if tesoros %}
 			{% for tesoro in tesoros %}
 				<tr>
-					<td><a href="/tesoros/{{ tesoro.id }}">{{ tesoro.busqueda }}</a></td>
-					<td>{{ tesoro.x }}</td>
-					<td>{{ tesoro.y }}</td>
 					<td>
-						{% if tesoro.recogidaPor %}
-							{{ tesoro.recogidaPor }}
+						{% if tesoro.recogidoPor %}
+							{{ tesoro.recogidoPor }}
 						{% else %}
 							Nadie
 						{% endif %}
 					</td>
-					<td><a class="btn btn-danger btn-block" href="/tesoros/borrar/{{ tesoro.id }}"><i class="icon-trash"></i><i class="icon-flag"></i> Borrar</a></td>
+					<td>{{ tesoro.x }}</td>
+					<td>{{ tesoro.y }}</td>
+					<td><a class="btn btn-success btn-block" href="/tesoros/{{ tesoro.id }}"><i class="icon-search"></i><i class="icon-flag"></i> Detalles</a></td>
 				</tr>
 			{% endfor %}
     	{% else %}
 			<tr>
 				<td><strong>No hay tesoros</strong></td>
-				<td></td>
 				<td></td>
 				<td></td>
 				<td></td>
