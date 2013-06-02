@@ -29,7 +29,7 @@
 		{% if diamante %}
 			<tr>
 				<td><strong>{{diamante.username}}</strong></td>
-				<td><strong>{{diamante.recogidaPor__count}}</strong></td>
+				<td><strong>{{diamante.recogidoPor__count}}</strong></td>
 				<td><strong>Cazador legendario</strong></td>
 				<td><img src="{{STATIC_URL}}img/medalla_diamante1_p.png" height="50px" width="50px"/></td>
 			</tr>
@@ -37,7 +37,7 @@
 		{% if platino %}
 			<tr>
 				<td><strong>{{platino.username}}</strong></td>
-				<td><strong>{{platino.recogidaPor__count}}</strong></td>
+				<td><strong>{{platino.recogidoPor__count}}</strong></td>
 				<td><strong>Maestro cazador</strong></td>
 				<td><img src="{{STATIC_URL}}img/medalla_platino1_p.png" height="50px" width="50px"/></td>
 			</tr>
@@ -45,7 +45,7 @@
 		{% if oro %}
 			<tr>
 				<td><strong>{{oro.username}}</strong></td>
-				<td><strong>{{oro.recogidaPor__count}}</strong></td>
+				<td><strong>{{oro.recogidoPor__count}}</strong></td>
 				<td><strong>Líder cazador</strong></td>
 				<td><img src="{{STATIC_URL}}img/medalla_oro1_p.png" height="50px" width="50px"/></td>
 			</tr>
@@ -53,7 +53,7 @@
 		{% if plata %}
 			<tr>
 				<td><strong>{{plata.username}}</strong></td>
-				<td><strong>{{plata.recogidaPor__count}}</strong></td>
+				<td><strong>{{plata.recogidoPor__count}}</strong></td>
 				<td><strong>Cazador experto</strong></td>
 				<td><img src="{{STATIC_URL}}img/medalla_plata1_p.png" height="50px" width="50px"/></td>
 			</tr>
@@ -61,7 +61,7 @@
 		{% if bronce %}
 			<tr>
 				<td><strong>{{bronce.username}}</strong></td>
-				<td><strong>{{bronce.recogidaPor__count}}</strong></td>
+				<td><strong>{{bronce.recogidoPor__count}}</strong></td>
 				<td><strong>Cazador novato</strong></td>
 				<td><img src="{{STATIC_URL}}img/medalla_bronce1_p.png" height="50px" width="50px"/></td>
 			</tr>
@@ -69,7 +69,7 @@
 		{% for usuario in elresto %}
 			<tr>
 				<td><strong>{{usuario.username}}</strong></td>
-				<td><strong>{{usuario.recogidaPor__count}}</strong></td>
+				<td><strong>{{usuario.recogidoPor__count}}</strong></td>
 				<td><strong>Desconocido</strong></td>
 				<td></td>
 			</tr>
@@ -79,7 +79,7 @@
 <!--<ol class="well">
 {% for usuario in lista %}
 <li>
-	{{usuario.username}} - {{usuario.recogidaPor__count}}
+	{{usuario.username}} - {{usuario.recogidoPor__count}}
 </li>
 {% empty %}
 	<li>No hay auténticos buscadores de tesoros en este momento.</li>
