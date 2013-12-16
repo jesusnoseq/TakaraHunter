@@ -22,9 +22,7 @@ https://developers.google.com/maps/documentation/javascript/examples/?hl=es
 
 TO-DO
 Añadir algunos datos mas al fichero fixtures/initial_data.json
-google places con categorias
-matriz de usuarios con controles ok
 poner las url con los titulos
-arreglar bug editar pefil sin coordenadas
+
 
 
