@@ -12,11 +12,20 @@ from django.db.models import Count
 from principal.models import *
 from principal.forms import *
 from django.http import Http404
+from django.core.serializers.json import simplejson
 
+
+#return HttpResponse(simplejson.dumps(response_data), content_type="application/json")
 def inicio(request):
 	if not request.user.is_anonymous():
 		return HttpResponseRedirect('/perfil')
 	return render_to_response('inicio.html',{},context_instance=RequestContext(request))
+
+def inicioMovil(request):
+	if not request.user.is_anonymous():
+		return HttpResponseRedirect('/perfil')
+	response_data={'result':'ok'}
+	return HttpResponse(simplejson.dumps(response_data), content_type="application/json")
 
 def entrar(request):
 	state=""

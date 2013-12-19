@@ -7,6 +7,26 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
+# ini movil url
+	url(r'^movil/$','principal.views.inicioMovil'),
+	url(r'^movil/login/$','principal.views.entrarMovil'),
+	url(r'^movil/logout/$','principal.views.salirMovil'),
+	url(r'^movil/registro/$','principal.views.registroMovil'),
+	url(r'^movil/perfil/$','principal.views.perfilMovil'),
+	url(r'^movil/perfil/editar$','principal.views.editarPerfilMovil'),
+	
+	url(r'^movil/misbusquedas/$','principal.views.miListaBusquedas'),
+	url(r'^movil/misbusquedas/(?P<busqueda>\d+)\/[-\w]*$','principal.views.miDetallesBusquedasMovil'),
+	url(r'^movil/misbusquedas/salir/(?P<busqueda>\d+)\/[-\w]*$','principal.views.miSalirBusquedasMovil'),
+	url(r'^movil/misbusquedas/realizar/(?P<busqueda>\d+)\/[-\w]*$','principal.views.realizandoBusquedaMovil'),
+	url(r'^movil/misbusquedas/tesoros/atrapar/(?P<busqueda>\d+)\/[-\w]*$','principal.views.atraparTesorosMovil'),		
+	
+	url(r'^movil/busquedas/$','principal.views.listaBusquedasMovil'),
+	url(r'^movil/busquedas/(?P<busqueda>\d+)\/[-\w]*$','principal.views.detalleBusquedaMovil'),
+	url(r'^movil/busquedas/unirse/(?P<busqueda>\d+)\/[-\w]*$','principal.views.unirseBusquedaMovil'),
+	url(r'^movil/busquedas/salir/(?P<busqueda>\d+)\/[-\w]*$','principal.views.salirBusquedaMovil'),
+					
+# fin movil url
 	url(r'^$','principal.views.inicio'),
 
 	url(r'^login/$','principal.views.entrar'),
