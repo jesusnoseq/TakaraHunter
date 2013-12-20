@@ -15,17 +15,261 @@ from django.http import Http404
 from django.core.serializers.json import simplejson
 
 
-#return HttpResponse(simplejson.dumps(response_data), content_type="application/json")
-def inicio(request):
-	if not request.user.is_anonymous():
-		return HttpResponseRedirect('/perfil')
-	return render_to_response('inicio.html',{},context_instance=RequestContext(request))
+
+
+
+
+
+
+
+
+
+################################################################# WEB MOVIL ###
+
+## Acciones del perfil
 
 def inicioMovil(request):
 	if not request.user.is_anonymous():
 		return HttpResponseRedirect('/perfil')
 	response_data={'result':'ok'}
 	return HttpResponse(simplejson.dumps(response_data), content_type="application/json")
+
+
+
+def entrarMovil(request):
+	state="prueba"
+	return render_to_response('login.html',
+	{
+		'mensaje':state
+	},context_instance=RequestContext(request))
+
+
+
+def registroMovil(request):
+	if not request.user.is_anonymous():
+		return HttpResponseRedirect('/perfil')
+	if request.method=='POST':
+		formulario = PerfilCreationForm(request.POST)
+		if formulario.is_valid():
+			formulario.save()
+			return HttpResponseRedirect('/login')
+	else:
+		formulario = PerfilCreationForm()
+	return render_to_response('registro.html',
+	{
+		'formulario':formulario
+	}, context_instance=RequestContext(request))
+
+
+
+@login_required(login_url='/login')
+def salirMovil(request):
+	logout(request)
+	state='Sesión cerrada'
+	return render_to_response('mensaje.html',{'mensaje':state},context_instance=RequestContext(request))
+
+
+
+@login_required(login_url='/login')
+def perfilMovil(request):
+	numero_tesoros = Tesoro.objects.filter(recogidaPor=request.user).count()
+	listaRutas = Ruta.objects.filter(user=request.user)[:10]
+	listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)[:10]
+	
+	return render_to_response('perfil.html',
+	{
+		'numero_tesoros':numero_tesoros,
+		'ultimas_rutas':listaRutas,
+		'ultimas_busquedas':listaBusquedas
+	},context_instance=RequestContext(request))
+
+
+
+@login_required(login_url='/login')
+def editarPerfilMovil(request):
+	if request.method=='POST':
+		formulario= UserForm(request.POST,request.FILES,instance=request.user)
+		if formulario.is_valid():
+			user = formulario.save(commit=True)
+			return HttpResponseRedirect('/perfil')
+	else:
+		formulario = UserForm(instance=request.user)
+	return render_to_response('editarPerfil.html',
+	{
+		'formulario':formulario
+	},context_instance=RequestContext(request))
+
+
+
+
+##### Acciones Busquedas
+
+
+@login_required(login_url='/login')
+def detalleBusquedaMovil(request, busqueda):
+	busqueda = Busqueda.objects.get(id=busqueda)
+	participantes = busqueda.participantes.all()
+	participo = False
+	for participante in participantes:
+		if participante == request.user:
+			participo = True
+	return render_to_response('detalleBusqueda.html',
+	{
+		'participo':participo,
+		'participantes':participantes,
+		'busqueda':busqueda
+	},context_instance=RequestContext(request))
+
+@login_required(login_url='/login')
+def unirseBusquedaMovil(request, busqueda):
+	busqueda = get_object_or_404(Busqueda,pk=busqueda,estado='a')
+	tesoro = Tesoro.objects.filter(busqueda=busqueda)
+	if tesoro.count() != 1:
+		raise Http404
+	else:
+		get_object_or_404(Tesoro, busqueda=busqueda)
+	busqueda.participantes.add(request.user)
+	return HttpResponseRedirect('/busquedas')
+
+@login_required(login_url='/login')
+def listaBusquedasMovil(request):
+	if request.user.is_superuser == True:
+		busquedas1 = Busqueda.objects.filter(participantes=request.user)
+	else:
+		busquedas1 = Busqueda.objects.filter(estado="a").filter(participantes=request.user)
+	if request.user.is_superuser == True:
+		busquedas2 = Busqueda.objects.exclude(participantes=request.user)
+	else:
+		busquedas2 = Busqueda.objects.filter(estado="a").exclude(participantes=request.user)
+	return render_to_response('listaBusquedas.html',
+	{
+		'busquedas1':busquedas1,
+		'busquedas2':busquedas2
+	},context_instance=RequestContext(request))
+	
+@login_required(login_url='/login')
+def miListaBusquedasMovil(request):
+	listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)
+	return render_to_response('miListaBusquedas.html',
+	{
+		'busquedas':listaBusquedas
+	},context_instance=RequestContext(request))
+	
+@login_required(login_url='/login')
+def miDetallesBusquedasMovil(request, busqueda):
+	busqueda = Busqueda.objects.get(id=busqueda)
+	participantes = busqueda.participantes.all()
+	return render_to_response('miDetalleBusqueda.html',
+	{
+		'participantes':participantes,
+		'busqueda':busqueda
+	},context_instance=RequestContext(request))
+
+@login_required(login_url='/login')
+def salirBusquedaMovil(request, busqueda):
+	busqueda = Busqueda.objects.get(id=busqueda)
+	busqueda.participantes.remove(request.user)
+	return HttpResponseRedirect('/busquedas')
+
+@login_required(login_url='/login')
+def miSalirBusquedasMovil(request, busqueda):
+	busqueda = Busqueda.objects.get(id=busqueda)
+	busqueda.participantes.remove(request.user)
+	return HttpResponseRedirect('/misbusquedas')
+
+### Acciones tesoros
+
+@login_required(login_url='/login')
+def realizandoBusquedaMovil(request, busqueda):
+	busquedaARealizar = Busqueda.objects.get(id=busqueda)
+	participantes = busquedaARealizar.participantes.all()
+	tesoro = Tesoro.objects.filter(busqueda=busquedaARealizar)
+	if tesoro.count() != 1:
+		raise Http404
+	else:
+		tesoro = Tesoro.objects.get(busqueda=busquedaARealizar)
+	return render_to_response('tesoro.html',
+	{
+		'participantes':participantes,
+		'busqueda':busquedaARealizar,
+		'tesoro':tesoro
+	},context_instance=RequestContext(request))
+
+@login_required(login_url='/login')
+def atraparTesorosMovil(request, busqueda):
+	busquedaAAtrapar = Busqueda.objects.get(id=busqueda)
+	tesoro = Tesoro.objects.filter(busqueda=busquedaAAtrapar)
+	if tesoro.count() != 1:
+		raise Http404
+	else:
+		tesoro = Tesoro.objects.get(busqueda=busquedaAAtrapar)
+	if busquedaAAtrapar.estado == 'c':
+		return HttpResponseRedirect('/misbusquedas')
+	else:
+		tesoro.recogidaPor = request.user
+		busquedaAAtrapar.estado = 'c'
+		tesoro.save()
+		busquedaAAtrapar.save()
+		return render_to_response('tesoroAtrapado.html',
+		{
+			'tesoro':tesoro,
+		},context_instance=RequestContext(request))
+		
+
+
+@login_required(login_url='/login')
+def hallMovil(request):
+	campeon = []
+	diamante = []
+	platino = []
+	oro = []
+	plata = []
+	bronce = []
+	elresto = []
+	result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
+	resultados = []
+	for row in result:
+		if row['recogidaPor']!=None:
+			row['username']=User.objects.get(pk=row['recogidaPor']).username
+			resultados.append(row)
+	if len(resultados) >= 1:
+		campeon = resultados[0]
+	if len(resultados) >= 2:
+		diamante = resultados[1]
+	if len(resultados) >= 3:
+		platino = resultados[2]
+	if len(resultados) >= 4:
+		oro = resultados[3]
+	if len(resultados) >= 5:
+		plata = resultados[4]
+	if len(resultados) >= 6:
+		bronce = resultados[5]
+	if len(resultados) >= 7:
+		elresto = resultados[6:]
+	return render_to_response('hallDeLaFama.html',
+	{
+		'campeon':campeon,
+		'diamante':diamante,
+		'platino':platino,
+		'oro':oro,
+		'plata':plata,
+		'bronce':bronce,
+		'elresto':elresto,
+	},context_instance=RequestContext(request))
+
+
+
+####################################################################### WEB ###
+
+
+
+
+#return HttpResponse(simplejson.dumps(response_data), content_type="application/json")
+def inicio(request):
+	if not request.user.is_anonymous():
+		return HttpResponseRedirect('/perfil')
+	return render_to_response('inicio.html',{},context_instance=RequestContext(request))
+
 
 def entrar(request):
 	state=""
@@ -40,67 +284,29 @@ def entrar(request):
 			if user.is_active:
 				login(request, user)
 				state = "Bienvenido %s" % username
+
 				numero_tesoros = Tesoro.objects.filter(recogidaPor=request.user).count()
 				listaRutas = Ruta.objects.filter(user=request.user)[:10]
 				listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)[:10]
+				
 				########################################################################## WARNING CODIGO FEO Y PELIGROSO
-				############################## ponlo en una funcion hombre XD y almenos no repites codigo. -Jesus
-				campeon = []
-				diamante = []
-				platino = []
-				oro = []
-				plata = []
-				bronce = []
-				soy_campeon = False
-				soy_diamante = False
-				soy_platino = False
-				soy_oro = False
-				soy_plata = False
-				soy_bronce = False
-				soy_nada = False
 				result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
 				resultados = []
 				for row in result:
 					if row['recogidaPor']!=None:
 						row['username']=User.objects.get(pk=row['recogidaPor']).username
 						resultados.append(row)
-				if len(resultados) >= 1:
-					campeon = resultados[0]
-					if campeon['username'] == request.user.username:
-						soy_campeon = True
-				if len(resultados) >= 2:
-					diamante = resultados[1]
-					if diamante['username'] == request.user.username:
-						soy_diamante = True
-				if len(resultados) >= 3:
-					platino = resultados[2]
-					if platino['username'] == request.user.username:
-						soy_platino = True
-				if len(resultados) >= 4:
-					oro = resultados[3]
-					if oro['username'] == request.user.username:
-						soy_oro = True
-				if len(resultados) >= 5:
-					plata = resultados[4]
-					if plata['username'] == request.user.username:
-						soy_plata = True
-				if len(resultados) >= 6:
-					bronce = resultados[5]
-					if bronce['username'] == request.user.username:
-						soy_bronce = True
-				if not(soy_campeon == True or soy_diamante == True or soy_platino == True or soy_oro == True or soy_plata == True or soy_bronce == True):
-					soy_nada = True
-				########################################################################## WARNING CODIGO FEO Y PELIGROSO
+				#aqui 
 				return render_to_response('perfil.html',
 				{
 					########################################################################## WARNING CODIGO FEO Y PELIGROSO
-					'campeon':soy_campeon,
+					'''campeon':soy_campeon,
 					'diamante':soy_diamante,
 					'platino':soy_platino,
 					'oro':soy_oro,
 					'plata':soy_plata,
 					'bronce':soy_bronce,
-					'nada':soy_nada,
+					'nada':soy_nada,'''
 					########################################################################## WARNING CODIGO FEO Y PELIGROSO
 					'numero_tesoros':numero_tesoros,
 					'ultimas_busquedas':listaBusquedas,
@@ -143,64 +349,19 @@ def perfil(request):
 	numero_tesoros = Tesoro.objects.filter(recogidaPor=request.user).count()
 	listaRutas = Ruta.objects.filter(user=request.user)[:10]
 	listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)[:10]
-	########################################################################## WARNING CODIGO FEO Y PELIGROSO
-	## OMG la que me has liado. Yo paso XD
-	campeon = []
-	diamante = []
-	platino = []
-	oro = []
-	plata = []
-	bronce = []
-	soy_campeon = False
-	soy_diamante = False
-	soy_platino = False
-	soy_oro = False
-	soy_plata = False
-	soy_bronce = False
-	soy_nada = False
-	result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
-	resultados = []
-	for row in result:
-		if row['recogidaPor']!=None:
-			row['username']=User.objects.get(pk=row['recogidaPor']).username
-			resultados.append(row)
-	if len(resultados) >= 1:
-		campeon = resultados[0]
-		if campeon['username'] == request.user.username:
-			soy_campeon = True
-	if len(resultados) >= 2:
-		diamante = resultados[1]
-		if diamante['username'] == request.user.username:
-			soy_diamante = True
-	if len(resultados) >= 3:
-		platino = resultados[2]
-		if platino['username'] == request.user.username:
-			soy_platino = True
-	if len(resultados) >= 4:
-		oro = resultados[3]
-		if oro['username'] == request.user.username:
-			soy_oro = True
-	if len(resultados) >= 5:
-		plata = resultados[4]
-		if plata['username'] == request.user.username:
-			soy_plata = True
-	if len(resultados) >= 6:
-		bronce = resultados[5]
-		if bronce['username'] == request.user.username:
-			soy_bronce = True
-	if not(soy_campeon == True or soy_diamante == True or soy_platino == True or soy_oro == True or soy_plata == True or soy_bronce == True):
-		soy_nada = True
-	########################################################################## WARNING CODIGO FEO Y PELIGROSO
+	
+	#codigo mierdoso, insert here
+	
 	return render_to_response('perfil.html',
 	{
 		########################################################################## WARNING CODIGO FEO Y PELIGROSO
-		'campeon':soy_campeon,
+		'''campeon':soy_campeon,
 		'diamante':soy_diamante,
 		'platino':soy_platino,
 		'oro':soy_oro,
 		'plata':soy_plata,
 		'bronce':soy_bronce,
-		'nada':soy_nada,
+		'nada':soy_nada,'''
 		########################################################################## WARNING CODIGO FEO Y PELIGROSO
 		'numero_tesoros':numero_tesoros,
 		'ultimas_rutas':listaRutas,
@@ -494,3 +655,117 @@ def noFound(request):
 	return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+def mierdicodeEntrar():
+	########################################################################## WARNING CODIGO FEO Y PELIGROSO
+	############################## ponlo en una funcion hombre XD y almenos no repites codigo. -Jesus
+	'''campeon = []
+	diamante = []
+	platino = []
+	oro = []
+	plata = []
+	bronce = []
+	soy_campeon = False
+	soy_diamante = False
+	soy_platino = False
+	soy_oro = False
+	soy_plata = False
+	soy_bronce = False
+	soy_nada = False
+ *  result here
+	for row in result:
+		if row['recogidaPor']!=None:
+			row['username']=User.objects.get(pk=row['recogidaPor']).username
+			resultados.append(row)
+	if len(resultados) >= 1:
+		campeon = resultados[0]
+		if campeon['username'] == request.user.username:
+			soy_campeon = True
+	if len(resultados) >= 2:
+		diamante = resultados[1]
+		if diamante['username'] == request.user.username:
+			soy_diamante = True
+	if len(resultados) >= 3:
+		platino = resultados[2]
+		if platino['username'] == request.user.username:
+			soy_platino = True
+	if len(resultados) >= 4:
+		oro = resultados[3]
+		if oro['username'] == request.user.username:
+			soy_oro = True
+	if len(resultados) >= 5:
+		plata = resultados[4]
+		if plata['username'] == request.user.username:
+			soy_plata = True
+	if len(resultados) >= 6:
+		bronce = resultados[5]
+		if bronce['username'] == request.user.username:
+			soy_bronce = True
+	if not(soy_campeon == True or soy_diamante == True or soy_platino == True or soy_oro == True or soy_plata == True or soy_bronce == True):
+		soy_nada = True
+	'''
+	return 0
+
+
+def mierdicodigoPerfil():
+	########################################################################## WARNING CODIGO FEO Y PELIGROSO
+	## OMG la que me has liado. Yo paso XD
+	'''campeon = []
+	diamante = []
+	platino = []
+	oro = []
+	plata = []
+	bronce = []
+	soy_campeon = False
+	soy_diamante = False
+	soy_platino = False
+	soy_oro = False
+	soy_plata = False
+	soy_bronce = False
+	soy_nada = False
+	result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
+	resultados = []
+	for row in result:
+		if row['recogidaPor']!=None:
+			row['username']=User.objects.get(pk=row['recogidaPor']).username
+			resultados.append(row)
+	if len(resultados) >= 1:
+		campeon = resultados[0]
+		if campeon['username'] == request.user.username:
+			soy_campeon = True
+	if len(resultados) >= 2:
+		diamante = resultados[1]
+		if diamante['username'] == request.user.username:
+			soy_diamante = True
+	if len(resultados) >= 3:
+		platino = resultados[2]
+		if platino['username'] == request.user.username:
+			soy_platino = True
+	if len(resultados) >= 4:
+		oro = resultados[3]
+		if oro['username'] == request.user.username:
+			soy_oro = True
+	if len(resultados) >= 5:
+		plata = resultados[4]
+		if plata['username'] == request.user.username:
+			soy_plata = True
+	if len(resultados) >= 6:
+		bronce = resultados[5]
+		if bronce['username'] == request.user.username:
+			soy_bronce = True
+	if not(soy_campeon == True or soy_diamante == True or soy_platino == True or soy_oro == True or soy_plata == True or soy_bronce == True):
+		soy_nada = True'''
+	########################################################################## WARNING CODIGO FEO Y PELIGROSO
+	return 0
