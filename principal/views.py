@@ -2,6 +2,7 @@
 
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse,HttpResponseNotFound, HttpResponseRedirect
@@ -12,11 +13,19 @@ from django.db.models import Count
 from principal.models import *
 from principal.forms import *
 from django.http import Http404
-from django.core.serializers.json import simplejson
+from django.core.serializers.json import simplejson as json
+from django.core import serializers
 
 
 
 
+class JsonResponse(HttpResponse):
+	def __init__(self, data):
+		content = json.dumps(data,
+		                           indent=2,
+		                           ensure_ascii=False)
+		super(JsonResponse, self).__init__(content=content,
+		                                   mimetype='application/json; charset=utf8')
 
 
 
@@ -30,29 +39,33 @@ from django.core.serializers.json import simplejson
 
 def inicioMovil(request):
 	if not request.user.is_anonymous():
-		return HttpResponseRedirect('/perfil')
+		return HttpResponseRedirect('/movil/perfil')
 	response_data={'result':'ok'}
-	return HttpResponse(simplejson.dumps(response_data), content_type="application/json")
+	return JsonResponse(response_data)
 
 
 
 def entrarMovil(request):
-	state="prueba"
-	return render_to_response('login.html',
-	{
-		'mensaje':state
-	},context_instance=RequestContext(request))
-
+	response = {'string': "test",
+			'number': 42,
+			'array': [1, 2, 3],
+			'js_object': dict(foo="bar")}
+	return HttpResponse(json.dumps(response),
+						mimetype="application/json")
+	
+	
+	response_data={'result':'ok'}
+	return JsonResponse(response_data)
 
 
 def registroMovil(request):
 	if not request.user.is_anonymous():
-		return HttpResponseRedirect('/perfil')
+		return HttpResponseRedirect('/movil/perfil')
 	if request.method=='POST':
 		formulario = PerfilCreationForm(request.POST)
 		if formulario.is_valid():
 			formulario.save()
-			return HttpResponseRedirect('/login')
+			return HttpResponseRedirect('/movil/login')
 	else:
 		formulario = PerfilCreationForm()
 	return render_to_response('registro.html',
@@ -62,30 +75,36 @@ def registroMovil(request):
 
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/movil/login')
 def salirMovil(request):
 	logout(request)
 	state='Sesión cerrada'
-	return render_to_response('mensaje.html',{'mensaje':state},context_instance=RequestContext(request))
+	#return render_to_response('mensaje.html',{'mensaje':state},context_instance=RequestContext(request))
+	return HttpResponse(json.dumps({'mensaje':state}), content_type="application/json")
 
-
-
-@login_required(login_url='/login')
+#data = serializers.serialize('json', SomeModel.objects.all(), fields=('name','size'))
+#json.dumps(response_data)
+@login_required(login_url='/movil/login')
 def perfilMovil(request):
 	numero_tesoros = Tesoro.objects.filter(recogidaPor=request.user).count()
-	listaRutas = Ruta.objects.filter(user=request.user)[:10]
 	listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)[:10]
-	
-	return render_to_response('perfil.html',
-	{
+	#listaBusquedas= serializers.serialize('json',listaBusquedas)
+	#user=json.dumps(get_user(request))#request.user))
+	listaBusquedas = [ob.as_json() for ob in listaBusquedas]
+	#print RequestContext(request)
+	response_data={
 		'numero_tesoros':numero_tesoros,
-		'ultimas_rutas':listaRutas,
-		'ultimas_busquedas':listaBusquedas
-	},context_instance=RequestContext(request))
+		'ultimas_busquedas':listaBusquedas,
+		#'user':request.user,
+		#'context_instance':json.dumps(RequestContext(request))
+	}
+									#,context_instance=RequestContext(request))
+									#serializers.serialize('json', listaBusquedas)		, sort_keys=True,indent=2
+	return JsonResponse(response_data)
 
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/movil/login')
 def editarPerfilMovil(request):
 	if request.method=='POST':
 		formulario= UserForm(request.POST,request.FILES,instance=request.user)
@@ -105,7 +124,7 @@ def editarPerfilMovil(request):
 ##### Acciones Busquedas
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/movil/login')
 def detalleBusquedaMovil(request, busqueda):
 	busqueda = Busqueda.objects.get(id=busqueda)
 	participantes = busqueda.participantes.all()
@@ -120,7 +139,9 @@ def detalleBusquedaMovil(request, busqueda):
 		'busqueda':busqueda
 	},context_instance=RequestContext(request))
 
-@login_required(login_url='/login')
+
+
+@login_required(login_url='/movil/login')
 def unirseBusquedaMovil(request, busqueda):
 	busqueda = get_object_or_404(Busqueda,pk=busqueda,estado='a')
 	tesoro = Tesoro.objects.filter(busqueda=busqueda)
@@ -129,9 +150,9 @@ def unirseBusquedaMovil(request, busqueda):
 	else:
 		get_object_or_404(Tesoro, busqueda=busqueda)
 	busqueda.participantes.add(request.user)
-	return HttpResponseRedirect('/busquedas')
+	return HttpResponseRedirect('/movil/login')
 
-@login_required(login_url='/login')
+@login_required(login_url='/movil/login')
 def listaBusquedasMovil(request):
 	if request.user.is_superuser == True:
 		busquedas1 = Busqueda.objects.filter(participantes=request.user)
@@ -147,7 +168,9 @@ def listaBusquedasMovil(request):
 		'busquedas2':busquedas2
 	},context_instance=RequestContext(request))
 	
-@login_required(login_url='/login')
+	
+	
+@login_required(login_url='/loginMovil')
 def miListaBusquedasMovil(request):
 	listaBusquedas = Busqueda.objects.filter(estado="a").filter(participantes=request.user)
 	return render_to_response('miListaBusquedas.html',
@@ -155,7 +178,9 @@ def miListaBusquedasMovil(request):
 		'busquedas':listaBusquedas
 	},context_instance=RequestContext(request))
 	
-@login_required(login_url='/login')
+	
+	
+@login_required(login_url='/movil/login')
 def miDetallesBusquedasMovil(request, busqueda):
 	busqueda = Busqueda.objects.get(id=busqueda)
 	participantes = busqueda.participantes.all()
@@ -165,13 +190,17 @@ def miDetallesBusquedasMovil(request, busqueda):
 		'busqueda':busqueda
 	},context_instance=RequestContext(request))
 
-@login_required(login_url='/login')
+
+
+@login_required(login_url='/movil/login')
 def salirBusquedaMovil(request, busqueda):
 	busqueda = Busqueda.objects.get(id=busqueda)
 	busqueda.participantes.remove(request.user)
 	return HttpResponseRedirect('/busquedas')
 
-@login_required(login_url='/login')
+
+
+@login_required(login_url='/loginMovil')
 def miSalirBusquedasMovil(request, busqueda):
 	busqueda = Busqueda.objects.get(id=busqueda)
 	busqueda.participantes.remove(request.user)
@@ -179,7 +208,9 @@ def miSalirBusquedasMovil(request, busqueda):
 
 ### Acciones tesoros
 
-@login_required(login_url='/login')
+
+
+@login_required(login_url='/movil/login')
 def realizandoBusquedaMovil(request, busqueda):
 	busquedaARealizar = Busqueda.objects.get(id=busqueda)
 	participantes = busquedaARealizar.participantes.all()
@@ -195,7 +226,7 @@ def realizandoBusquedaMovil(request, busqueda):
 		'tesoro':tesoro
 	},context_instance=RequestContext(request))
 
-@login_required(login_url='/login')
+@login_required(login_url='/movil/login')
 def atraparTesorosMovil(request, busqueda):
 	busquedaAAtrapar = Busqueda.objects.get(id=busqueda)
 	tesoro = Tesoro.objects.filter(busqueda=busquedaAAtrapar)
@@ -217,7 +248,7 @@ def atraparTesorosMovil(request, busqueda):
 		
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/movil/login')
 def hallMovil(request):
 	campeon = []
 	diamante = []
@@ -260,8 +291,8 @@ def hallMovil(request):
 
 
 ####################################################################### WEB ###
-
-
+####################################################################### WEB ###
+####################################################################### WEB ###
 
 
 #return HttpResponse(simplejson.dumps(response_data), content_type="application/json")
@@ -299,15 +330,6 @@ def entrar(request):
 				#aqui 
 				return render_to_response('perfil.html',
 				{
-					########################################################################## WARNING CODIGO FEO Y PELIGROSO
-					'''campeon':soy_campeon,
-					'diamante':soy_diamante,
-					'platino':soy_platino,
-					'oro':soy_oro,
-					'plata':soy_plata,
-					'bronce':soy_bronce,
-					'nada':soy_nada,'''
-					########################################################################## WARNING CODIGO FEO Y PELIGROSO
 					'numero_tesoros':numero_tesoros,
 					'ultimas_busquedas':listaBusquedas,
 					'ultimas_rutas':listaRutas,
@@ -354,15 +376,6 @@ def perfil(request):
 	
 	return render_to_response('perfil.html',
 	{
-		########################################################################## WARNING CODIGO FEO Y PELIGROSO
-		'''campeon':soy_campeon,
-		'diamante':soy_diamante,
-		'platino':soy_platino,
-		'oro':soy_oro,
-		'plata':soy_plata,
-		'bronce':soy_bronce,
-		'nada':soy_nada,'''
-		########################################################################## WARNING CODIGO FEO Y PELIGROSO
 		'numero_tesoros':numero_tesoros,
 		'ultimas_rutas':listaRutas,
 		'ultimas_busquedas':listaBusquedas

@@ -76,6 +76,16 @@ class Busqueda(models.Model):
         ordering=['-fecha_modificacion']
     def __unicode__(self):
         return u"%s" % self.titulo
+    def as_json(self):
+        #print self.participantes
+        
+        return dict(
+            slug=self.slug,
+            titulo=self.titulo,
+            descripcion=self.descripcion,
+            fecha_modificacion=self.fecha_modificacion.isoformat(),
+            participantes='',
+            estado=self.estado)
 
 ################################################################################
 #                                        CLASE TESORO
