@@ -14,7 +14,12 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 class TesoroViewSet(viewsets.ModelViewSet):
     model = Tesoro
-    
+
+class BusquedaViewSet(viewsets.ModelViewSet):
+    model = Busqueda
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
+     
 '''
     
 class UserViewSet(viewsets.ModelViewSet):
