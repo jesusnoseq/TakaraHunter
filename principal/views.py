@@ -1,6 +1,6 @@
 #encoding:utf-8
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user
 from django.shortcuts import render_to_response, get_object_or_404
@@ -13,12 +13,16 @@ from django.db.models import Count
 from principal.models import *
 from principal.forms import *
 from django.http import Http404
-from django.core.serializers.json import simplejson as json
+#from django.core.serializers.json import simplejson as json
 from django.core import serializers
 
+from rest_framework import viewsets
+from serializers import UserSerializer, GroupSerializer
 
 
 
+
+'''
 class JsonResponse(HttpResponse):
 	def __init__(self, data):
 		content = json.dumps(data,
@@ -288,7 +292,7 @@ def hallMovil(request):
 		'elresto':elresto,
 	},context_instance=RequestContext(request))
 
-
+'''
 
 ####################################################################### WEB ###
 ####################################################################### WEB ###

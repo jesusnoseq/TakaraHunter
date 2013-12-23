@@ -3,32 +3,21 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib import admin
 
+
+from rest_framework import viewsets, routers
+from django.contrib.auth.models import User, Group
+
+from principal.routers import router
+
 admin.autodiscover()
 
 
 urlpatterns = patterns('',
-# ini movil url
-	url(r'^movil/$','principal.views.inicioMovil'),
-	url(r'^movil/login/$','principal.views.entrarMovil'),
-	url(r'^movil/logout/$','principal.views.salirMovil'),
-	url(r'^movil/registro/$','principal.views.registroMovil'),
-	url(r'^movil/perfil/$','principal.views.perfilMovil'),
-	url(r'^movil/perfil/editar$','principal.views.editarPerfilMovil'),
-	
-	url(r'^movil/misbusquedas/$','principal.views.miListaBusquedas'),
-	url(r'^movil/misbusquedas/(?P<busqueda>\d+)\/[-\w]*$','principal.views.miDetallesBusquedasMovil'),
-	url(r'^movil/misbusquedas/salir/(?P<busqueda>\d+)\/[-\w]*$','principal.views.miSalirBusquedasMovil'),
-	url(r'^movil/misbusquedas/realizar/(?P<busqueda>\d+)\/[-\w]*$','principal.views.realizandoBusquedaMovil'),
-	url(r'^movil/misbusquedas/tesoros/atrapar/(?P<busqueda>\d+)\/[-\w]*$','principal.views.atraparTesorosMovil'),		
-	
-	url(r'^movil/busquedas/$','principal.views.listaBusquedasMovil'),
-	url(r'^movil/busquedas/(?P<busqueda>\d+)\/[-\w]*$','principal.views.detalleBusquedaMovil'),
-	url(r'^movil/busquedas/unirse/(?P<busqueda>\d+)\/[-\w]*$','principal.views.unirseBusquedaMovil'),
-	url(r'^movil/busquedas/salir/(?P<busqueda>\d+)\/[-\w]*$','principal.views.salirBusquedaMovil'),
-					
+	url(r'^api/', include(router.urls)),
+	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
 # fin movil url
 	url(r'^$','principal.views.inicio'),
-
 	url(r'^login/$','principal.views.entrar'),
 	url(r'^logout/$','principal.views.salir'),
 	url(r'^registro/$','principal.views.registro'),
@@ -69,5 +58,5 @@ urlpatterns = patterns('',
 
 	url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT,}),
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-	url(r'^admin/', include(admin.site.urls)),
+	url(r'^admin/', include(admin.site.urls)),	
 )

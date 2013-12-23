@@ -16,7 +16,7 @@ class BusquedaForm(ModelForm):
 class TesoroForm(ModelForm):
     class Meta:
         model = Tesoro
-        exclude=('recogidaPor')
+        #exclude=('recogidaPor')
                 
 class UserForm(ModelForm):
     class Meta:

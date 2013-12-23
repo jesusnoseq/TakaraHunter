@@ -76,7 +76,7 @@ class Busqueda(models.Model):
         ordering=['-fecha_modificacion']
     def __unicode__(self):
         return u"%s" % self.titulo
-    def as_json(self):
+    '''def as_json(self):
         #print self.participantes
         
         return dict(
@@ -85,7 +85,7 @@ class Busqueda(models.Model):
             descripcion=self.descripcion,
             fecha_modificacion=self.fecha_modificacion.isoformat(),
             participantes='',
-            estado=self.estado)
+            estado=self.estado)'''
 
 ################################################################################
 #                                        CLASE TESORO
@@ -98,6 +98,7 @@ class Tesoro(models.Model):
     recogidaPor =  models.ForeignKey(User, null=True, blank=True, verbose_name="Recogido por", help_text="Usuario que ha recogido el tesoro.")
     def __unicode__(self):
         return u"%s - (%0.2f, %0.2f)" % (self.busqueda.titulo,self.x,self.y)
+    
     
 #return u"%s apuesta en %s: %ium a la opcion (%s)" % (self.user.username, self.apuesta, self.cantidad,self.opcion)
 # mejor ponerlo como una relacion muchos a muchos en busqueda
