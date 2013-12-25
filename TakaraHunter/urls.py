@@ -52,8 +52,10 @@ urlpatterns = patterns('',
 	url(r'^tesoros/nuevo/$','principal.views.crearTesoro'),
 	url(r'^tesoros/borrar/(?P<tesoro>\d+)\/[-\w]*$','principal.views.borrarTesoro'),
 		
-	url(r'^about/$', direct_to_template, {'template': 'sobreNosotros.html'}),
-	url('^404testing/$', direct_to_template, {'template': '404.html'}),
+	#url(r'^about/$', direct_to_template, {'template': 'sobreNosotros.html'}),
+	#url('^404testing/$', direct_to_template, {'template': '404.html'}),
+	url(r'^about/$', TemplateView.as_view(template_name='sobreNosotros.html'), name="about"), #<-----------------------------------------------------------
+	url('^404testing/$', TemplateView.as_view(template_name='404.html'), name="404"), #<-----------------------------------------------------------
 	#url(r'^login/$', 'auth.views.login_user'),
 
 	url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT,}),
