@@ -1,5 +1,6 @@
 El superusuario es:
 
-	Usuario:    grupo3
+	Usuario:    i02arlur
 	E-Mail:     i02arlur@uco.es
-	Contraseña: 1234
+	Contraseña: 1
+	
