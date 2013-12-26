@@ -37,6 +37,11 @@
 
 	$(document).ready(function()
 	{
+		//putobugdechrome
+		$('#id_py').attr( 'type', 'text' );
+		$('#id_px').attr( 'type', 'text' );
+		// fin solucion
+		
 		initialize();
 		$("#buscarLugar").click(geocode);
 	});
@@ -110,6 +115,7 @@
 		var coords=latlng.split(',');
 		px=coords[0].split('(')[1];
 		py=coords[1].split(')')[0];
+		console.log("x:"+px+"  y:"+py);
 		$('#id_px').val(px);
 		$('#id_py').val(py);
 		currentReverseGeocodeResponse = null;
