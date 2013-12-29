@@ -17,6 +17,8 @@ urlpatterns = patterns('',
 	url(r'^api/', include(router.urls)),
 	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
+	url('^prueba/$', TemplateView.as_view(template_name='prueba.html'), name="prueba"),
+
 # fin movil url
 	url(r'^$','principal.views.inicio'),
 	url(r'^login/$','principal.views.entrar'),

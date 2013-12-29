@@ -680,11 +680,6 @@ def noFound(request):
 
 
 
-
-
-
-
-
 def mierdicodeEntrar():
 	########################################################################## WARNING CODIGO FEO Y PELIGROSO
 	############################## ponlo en una funcion hombre XD y almenos no repites codigo. -Jesus
