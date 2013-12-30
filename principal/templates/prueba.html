@@ -18,7 +18,7 @@
 	
 		<script type="text/javascript">
 			$(document).ready(function(){
-				login();
+				//login();
 			});
 			
 			//https://docs.djangoproject.com/en/dev/ref/contrib/csrf/
@@ -35,10 +35,12 @@
 			    }
 			});
 						
-			function login(){
+			/*function login(){
 				console.log("Hola1");
 				var url="http://127.0.0.1:8000/api/tesoros/";
-				var parametros = '';//{"p1":"valor1", "p2":"valor2"};
+					//url="http://127.0.0.1:8000/api-auth/login/";
+				var parametros = 'srfmiddlewaretoken: {{csrf_token}}';
+				//{"p1":"valor1", "p2":"valor2"};
 				
 				
 				 $.getJSON(url, {}, r);/*function(json){
@@ -46,14 +48,14 @@
 		            console.log(json);
 		        });*/
 				
-				/*$.ajax({
+				$.ajax({
 		            async:	true,
-		            success:r,
+		            success:r2,
 		            data:	parametros,
-		            url:	"http://127.0.0.1:8000/api/",
-		            type:	"GET"
+		            url:	"http://127.0.0.1:8000/api-auth/login/",
+		            type:	"POST",
 		            dataType:"json"
-				});*/
+				});
 				/*$.getJSON( "http://127.0.0.1:8000/api/", function( json ) {
 					console.log( "JSON Data: " );
 					//console.log(json);
@@ -70,8 +72,14 @@
 				console.log(json);
 			}
 			
+			function r2(json){
+				console.log("Hola4");
+				console.log(json);
+			}
+			
 			
 		//login
+		/*
 		$.ajax({
 		    url: '/accounts/signin/',
 		    type: 'POST',
@@ -88,8 +96,9 @@
 		        alert(errorThrown);
 		    }
 		});
+*/
 
-		//jquery mobile
+	/*	//jquery mobile
 		$( document ).on( "pageinit", "#myPage", function() {
 		    $( "#autocomplete" ).on( "listviewbeforefilter", function ( e, data ) {
 		        var $ul = $( this ),
@@ -119,7 +128,7 @@
 		        }
 		    });
 		});
-			
+			*/
 		</script>
 		
 		<div data-role="page" id="myPage">
