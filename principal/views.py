@@ -51,9 +51,8 @@ def entrarMovil(request):
 		else:
 			req ['status']='fail'
 		
-	response = json.dumps(req)
-	response = callback + '(' + response + ');'
-	return JsonResponse(response)
+	req ['callback'] = callback
+	return JsonResponse(req)
 	
 	#return HttpResponse(json.dumps(response), mimetype="application/json")
 def salirMovil(request):
