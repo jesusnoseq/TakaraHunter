@@ -7,6 +7,8 @@ from principal.viewsets import *
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'groups', GroupViewSet)
-router.register('tesoros', TesoroViewSet)
-router.register('busquedas', BusquedaViewSet)
+router.register(r'tesoros', TesoroViewSet)
+router.register(r'busquedas', BusquedaViewSet)
+#router.register('UserView', UserView)
+
 #router.register('no-model', viewsets.NoModelViewSet, 'no-model')

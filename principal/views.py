@@ -13,7 +13,7 @@ from django.db.models import Count
 from principal.models import *
 from principal.forms import *
 from django.http import Http404
-#from django.core.serializers.json import simplejson as json
+from django.core.serializers.json import json
 from django.core import serializers
 
 from rest_framework import viewsets
@@ -22,7 +22,7 @@ from serializers import UserSerializer, GroupSerializer
 
 
 
-'''
+
 class JsonResponse(HttpResponse):
 	def __init__(self, data):
 		content = json.dumps(data,
@@ -31,9 +31,38 @@ class JsonResponse(HttpResponse):
 		super(JsonResponse, self).__init__(content=content,
 		                                   mimetype='application/json; charset=utf8')
 
+def entrarMovil(request):
+	callback = request.GET.get('callback', '')
+	req = {}
+	req ['status'] = 'This is a constant result.'
+	#req ['get'] =request.GET
+	#req ['post'] = request.POST
 
-
-
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				req ['status']='ok'
+			else:
+				req ['status']='User is not active'
+		else:
+			req ['status']='fail'
+		
+	response = json.dumps(req)
+	response = callback + '(' + response + ');'
+	return JsonResponse(response)
+	
+	#return HttpResponse(json.dumps(response), mimetype="application/json")
+def salirMovil(request):
+	logout(request)
+	state='Sesión cerrada'
+	return JsonResponse({'mensaje':state})
+	#return render_to_response('mensaje.html',{'mensaje':state},context_instance=RequestContext(request))
+	#return HttpResponse(json.dumps({'mensaje':state}), content_type="application/json")
+'''
 
 
 

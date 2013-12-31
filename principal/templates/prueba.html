@@ -17,12 +17,28 @@
         <!--<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>-->
 	
 		<script type="text/javascript">
+
 			$(document).ready(function(){
-				//login();
+				//http://stackoverflow.com/questions/17735465/sending-a-jquery-request-to-django-rest-framework-results-in-no-found-json-objec
+				login();
 			});
 			
+			function login(){
+				$.ajax({
+		            async:	true,
+		            success:r,
+		            data:	{"username":"admin", "password":"pasa"},
+		            url:	"http://127.0.0.1:8000/loginMovil/",
+		            type:	"POST",
+		            dataType:"jsonp"
+				});
+			}
+			
+			function r(json){
+				console.log("HOLA");
+			}
 			//https://docs.djangoproject.com/en/dev/ref/contrib/csrf/
-			function csrfSafeMethod(method) {
+		/*		function csrfSafeMethod(method) {
 			    // these HTTP methods do not require CSRF protection
 			    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 			}
@@ -46,7 +62,7 @@
 				 $.getJSON(url, {}, r);/*function(json){
 		            //$('#resquest').html(json.busquedas+'('+json.tesoros+')');
 		            console.log(json);
-		        });*/
+		        });
 				
 				$.ajax({
 		            async:	true,
@@ -59,7 +75,7 @@
 				/*$.getJSON( "http://127.0.0.1:8000/api/", function( json ) {
 					console.log( "JSON Data: " );
 					//console.log(json);
-				});*/
+				});
 				//$( "#request2" ).load( url );
 				
 				
@@ -79,7 +95,7 @@
 			
 			
 		//login
-		/*
+		
 		$.ajax({
 		    url: '/accounts/signin/',
 		    type: 'POST',
@@ -96,9 +112,17 @@
 		        alert(errorThrown);
 		    }
 		});
-*/
+		
+		/*$.ajax({
+    	url: '/myresource/',
+    	method: 'POST',
+    	headers: {'X-HTTP-Method-Override': 'PATCH'},
+    	...
+		});*/
 
-	/*	//jquery mobile
+
+	//jquery mobile
+	/*
 		$( document ).on( "pageinit", "#myPage", function() {
 		    $( "#autocomplete" ).on( "listviewbeforefilter", function ( e, data ) {
 		        var $ul = $( this ),

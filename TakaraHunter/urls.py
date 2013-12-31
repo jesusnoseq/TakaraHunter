@@ -18,9 +18,14 @@ urlpatterns = patterns('',
 	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
 	url('^prueba/$', TemplateView.as_view(template_name='prueba.html'), name="prueba"),
+	
 
 # fin movil url
 	url(r'^$','principal.views.inicio'),
+	
+	url(r'^loginMovil/$','principal.views.entrarMovil'),
+	url(r'^logoutMovil/$','principal.views.salirMovil'),
+	
 	url(r'^login/$','principal.views.entrar'),
 	url(r'^logout/$','principal.views.salir'),
 	url(r'^registro/$','principal.views.registro'),
