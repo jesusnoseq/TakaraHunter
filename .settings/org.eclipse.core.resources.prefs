@@ -1,6 +1,11 @@
 eclipse.preferences.version=1
 encoding//TakaraHunter/settings.py=utf-8
+encoding//TakaraHunter/urls.py=utf-8
 encoding//principal/admin.py=utf-8
+encoding//principal/filters.py=utf-8
 encoding//principal/forms.py=utf-8
 encoding//principal/models.py=utf-8
+encoding//principal/routers.py=utf-8
+encoding//principal/serializers.py=utf-8
 encoding//principal/views.py=utf-8
+encoding//principal/viewsets.py=utf-8

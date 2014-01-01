@@ -1,3 +1,5 @@
+#encoding:utf-8
+
 from rest_framework import routers
 from rest_framework import viewsets, routers
 from django.contrib.auth.models import User, Group

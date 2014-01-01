@@ -30,16 +30,41 @@
 		            data:	{"username":"admin", "password":"pasa"},
 		            url:	"http://127.0.0.1:8000/loginMovil/",
 		            type:	"POST",
-		            dataType:"jsonp"
+		            dataType:"jsonp",
+					error: function(errorThrown){
+	        			console.log('ErrorLogin');
+	        			console.log(errorThrown);
+		    		}
 				});
 				
-				
+
 				$.ajax({
 		            async:	true,
 		            success:r,
 		            url:	"http://127.0.0.1:8000/api/busquedas",
-		            dataType:"jsonp"
+		            type:	"GET",
+		            dataType:"jsonp",
+					error: function(errorThrown){
+	        			console.log('ErrorBusquedas');
+	        			console.log(errorThrown);
+		    		}		            
 				});
+				
+
+				
+				/*
+				$.ajax({
+		            async:	true,
+		            success:r,
+		            url:	"http://127.0.0.1:8000/logoutMovil/",
+		            type:	"GET",
+					dataType:"jsonp",
+					error: function(errorThrown){
+	        			console.log('ErrorLogout');
+	        			console.log(errorThrown);
+		    		}
+				});
+				*/
 				/*
 				$.ajax({
 		            async:	true,

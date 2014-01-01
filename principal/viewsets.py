@@ -1,3 +1,5 @@
+#encoding:utf-8
+
 from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -14,7 +16,15 @@ from rest_framework import permissions
 from filters import *
 from serializers import *
 
-
+'''
+    necesito 2 listas de busquedas:
+1 - las que pertenezcan al usuario que le pase
+- que tengan tesoros
+- y que esten activas
+2 - las que NO pertenezcan al usuario que le pase
+- que tengan tesoros
+- y que estén activas
+'''
 
 class UserAPIView(APIView):
     authentication_classes = (SessionAuthentication, BasicAuthentication)

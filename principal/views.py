@@ -57,7 +57,7 @@ def entrarMovil(request):
 def salirMovil(request):
 	logout(request)
 	state='Sesión cerrada'
-	return JsonResponse({'mensaje':state})
+	return JsonResponse({'status':state})
 	#return render_to_response('mensaje.html',{'mensaje':state},context_instance=RequestContext(request))
 	#return HttpResponse(json.dumps({'mensaje':state}), content_type="application/json")
 '''

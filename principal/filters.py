@@ -1,3 +1,5 @@
+#encoding:utf-8
+
 from rest_framework import filters
 import django_filters
 from django.contrib.auth.models import User
@@ -6,7 +8,7 @@ from models import *
 class BusquedaFilter(django_filters.FilterSet):
     class Meta:
         model = Busqueda
-        fields = ['slug','estado']
+        fields = ['slug','estado','participantes']
 
 class TesoroFilter(django_filters.FilterSet):
     class Meta:
