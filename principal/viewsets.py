@@ -11,6 +11,8 @@ from models import *
 from rest_framework import viewsets, routers
 from django.contrib.auth.models import User, Group
 from rest_framework import permissions
+from filters import *
+from serializers import *
 
 
 
@@ -25,6 +27,40 @@ class UserAPIView(APIView):
         }
         return Response(content)
 
+class detalleUsuarioViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Retrieves the suburbs (20 per page).
+    GET and OPTIONS allowed.
+    """
+    model = User
+
+    def get_queryset(self):
+        """
+        Can filter by region_id, ...
+        - using query parameters in the URL.
+        """
+        queryset = User.objects.all()
+        region_id = self.request.QUERY_PARAMS.get('username', None)
+        if region_id is not None:
+            queryset = queryset.filter(region_id=region_id)
+        return queryset
+
+
+'''
+class PurchaseList(generics.ListAPIView)
+    serializer_class = PurchaseSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Purchase.objects.filter(purchaser=user)'''
+
+#class BusquedasAbiertas(viewsets.ReadOnlyModelViewSet):
+#    queryset = 
+#    serializer_class = UserSerializer
 
 
 # ViewSets define the view behavior.
@@ -32,6 +68,9 @@ class UserAPIView(APIView):
 #http://blog.kevinastone.com/getting-started-with-django-rest-framework-and-angularjs.html
 class UserViewSet(viewsets.ModelViewSet):
     model = User
+    filter_class = UsernameFilter
+    #filter_fields = ('username', 'id')
+    serializer_class = UserSerializer
     
     #def get_queryset(self):
     #    return self.request.user.accounts.all()
@@ -45,8 +84,9 @@ class TesoroViewSet(viewsets.ModelViewSet):
 
 class BusquedaViewSet(viewsets.ModelViewSet):
     model = Busqueda
-    #authentication_classes = (SessionAuthentication, BasicAuthentication)
-    #permission_classes = (IsAuthenticated,)#IsAdminUser
+    filter_class = BusquedaFilter
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)#IsAdminUser
      
 '''
     

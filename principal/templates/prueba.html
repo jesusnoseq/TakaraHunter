@@ -32,6 +32,32 @@
 		            type:	"POST",
 		            dataType:"jsonp"
 				});
+				
+				
+				$.ajax({
+		            async:	true,
+		            success:r,
+		            url:	"http://127.0.0.1:8000/api/busquedas",
+		            dataType:"jsonp"
+				});
+				/*
+				$.ajax({
+		            async:	true,
+		            success:r,
+		            data:	{
+					    "username": "", 
+					    "password": "", 
+					    "first_name": "", 
+					    "last_name": "", 
+					    "email": "", 
+					    "px": 0, 
+					    "py": 0
+					},
+		            url:	"http://127.0.0.1:8000/api/users/",
+		            type:	"POST",
+		            dataType:"jsonp"
+				});*/
+				
 			}
 			
 			function r(json){
@@ -39,7 +65,7 @@
 				console.log(json);
 			}
 			//https://docs.djangoproject.com/en/dev/ref/contrib/csrf/
-		/*		function csrfSafeMethod(method) {
+			/*function csrfSafeMethod(method) {
 			    // these HTTP methods do not require CSRF protection
 			    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 			}
@@ -50,8 +76,8 @@
 			            xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			        }
 			    }
-			});
-						
+			});*/
+				/*		
 			/*function login(){
 				console.log("Hola1");
 				var url="http://127.0.0.1:8000/api/tesoros/";

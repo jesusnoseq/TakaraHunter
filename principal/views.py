@@ -34,7 +34,7 @@ class JsonResponse(HttpResponse):
 def entrarMovil(request):
 	callback = request.GET.get('callback', '')
 	req = {}
-	req ['status'] = 'This is a constant result.'
+	req ['status']='fail'
 	#req ['get'] =request.GET
 	#req ['post'] = request.POST
 
@@ -46,11 +46,10 @@ def entrarMovil(request):
 			if user.is_active:
 				login(request, user)
 				req ['status']='ok'
+				req['user']=user.username
 			else:
 				req ['status']='User is not active'
-		else:
-			req ['status']='fail'
-		
+
 	req ['callback'] = callback
 	return JsonResponse(req)
 	
