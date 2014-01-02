@@ -29,7 +29,7 @@ class JsonResponse(HttpResponse):
 		                           indent=2,
 		                           ensure_ascii=False)
 		super(JsonResponse, self).__init__(content=content,
-		                                   mimetype='application/json; charset=utf8')
+		                                   content_type='application/json; charset=utf8')
 
 def entrarMovil(request):
 	callback = request.GET.get('callback', '')
