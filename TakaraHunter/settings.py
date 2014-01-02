@@ -111,6 +111,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'corsheaders.middleware.CorsMiddleware',
+    'principal.disableCSRF.DisableCSRF',
+    'principal.django-crossdomainxhr-middleware.XsSharing',
 )
 
 ROOT_URLCONF = 'TakaraHunter.urls'
@@ -129,6 +132,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 	'principal',
     'rest_framework',
+    #'corsheaders',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -164,7 +168,7 @@ FIXTURE_DIRS = (
    os.path.join(PROJECT_DIR, 'fixtures'),
 )
 
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 REST_FRAMEWORK = {
     # Use hyperlinked styles by default.
@@ -182,7 +186,8 @@ REST_FRAMEWORK = {
     
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONPRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',
+        #'rest_framework.renderers.BrowsableAPIRenderer',
     ),
                   
 }

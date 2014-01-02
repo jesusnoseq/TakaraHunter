@@ -30,14 +30,21 @@
 		            data:	{"username":"admin", "password":"pasa"},
 		            url:	"http://127.0.0.1:8000/loginMovil/",
 		            type:	"POST",
-		            dataType:"jsonp",
-					error: function(errorThrown){
+		            dataType:"json",
+					error: function(xhr, status, error){
 	        			console.log('ErrorLogin');
-	        			console.log(errorThrown);
+	        			var err = eval("(" + xhr.responseText + ")");
+  						console.log(err);
+  						console.log(error);
+  						console.log(status);
+		    		},
+		    		success: function(json){
+	        			console.log('GogoLogin');
+	        			console.log(json);
 		    		}
 				});
 				
-
+/*
 				$.ajax({
 		            async:	true,
 		            success:r,
@@ -49,22 +56,22 @@
 	        			console.log(errorThrown);
 		    		}		            
 				});
-				
+				*/
 
 				
-				/*
-				$.ajax({
+				
+				/*$.ajax({
 		            async:	true,
 		            success:r,
 		            url:	"http://127.0.0.1:8000/logoutMovil/",
 		            type:	"GET",
 					dataType:"jsonp",
-					error: function(errorThrown){
-	        			console.log('ErrorLogout');
-	        			console.log(errorThrown);
-		    		}
-				});
-				*/
+					//error: function(errorThrown){
+	        		//	console.log('ErrorLogout');
+	        		//	console.log(errorThrown);
+		    		//}
+				});*/
+				
 				/*
 				$.ajax({
 		            async:	true,
