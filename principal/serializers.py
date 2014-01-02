@@ -2,6 +2,7 @@
 
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+from principal.models import *
 
 
 '''class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -11,7 +12,6 @@ from rest_framework import serializers
         fields = ('url', 'username', 'email', 'groups')'''
         
 class UserSerializer(serializers.ModelSerializer):
-    city = serializers.CharField(source='myuser.city')
     class Meta:
         model = User
         fields = ('id', 'username', 'password', 'first_name', 'last_name', 'email', 'px', 'py')
@@ -20,3 +20,9 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
         fields = ('url', 'name')
+        
+class BusquedaSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Busqueda
+
+        

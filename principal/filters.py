@@ -17,9 +17,13 @@ class TesoroFilter(django_filters.FilterSet):
         
         
 class UsernameFilter(django_filters.FilterSet):
+
     class Meta:
         model = User
         fields = ['username']
+
+
+
 
 '''
 

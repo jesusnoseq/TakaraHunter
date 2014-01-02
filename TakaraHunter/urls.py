@@ -9,21 +9,39 @@ from django.contrib import admin
 
 from rest_framework import viewsets, routers
 from django.contrib.auth.models import User, Group
-
+from principal.viewsets import  *
 from principal.routers import router
 
 admin.autodiscover()
 
 
 urlpatterns = patterns('',
+					
+	url(r'^$','principal.views.inicio'),
+	
+	
+	
+	
+	url(r'^api/busquedas/tojoin/$',BusquedasPorUnirse.as_view()),
+
+# ini  movil url
 	url(r'^api/', include(router.urls)),
 	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-	url('^prueba/$', TemplateView.as_view(template_name='prueba.html'), name="prueba"),
-	
+
+
+
+
+	url(r'^api/busquedas/(?P<busqueda>\d+)/join/$','principal.views.joinMovil'),
+	url(r'^api/busquedas/(?P<busqueda>\d+)/unjoin/$','principal.views.unjoinMovil'),
+	url(r'^api/busquedas/(?P<busqueda>\d+)/catch/$','principal.views.atraparTesoroMovil'),
+
+		
+
+	url(r'^prueba/$', TemplateView.as_view(template_name='prueba.html'), name="prueba"),
 
 # fin movil url
-	url(r'^$','principal.views.inicio'),
+	
 	
 	url(r'^loginMovil/$','principal.views.entrarMovil'),
 	url(r'^logoutMovil/$','principal.views.salirMovil'),
