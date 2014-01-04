@@ -85,10 +85,9 @@ class PurchaseList(generics.ListAPIView)
 
 class BusquedasPorUnirse(APIView):
     def get(self, request, format=None):
-        busqueda = Busqueda.objects.filter(estado="a") .exclude(participantes=request.user)
-        print busqueda[0]
+        id=request.GET.get('id')
+        busqueda = Busqueda.objects.filter(estado="a") .exclude(participantes=id)
         serializer = BusquedaSerializer(busqueda, many=True)
-        print "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
         return Response(serializer.data)
 
 # ViewSets define the view behavior.
@@ -127,14 +126,14 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class TesoroViewSet(viewsets.ModelViewSet):
     model = Tesoro
-    authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)#IsAdminUser
+    #authentication_classes = (SessionAuthentication, BasicAuthentication)
+    #permission_classes = (IsAuthenticated,)#IsAdminUser
 
 class BusquedaViewSet(viewsets.ModelViewSet):
     model = Busqueda
     filter_class = BusquedaFilter
-    authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)#IsAdminUser
+    #authentication_classes = (SessionAuthentication, BasicAuthentication)
+    #permission_classes = (IsAuthenticated,)#IsAdminUser
     
 '''
     @action(methods=['POST', 'DELETE'])

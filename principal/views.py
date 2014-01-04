@@ -32,12 +32,12 @@ class JsonResponse(HttpResponse):
 		                                   content_type='application/json; charset=utf8')
 
 def entrarMovil(request):
-	callback = request.GET.get('callback', '')
+	callback = request.POST.get('callback', 'logIt')
 	req = {}
 	req ['status']='fail'
 	#req ['get'] =request.GET
 	#req ['post'] = request.POST
-
+	#request.session['member_id'] = user.id
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
