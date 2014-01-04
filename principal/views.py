@@ -63,23 +63,26 @@ def salirMovil(request):
 	#return HttpResponse(json.dumps({'mensaje':state}), content_type="application/json")
 
 def joinMovil(request,busqueda):
+	user = request.POST.get('user')
 	busqueda = get_object_or_404(Busqueda,pk=busqueda,estado='a')
 	tesoro = Tesoro.objects.filter(busqueda=busqueda)
 	if tesoro.count() != 1:
 		return JsonResponse({'status':'busqueda sin tesoros'})
 	else:
 		get_object_or_404(Tesoro, busqueda=busqueda)
-	busqueda.participantes.add(request.user)
+	busqueda.participantes.add(user)
 	return JsonResponse({'status':'joined'})
 
 
 def unjoinMovil(request,busqueda):
+	user = request.POST.get('user')
 	busqueda = Busqueda.objects.get(id=busqueda)
-	busqueda.participantes.remove(request.user)
+	busqueda.participantes.remove(user)
 	return JsonResponse({'status':'unjoined'})
 
 
 def atraparTesoroMovil(request,busqueda):
+	user = request.POST.get('user')
 	busquedaAAtrapar = Busqueda.objects.get(id=busqueda)
 	tesoro = Tesoro.objects.filter(busqueda=busquedaAAtrapar)
 	if tesoro.count() != 1:
@@ -89,7 +92,7 @@ def atraparTesoroMovil(request,busqueda):
 	if busquedaAAtrapar.estado == 'c':
 		return JsonResponse({'status':'busqueda cerrada'})
 	else:
-		tesoro.recogidaPor = request.user
+		tesoro.recogidaPor = user
 		busquedaAAtrapar.estado = 'c'
 		tesoro.save()
 		busquedaAAtrapar.save()
