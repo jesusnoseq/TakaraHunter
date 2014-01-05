@@ -82,7 +82,8 @@ def unjoinMovil(request,busqueda):
 
 
 def atraparTesoroMovil(request,busqueda):
-	user = request.POST.get('user')
+	userid = request.POST.get('user')
+	user = User.objects.get(pk=userid)
 	busquedaAAtrapar = Busqueda.objects.get(id=busqueda)
 	tesoro = Tesoro.objects.filter(busqueda=busquedaAAtrapar)
 	if tesoro.count() != 1:
