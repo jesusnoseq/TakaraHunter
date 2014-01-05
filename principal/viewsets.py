@@ -126,6 +126,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class TesoroViewSet(viewsets.ModelViewSet):
     model = Tesoro
+    filter_class = TesoroFilter
     #authentication_classes = (SessionAuthentication, BasicAuthentication)
     #permission_classes = (IsAuthenticated,)#IsAdminUser
 
