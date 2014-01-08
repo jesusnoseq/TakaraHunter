@@ -25,5 +25,8 @@ class BusquedaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Busqueda
         fields = ('id', 'slug', 'titulo', 'descripcion', 'fecha_modificacion', 'estado', 'participantes')
+        
+
+
 
         

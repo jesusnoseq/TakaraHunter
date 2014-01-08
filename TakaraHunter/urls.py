@@ -23,6 +23,7 @@ urlpatterns = patterns('',
 	
 	
 	url(r'^api/busquedas/tojoin/$',BusquedasPorUnirse.as_view()),
+	url(r'^api/hall/$',hall.as_view()),
 
 # ini  movil url
 	url(r'^api/', include(router.urls)),
@@ -40,11 +41,13 @@ urlpatterns = patterns('',
 
 	url(r'^prueba/$', TemplateView.as_view(template_name='prueba.html'), name="prueba"),
 
-# fin movil url
 	
 	
 	url(r'^loginMovil/$','principal.views.entrarMovil'),
 	url(r'^logoutMovil/$','principal.views.salirMovil'),
+
+# fin movil url
+
 	
 	url(r'^login/$','principal.views.entrar'),
 	url(r'^logout/$','principal.views.salir'),

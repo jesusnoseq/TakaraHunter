@@ -85,8 +85,14 @@ class PurchaseList(generics.ListAPIView)
 class hall(APIView):
     def get(self, request, format=None):
         result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
-        serializer = UserSerializer(result, many=True)
-        return Response(serializer.data)
+        resultados = []
+        for row in result:
+            if row['recogidaPor']!=None:
+                row['username']=User.objects.get(pk=row['recogidaPor']).username
+                resultados.append(row)
+        
+        return Response(resultados)
+
 
 class BusquedasPorUnirse(APIView):
     def get(self, request, format=None):
