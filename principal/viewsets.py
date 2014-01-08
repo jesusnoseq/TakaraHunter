@@ -19,6 +19,7 @@ from rest_framework import permissions
 from filters import *
 from serializers import *
 from rest_framework import generics
+from django.db.models import Count
 
 '''
     necesito 2 listas de busquedas:
@@ -81,7 +82,11 @@ class PurchaseList(generics.ListAPIView)
 
 
 
-
+class hall(APIView):
+    def get(self, request, format=None):
+        result = Tesoro.objects.values('recogidaPor').annotate(Count('recogidaPor')).order_by('-recogidaPor__count')[:10]
+        serializer = UserSerializer(result, many=True)
+        return Response(serializer.data)
 
 class BusquedasPorUnirse(APIView):
     def get(self, request, format=None):
