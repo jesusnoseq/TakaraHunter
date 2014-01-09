@@ -1,16 +1,269 @@
 [
 	{ "model": "auth.user",
 	"pk": 2,
-	"fields": {"username": "user1", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user1@takarahunter.com"}
+	"fields": {"username": "Indiana", "password": "pbkdf2_sha256$12000$nhSsBxWiasLF$/65aBgkLmXtHKwMQEqVtEEb0ohSz0hbd4L6JJn6NQmQ=", "email":"user1@takarahunter.com", "foto":"/fotos_usuario/39.jpg"}
+	},	
+	{ "model": "auth.user",
+	"pk": 3,
+	"fields": {"username": "Coleccionista", "password": "pbkdf2_sha256$12000$nhSsBxWiasLF$/65aBgkLmXtHKwMQEqVtEEb0ohSz0hbd4L6JJn6NQmQ=", "email":"user2@takarahunter.com", "foto":"/fotos_usuario/gandalf_to_the_music.gif"}
 	},
+	{ "model": "auth.user",
+	"pk": 4,
+	"fields": {"username": "Master", "password": "pbkdf2_sha256$12000$nhSsBxWiasLF$/65aBgkLmXtHKwMQEqVtEEb0ohSz0hbd4L6JJn6NQmQ=", "email":"user3@takarahunter.com", "foto":"/fotos_usuario/fernandoalonso.jpg"}
+	},
+	{ "model": "auth.user",
+	"pk": 5,
+	"fields": {"username": "goodog", "password": "pbkdf2_sha256$12000$nhSsBxWiasLF$/65aBgkLmXtHKwMQEqVtEEb0ohSz0hbd4L6JJn6NQmQ=", "email":"user4@takarahunter.com", "foto":"/fotos_usuario/phoenix_wright_ace_attorney.jpg"}
+	},
+	{ "model": "auth.user",
+	"pk": 6,
+	"fields": {"username": "MarcoPolo", "password": "pbkdf2_sha256$12000$nhSsBxWiasLF$/65aBgkLmXtHKwMQEqVtEEb0ohSz0hbd4L6JJn6NQmQ=", "email":"user5@takarahunter.com", "foto":"/fotos_usuario/tio.jpg"}
+	},
+	{ "model": "auth.user",
+	"pk": 7,
+	"fields": {"username": "user6", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user6@takarahunter.com", "foto":"/fotos_usuario/39.jpg"}
+	},
+	{ "model": "auth.user",
+	"pk": 8,
+	"fields": {"username": "user7", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user7@takarahunter.com", "foto":"/fotos_usuario/39.jpg"}
+	},
+	{ "model": "auth.user",
+	"pk": 9,
+	"fields": {"username": "user8", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user8@takarahunter.com", "foto":"/fotos_usuario/39.jpg"}
+	},
+	{ "model": "auth.user",
+	"pk": 10,
+	"fields": {"username": "user9", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user9@takarahunter.com", "foto":"/fotos_usuario/39.jpg"}
+	},
+	{ "model": "auth.user",
+	"pk": 11,
+	"fields": {"username": "user10", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user10@takarahunter.com"}
+	},
+	{ "model": "auth.user",
+	"pk": 12,
+	"fields": {"username": "user11", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user11@takarahunter.com"}
+	},
+	{ "model": "auth.user",
+	"pk": 13,
+	"fields": {"username": "user12", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user12@takarahunter.com"}
+	},
+
+
 	{
 	"model": "principal.Busqueda",
 	"pk": 1,
-	"fields": {      "slug": "onepiece",      "titulo": "One Piece",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"pero esto que eeeeeeee e eeeeee e e e eee eeeeee" }
+	"fields": {      "slug": "onepiece",      "titulo": "One Piece",	"participantes":[1,2,3,4,5,6], 	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
 	},
 	{
 	"model": "principal.Busqueda",
 	"pk": 2,
-	"fields": {      "slug": "dagronballs",      "titulo": "Bolas de dragon",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"pero esto que eeeeeeee e eeeeee e e e eee eeeeee" }
+	"fields": {      "slug": "dagronballs",      "titulo": "Bolas de dragon",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 3,
+	"fields": {      "slug": "barbanegra",      "titulo": "Tesoro de Barbanegra",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 4,
+	"fields": {      "slug": "ambar",      "titulo": "Camara de Ambar",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 5,
+	"fields": {      "slug": "kaiseroda",      "titulo": "Mina Kaiseroda",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 6,
+	"fields": {      "slug": "atlantida",      "titulo": "Tesoros de la Atlantida",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 7,
+	"fields": {      "slug": "moctezuma",      "titulo": "Tesoros de Moctezuma",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 8,
+	"fields": {      "slug": "faraones",      "titulo": "Tesoros de los Faraones",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 9,
+	"fields": {      "slug": "salomon",      "titulo": "Mesa del Rey Salomon",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 10,
+	"fields": {      "slug": "arcaalianza",      "titulo": "Arca de la Alianza",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 11,
+	"fields": {      "slug": "lima",      "titulo": "Tesoro de Lima",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 12,
+	"fields": {      "slug": "yamashita",      "titulo": "Tesoro de Yamashita",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 13,
+	"fields": {      "slug": "dorado",      "titulo": "El Dorado",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 14,
+	"fields": {      "slug": "piedrafilosofal",      "titulo": "La piedra filosofal",	"fecha_modificacion":"2013-02-01T13:20:30+03:00",	"descripcion":"Super busqueda super divertida." }
+	},
+	{
+	"model": "principal.Busqueda",
+	"pk": 15,
+	"fields": {      "slug": "genghiskhan",      "titulo": "La tumba de Genghis Khan",	"fecha_modificacion":"2013-02-01T13:20:30+03:00", "estado":"c",	"descripcion":"Super busqueda super divertida." }
+	},
+	
+	
+	{
+	"model": "principal.Tesoro",
+	"pk": 1,
+	"fields": {		"x": "37.925971",	"y": "-4.620232",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":1	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 2,
+	"fields": {		"x": "37.913971",	"y": "-4.820232",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":2	}
+	},	
+	{
+	"model": "principal.Tesoro",
+	"pk": 16,
+	"fields": {		"x": "37.912971",	"y": "-4.820132",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":3	}
+	},	
+	{
+	"model": "principal.Tesoro",
+	"pk": 17,
+	"fields": {		"x": "37.914931",	"y": "-4.820432",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":4	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 18,
+	"fields": {		"x": "37.916016",	"y": "-4.722404",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":5	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 19,
+	"fields": {		"x": "37.916026",	"y": "-4.722424",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":6	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 20,
+	"fields": {		"x": "37.916021",	"y": "-4.722324",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":7	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 20,
+	"fields": {		"x": "37.926021",	"y": "-4.722424",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":8	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 21,
+	"fields": {		"x": "37.926821",	"y": "-4.728124",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":9	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 22,
+	"fields": {		"x": "37.926286",	"y": "-4.722826",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":10	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 23,
+	"fields": {		"x": "37.924226",	"y": "-4.724126",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":11	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 24,
+	"fields": {		"x": "37.926206",	"y": "-4.722026",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":12	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 25,
+	"fields": {		"x": "37.926276",	"y": "-4.722726",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":13	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 26,
+	"fields": {		"x": "37.926256",	"y": "-4.725126",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":14	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 27,
+	"fields": {		"x": "37.926126",	"y": "-4.712126",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15	}
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 3,
+	"fields": {		"x": "37.915971",	"y": "-4.720032",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"2" }
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 4,
+	"fields": {		"x": "37.92223",	"y": "-4.720232",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"2" }
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 5,
+	"fields": {		"x": "37.82223",	"y": "-4.720292",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"3" }
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 6,
+	"fields": {		"x": "37.919923",	"y": "-4.720932",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"3" }
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 7,
+	"fields": {		"x": "37.92663",	"y": "-4.719232",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"4" }
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 8,
+	"fields": {		"x": "37.92323",	"y": "-4.740232",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"4" }
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 9,
+	"fields": {		"x": "37.92213",	"y": "-4.730232",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"2" }
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 10,
+	"fields": {		"x": "37.92323",	"y": "-4.710232",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"4" }
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 11,
+	"fields": {		"x": "37.92223",	"y": "-4.713478",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"2" }
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 12,
+	"fields": {		"x": "37.916026",	"y": "-4.722404",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"3" }
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 13,
+	"fields": {		"x": "37.916026",	"y": "-4.722404",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"5" }
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 14,
+	"fields": {		"x": "37.916026",	"y": "-4.722404",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"6" }
+	},
+	{
+	"model": "principal.Tesoro",
+	"pk": 15,
+	"fields": {		"x": "37.916026",	"y": "-4.722404",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":15,	"recogidaPor":"5" }
 	}
 ]
