@@ -163,7 +163,7 @@
 	},
 	{
 	"model": "principal.Tesoro",
-	"pk": 20,
+	"pk": 28,
 	"fields": {		"x": "37.926021",	"y": "-4.722424",	"fecha_recogida":"2013-02-01T13:20:30+03:00",	"busqueda":8	}
 	},
 	{
